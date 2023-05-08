@@ -1,5 +1,16 @@
+import { Typography, Container, Box } from "@mui/material";
+
 export default function Home() {
-    <>
-    <h1>Holaaa</h1>
-    </>
+    return (
+        <>
+        <Box sx={{ bgcolor: "grey", height: '30vh', marginTop: ".5rem", marginBottom: ".5rem" }}>
+               
+        </Box>
+        <Container sx={{ width: 1300 }}>
+            
+
+        </Container>
+        </>
+    )
+
 }

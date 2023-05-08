@@ -7,24 +7,52 @@ import SearchIcon from '@mui/icons-material/Search';
 import Search from "../search/Search";
 import SearchIconWrapper from "../search/SearchIconWrapper";
 import StyledInputBase from "../search/StyledInputBase";
+import { NavLink } from "react-router-dom";
+import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeIcon from '@mui/icons-material/Home';
+import logo from '../../assets/logo.svg';
 
-export default function Navbar() {
+export default function Navbar(navArrayLinks) {
 
-    const [open, SetOpen] = useState(false);
+    const [openMenu, SetOpenMenu] = useState(false);
+    const [openShoppingCart, SetOpenShoppingCart] = useState(false);
 
     return (
         <>
             <AppBar position="static">
-                <Toolbar sx={{ padding: 2}}>
+                <Toolbar sx={{ padding: 2 }}>
                     <IconButton
                         color="inherit"
                         size="large"
-                        onClick={() => SetOpen(true)}
-                        sx={{display: {xs: "flex", sm:"none" }}}
+                        onClick={() => SetOpenMenu(true)}
+                        sx={{ display: { xs: "flex", sm: "none" } }}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{display: {xs: "none", sm:"flex"}}}>MUNDO TENIS CGA</Typography>
+                    
+                    <Button
+                        color="inherit"
+                        component={NavLink}
+                        to="/"
+                        sx={{ display: { xs: "none", sm: "flex" } }}
+                    >
+                        
+                        <Typography
+                            variant="h7"
+                            noWrap
+                            sx={{
+                              mr: 0,
+                              display: { xs: 'none', md: 'flex' },
+                              fontFamily: 'unset',
+                              fontWeight: 700,
+                              letterSpacing: '.2rem',
+                              color: 'inherit',
+                              textDecoration: 'none',
+                            }}>
+                            Mundo Tenis CGA
+                        </Typography>
+                    </Button>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -34,25 +62,65 @@ export default function Navbar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Box sx={{ flexGrow: 1}} />
-                    <Box sx={{ display: {xs: "none", sm:"flex"} }}>
-                    <Button color="inherit">Iniciar Sesión</Button>
-                    <Button color="inherit">
-                        <Badge badgeContent={0} color="secondary" showZero>
-                            <ShoppingCartIcon color="inherit">
-                            </ShoppingCartIcon>
-                        </Badge>
-                    </Button>
-                    </Box>
+                    <Box sx={{ flexGrow: 1 }} />
+                   
+                        <Button
+                            color="inherit"
+                            component={NavLink}
+                            to="/"
+                        >
+                            <HomeIcon />
+                        </Button>
+                        <Button
+                            color="inherit"
+                            component={NavLink}
+                            to="/login"
+                        >
+                            <AccountCircleIcon />
+                        </Button>
+                        <Button color="inherit">
+                            <Badge badgeContent={0} color="secondary" showZero>
+                                <ShoppingCartIcon
+                                    color="inherit"
+                                    size="large"
+                                    onClick={() => SetOpenShoppingCart(true)}>
+                                </ShoppingCartIcon>
+                            </Badge>
+                        </Button>
+                    
+
                 </Toolbar>
             </AppBar>
 
             <Drawer
-                open={open}
+                open={openMenu}
                 anchor="left"
-                onClose={() => SetOpen(false)}>
+                onClose={() => SetOpenMenu(false)}>
                 <NavListDrawer />
             </Drawer>
+            <Drawer
+                open={openShoppingCart}
+                anchor="right"
+                onClose={() => SetOpenShoppingCart(false)}>
+                <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart}/>
+            </Drawer>
+            <Box position="static" sx={{display: "flex", justifyContent: "center", backgroundColor: "#1565c0", color: "white"}}>                        
+            <Button 
+            color="inherit"
+            component={NavLink}
+            to="/sport/tenis"
+            >Tenis</Button>
+            <Button 
+            color="inherit"
+            component={NavLink}
+            to="/sport/padel"
+            >Padel</Button>
+            <Button 
+            color="inherit"
+            component={NavLink}
+            to="/"
+            >Sobre Nosotros</Button>
+            </Box>   
         </>
     )
 }

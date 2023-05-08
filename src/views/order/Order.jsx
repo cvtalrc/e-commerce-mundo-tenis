@@ -1,5 +1,9 @@
+import { Typography } from "@mui/material";
+
 export default function Order() {
-    <>
-    <h1>Holaaa</h1>
-    </>
+    return (
+        <>
+            <Typography variant="h2">Order</Typography>
+        </>
+    )
 }
