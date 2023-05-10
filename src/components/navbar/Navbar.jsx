@@ -12,16 +12,20 @@ import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import logo from '../../assets/logo.svg';
+import ButtonMenu from "../ButtonMenu/ButtonMenu";
+import { styled, alpha } from '@mui/material/styles';
 
 export default function Navbar(navArrayLinks) {
 
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
+    const sports = ["tenis", "padel"]
 
     return (
         <>
-            <AppBar position="static">
-                <Toolbar sx={{ padding: 2 }}>
+            <AppBar position="static" sx={{ paddingBottom: 0, paddingTop: 0 }}
+            >
+                <Toolbar>
                     <IconButton
                         color="inherit"
                         size="large"
@@ -30,29 +34,9 @@ export default function Navbar(navArrayLinks) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    
-                    <Button
-                        color="inherit"
-                        component={NavLink}
-                        to="/"
-                        sx={{ display: { xs: "none", sm: "flex" } }}
-                    >
-                        
-                        <Typography
-                            variant="h7"
-                            noWrap
-                            sx={{
-                              mr: 0,
-                              display: { xs: 'none', md: 'flex' },
-                              fontFamily: 'unset',
-                              fontWeight: 700,
-                              letterSpacing: '.2rem',
-                              color: 'inherit',
-                              textDecoration: 'none',
-                            }}>
-                            Mundo Tenis CGA
-                        </Typography>
-                    </Button>
+                    <img src={logo} />
+
+                    <Box sx={{ flexGrow: 1 }} />
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -62,32 +46,34 @@ export default function Navbar(navArrayLinks) {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Box sx={{ flexGrow: 1 }} />
-                   
-                        <Button
-                            color="inherit"
-                            component={NavLink}
-                            to="/"
-                        >
-                            <HomeIcon />
-                        </Button>
-                        <Button
-                            color="inherit"
-                            component={NavLink}
-                            to="/login"
-                        >
-                            <AccountCircleIcon />
-                        </Button>
-                        <Button color="inherit">
-                            <Badge badgeContent={0} color="secondary" showZero>
-                                <ShoppingCartIcon
-                                    color="inherit"
-                                    size="large"
-                                    onClick={() => SetOpenShoppingCart(true)}>
-                                </ShoppingCartIcon>
-                            </Badge>
-                        </Button>
-                    
+
+                    <Button
+                        color="inherit"
+                        component={NavLink}
+                        to="/"
+                    >
+                        {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
+                        inicio
+
+                    </Button>
+                    <Button
+                        color="inherit"
+                        component={NavLink}
+                        to="/login"
+                    >
+                        {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
+                        iniciar sesión
+                    </Button>
+                    <Button color="inherit">
+                        <Badge badgeContent={0} color="error" showZero>
+                            <ShoppingCartIcon
+                                color="inherit"
+                                size="large"
+                                onClick={() => SetOpenShoppingCart(true)}>
+                            </ShoppingCartIcon>
+                        </Badge>
+                    </Button>
+
 
                 </Toolbar>
             </AppBar>
@@ -102,25 +88,19 @@ export default function Navbar(navArrayLinks) {
                 open={openShoppingCart}
                 anchor="right"
                 onClose={() => SetOpenShoppingCart(false)}>
-                <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart}/>
+                <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart} />
             </Drawer>
-            <Box position="static" sx={{display: "flex", justifyContent: "center", backgroundColor: "#1565c0", color: "white"}}>                        
-            <Button 
-            color="inherit"
-            component={NavLink}
-            to="/sport/tenis"
-            >Tenis</Button>
-            <Button 
-            color="inherit"
-            component={NavLink}
-            to="/sport/padel"
-            >Padel</Button>
-            <Button 
-            color="inherit"
-            component={NavLink}
-            to="/"
-            >Sobre Nosotros</Button>
-            </Box>   
+            <Box position="static" sx={{ display: "flex", justifyContent: "center", paddingLeft: 5, backgroundColor: "#1565cd", color: "white" }}>
+                {sports.map((sport) => (
+                    <ButtonMenu key={sport} sport={sport}></ButtonMenu>
+                ))}
+
+                <Button
+                    color="inherit"
+                    component={NavLink}
+                    to="/"
+                >Sobre Nosotros</Button>
+            </Box>
         </>
     )
 }

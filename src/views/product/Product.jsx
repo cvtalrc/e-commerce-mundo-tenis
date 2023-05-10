@@ -1,5 +1,9 @@
+import { Typography } from "@mui/material";
+
 export default function Product() {
-    <>
-    <h1>Holaaa</h1>
-    </>
+    return (
+        <>
+            <Typography variant="h3">Order</Typography>
+        </>
+    )
 }

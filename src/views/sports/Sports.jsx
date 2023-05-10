@@ -7,7 +7,7 @@ export default function Sports() {
     return (
 
         <Container sx={{width: 1300}}>
-            <Typography variant="h2"> Sport: {id} </Typography>
+            <Typography variant="h3"> {id} </Typography>
         </Container>
 
 
