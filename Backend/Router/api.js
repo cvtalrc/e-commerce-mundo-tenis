@@ -9,6 +9,7 @@ const api = express.Router();
 api.post("/producto/agregar",func_producto.add);
 api.post("/producto/eliminar",func_producto.remove);
 api.post("/sign-up", func_auth.sign_up);
+api.post("/sign-in", func_auth.sign_in);
 //API GET
 api.get("/producto/all",func_producto.get);
 
