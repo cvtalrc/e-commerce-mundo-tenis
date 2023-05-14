@@ -6,7 +6,6 @@ import Sports from "./views/sports/Sports";
 import Product from "./views/product/Product";
 import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
-import injectContext from "./store/appContext";
 import React, { useEffect } from 'react';
 import Login from './views/login/Login';
 import axios from "axios";
@@ -52,7 +51,7 @@ const navArrayLinks = [
 //     getData();
 // }, [])
 
-const Layout = () => {
+function App() {
     return (
         <React.Fragment>
             <Navbar navArrayLinks={navArrayLinks} />
@@ -69,4 +68,4 @@ const Layout = () => {
     );
 };
 
-export default injectContext(Layout);
+export default App;
