@@ -7,8 +7,9 @@ import Product from "./views/product/Product";
 import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
 import injectContext from "./store/appContext";
-import React from 'react';
+import React, { useEffect } from 'react';
 import Login from './views/login/Login';
+import axios from "axios";
 
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
 
@@ -40,10 +41,21 @@ const navArrayLinks = [
 
 ]
 
+// useEffect(() => {
+//     const getData = async () => {
+//         try {
+//             const { data } = axios.get('/api')
+//         } catch (error){
+//             console.log(error);
+//         }
+//     };
+//     getData();
+// }, [])
+
 const Layout = () => {
     return (
         <React.Fragment>
-            <Navbar navArrayLinks={navArrayLinks}/>
+            <Navbar navArrayLinks={navArrayLinks} />
             <Routes>
                 <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
                 <Route path="/login" element={<Login />} />
