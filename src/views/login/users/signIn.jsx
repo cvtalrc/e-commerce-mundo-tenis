@@ -109,7 +109,7 @@ export default function SignUp() {
             >
               Regístrate
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link href="#" variant="body2">
                   ¿Ya estás registrado? Inicia sesión
