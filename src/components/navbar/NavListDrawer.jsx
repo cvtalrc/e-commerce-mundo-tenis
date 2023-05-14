@@ -1,19 +1,13 @@
-import { Box, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Collapse } from "@mui/material";
-import { ExpandLess, ExpandMore} from "@mui/icons-material"
-import { useState } from "react";
-// import LoginIcon from '@mui/icons-material/Login';
-import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import { Box, List, ListSubheader, ListItemButton, ListItemText, Button } from "@mui/material";
+import ListCategoriesSport from "./ListCategoriesSport";
+import { NavLink } from "react-router-dom";
 
 
-export default function NavListDrawer() {
-    const [open, setOpen] = useState(true);
+export default function NavListDrawer(SetOpenMenu) {
 
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
+    const sports = ["Tenis", "Padel"];
     return (
-        <Box sx={{ width: 250 }}>
+        <Box sx={{ width: 250, height: '100vh' }}>
             <List
                 sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
                 component="nav"
@@ -24,41 +18,45 @@ export default function NavListDrawer() {
                     </ListSubheader>
                 }
             >
-                {/* <ListItemButton>
-                    <ListItemIcon>
 
-                    </ListItemIcon>
-                    <ListItemText primary="Sent mail" />
-                </ListItemButton>
-                <ListItemButton>
-                    <ListItemIcon>
+                {sports.map((sport) => (
+                    <>
+                        <ListCategoriesSport key={sport} sport={sport} SetOpenMenu={SetOpenMenu} />
+                    </>
+                ))}
 
-                    </ListItemIcon>
-                    <ListItemText primary="Drafts" />
-                </ListItemButton> */}
+                <ListItemButton
+                    onClick={() => SetOpenMenu(false)}
+                    component={NavLink}
+                    to="/sobre-nosotros">
+                    <ListItemText
+                        primary="Sobre Nosotros"
+                    />
+                </ListItemButton>
 
-                <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                    <SportsTennisIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Tenis" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemText primary="Zapatillas" />
-                        </ListItemButton>
-                    </List>
-                </Collapse>
-                <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                    <SportsTennisIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Padel" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
             </List>
+
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', bottom: 0, width: '100%', paddingBottom: 5 }}>
+                <Button
+                    color="inherit"
+                    component={NavLink}
+                    to="/"
+                    onClick={() => SetOpenMenu(false)}
+                >
+                    {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
+                    inicio
+
+                </Button>
+                <Button
+                    color="inherit"
+                    component={NavLink}
+                    to="/login"
+                    onClick={() => SetOpenMenu(false)}
+                >
+                    {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
+                    iniciar sesión
+                </Button>
+            </Box>
 
 
         </Box>

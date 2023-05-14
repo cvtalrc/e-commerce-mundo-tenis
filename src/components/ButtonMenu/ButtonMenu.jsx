@@ -3,16 +3,17 @@ import { useState } from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import StyledMenu from "./StyledMenu";
 import { NavLink } from "react-router-dom";
+import Divider from '@mui/material/Divider';
+
 
 export default function ButtonMenu({ sport }) {
     //sport define la consulta al back, por el momento se declaran ambos deportes 
     let categories = [];
-    console.log(sport);
-    if (sport == 'tenis') {
+    if (sport == 'Tenis') {
         categories = [
             "Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"
         ]
-    } else if (sport == 'padel')
+    } else if (sport == 'Padel')
         categories = [
             "Palas", "Bolsos", "Pelotas", "Textiles", "Zapatillas", "Accesorios"
         ]
@@ -25,8 +26,6 @@ export default function ButtonMenu({ sport }) {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    console.log(categories)
 
     return (
         <div>
@@ -47,22 +46,24 @@ export default function ButtonMenu({ sport }) {
                 MenuListProps={{
                     'aria-labelledby': 'demo-customized-button',
                 }}
+                key={sport}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
             >
-                {categories.map(category => ( //agregar iconos y links
-                    <MenuItem
-                        key={category}
-                        onClick={handleClose}
-                        component={NavLink}
-                        to={`/sport/${sport}/${category}`}
-                        disableRipple>
+                {categories.map(category => ( 
+                        <MenuItem
+                            key={category}
+                            onClick={handleClose}
+                            component={NavLink}
+                            to={`/sport/${sport}/${category}`}
+                            disableRipple>
 
-                        {category}
-                    </MenuItem>
+                            {category}
+                        </MenuItem>
+
                 ))}
-
+                <Divider />
                 <MenuItem
                     onClick={handleClose}
                     component={NavLink}
