@@ -2,7 +2,7 @@ const Product = require("../Models/Product");
 
 function add(req, res) {
   const { title, brand, price, description, sport, category, imgUrl } = req.body;
-  const Product = new Product({
+  const product = new Product({
     title,
     brand,
     price,
@@ -12,7 +12,7 @@ function add(req, res) {
     imgUrl
   });
 
-  Product.save((error, prodStorage) => {
+  product.save((error, prodStorage) => {
     if (error) {
       return res.status(400).send({ msj: "Error al crear el usuario, intentar nuevamente" });
     } else {
@@ -34,11 +34,11 @@ function remove(req, res) {
 }
 
 function get(req, res) {
-  Product.find({}, (error, Products) => {
+  Product.find({}, (error, products) => {
     if (error) {
       return res.status(400).send({ msj: "No se pudo encontrar el producto" });
     } else {
-      res.status(200).send(Products);
+      res.status(200).send(products);
     }
   });
 }
