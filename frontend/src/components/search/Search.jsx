@@ -8,11 +8,11 @@ const Search = styled('div')(({ theme }) => ({
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(3),
-    marginLeft: 40,
+    marginLeft: theme.spacing(0),
     width: '70%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(15),
-      width: '15%',
+      marginLeft: theme.spacing(5),
+      width: '25%',
     },
   }));
 

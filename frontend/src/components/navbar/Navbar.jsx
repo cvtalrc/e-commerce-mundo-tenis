@@ -1,4 +1,4 @@
-import { AppBar, Button, Drawer, IconButton, Toolbar, Typography, Badge, Box } from "@mui/material";
+import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from "react";
 import NavListDrawer from './NavListDrawer'
@@ -9,61 +9,53 @@ import SearchIconWrapper from "../search/SearchIconWrapper";
 import StyledInputBase from "../search/StyledInputBase";
 import { NavLink } from "react-router-dom";
 import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import HomeIcon from '@mui/icons-material/Home';
 import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu";
-import { styled, alpha } from '@mui/material/styles';
 
 export default function Navbar(navArrayLinks) {
 
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
-    const sports = ["tenis", "padel"]
+    const sports = ["Tenis", "Padel"]
 
     return (
         <>
             <AppBar position="static" sx={{ paddingBottom: 0, paddingTop: 0 }}
             >
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        size="large"
-                        onClick={() => SetOpenMenu(true)}
-                        sx={{ display: { xs: "flex", sm: "none" } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <img src={logo} />
-
-                    <Box sx={{ flexGrow: 1 }} />
                     <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Buscar..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Buscar..."
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
+                    <Box sx={{ flexGrow: 1 }}></Box>
+                    <Box sx={{ justifyContent: 'right', display: { xs: 'none', sm: 'flex' } }}>
+                        
 
-                    <Button
-                        color="inherit"
-                        component={NavLink}
-                        to="/"
-                    >
-                        {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
-                        inicio
+                        <Button
+                            color="inherit"
+                            component={NavLink}
+                            to="/"
+                        >
+                            {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
+                            inicio
 
-                    </Button>
-                    <Button
-                        color="inherit"
-                        component={NavLink}
-                        to="/login"
-                    >
-                        {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
-                        iniciar sesión
-                    </Button>
+                        </Button>
+                        <Button
+                            color="inherit"
+                            component={NavLink}
+                            to="/login"
+                        >
+                            {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
+                            iniciar sesión
+                        </Button>
+                    </Box>
+
                     <Button color="inherit">
                         <Badge badgeContent={0} color="error" showZero>
                             <ShoppingCartIcon
@@ -74,15 +66,24 @@ export default function Navbar(navArrayLinks) {
                         </Badge>
                     </Button>
 
+                    <IconButton
+                        color="inherit"
+                        size="large"
+                        onClick={() => SetOpenMenu(true)}
+                        sx={{ display: { xs: "flex", sm: "none" } }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
 
                 </Toolbar>
             </AppBar>
 
             <Drawer
                 open={openMenu}
-                anchor="left"
+                anchor="right"
+                position="static"
                 onClose={() => SetOpenMenu(false)}>
-                <NavListDrawer />
+                <NavListDrawer SetOpenMenu={SetOpenMenu} />
             </Drawer>
             <Drawer
                 open={openShoppingCart}
@@ -90,7 +91,7 @@ export default function Navbar(navArrayLinks) {
                 onClose={() => SetOpenShoppingCart(false)}>
                 <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart} />
             </Drawer>
-            <Box position="static" sx={{ display: "flex", justifyContent: "center", paddingLeft: 5, backgroundColor: "#1565cd", color: "white" }}>
+            <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "#1565cd", color: "white" }}>
                 {sports.map((sport) => (
                     <ButtonMenu key={sport} sport={sport}></ButtonMenu>
                 ))}
@@ -98,7 +99,7 @@ export default function Navbar(navArrayLinks) {
                 <Button
                     color="inherit"
                     component={NavLink}
-                    to="/"
+                    to="/sobre-nosotros"
                 >Sobre Nosotros</Button>
             </Box>
         </>

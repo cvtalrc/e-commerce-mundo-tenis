@@ -24,18 +24,21 @@ export default function ShoppingCartDrawer(SetOpenShoppingCart) {
                 <ListItemButton>
                     <ListItemText primary="Product 2" />
                 </ListItemButton>
-                <Button
-                color="primary"
-                variant="contained"
-                component={NavLink}
-                to="/order"
-                sx={{ display:"flex", alignItems: "center", margin: 1.5}}
-                onClick={()=>SetOpenShoppingCart(false)}
-                >
-                Comprar
-                </Button>
 
             </List>
+
+            <Box sx={{position: 'absolute', bottom: 0, width: '100%', paddingBottom: 1 }}>
+                <Button
+                    color="primary"
+                    variant="contained"
+                    component={NavLink}
+                    to="/order"
+                    sx={{ display: "flex", alignItems: "center", margin: 1.5 }}
+                    onClick={() => SetOpenShoppingCart(false)}
+                >
+                    Comprar
+                </Button>
+            </Box>
 
 
         </Box>
