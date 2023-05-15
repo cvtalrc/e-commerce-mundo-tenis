@@ -56,7 +56,7 @@ export default function ButtonMenu({ sport }) {
                             key={category}
                             onClick={handleClose}
                             component={NavLink}
-                            to={`/sport/${sport}/${category}`}
+                            to={`/${sport}/${category}`}
                             disableRipple>
 
                             {category}
@@ -67,7 +67,7 @@ export default function ButtonMenu({ sport }) {
                 <MenuItem
                     onClick={handleClose}
                     component={NavLink}
-                    to={`/sport/${sport}`}
+                    to={`/${sport}`}
                     disableRipple>
                     Ver todo {sport}
 

@@ -40,17 +40,6 @@ const navArrayLinks = [
 
 ]
 
-// useEffect(() => {
-//     const getData = async () => {
-//         try {
-//             const { data } = axios.get('/api')
-//         } catch (error){
-//             console.log(error);
-//         }
-//     };
-//     getData();
-// }, [])
-
 function App() {
     return (
         <React.Fragment>
@@ -58,8 +47,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
                 <Route path="/login" element={<Login />} />
-                <Route path="/sport/:id" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
-                <Route path="/sport/:id/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
+                <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
+                <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
                 <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
                 <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
             </Routes>

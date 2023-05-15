@@ -2,8 +2,23 @@ import { Typography, Container, Box, Grid } from "@mui/material";
 import Card from "../../components/Product/Card";
 import './Home.css';
 import AppPagination from "../../components/AppPagination/AppPagination";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function Home() {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/producto/all');
+        console.log(response.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
     const products = [
         {
             id: '0',
