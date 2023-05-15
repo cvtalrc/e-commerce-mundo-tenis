@@ -51,7 +51,7 @@ export default function ButtonMenu({ sport }) {
                 open={open}
                 onClose={handleClose}
             >
-                {categories.map(category => ( //agregar iconos y links
+                {categories.map(category => ( //add iconos y links
                     <MenuItem
                         key={category}
                         onClick={handleClose}

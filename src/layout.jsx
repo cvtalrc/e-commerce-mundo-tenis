@@ -49,7 +49,7 @@ const Layout = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/sport/:id" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
                 <Route path="/sport/:id/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
-                <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
+                <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por Product en específico */}
                 <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
             </Routes>
             <Footer />
