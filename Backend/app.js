@@ -22,7 +22,7 @@ app.use("/api", ruta_autorizacion);
 
 //conexion base de datos e inicio de la escucha en el puerto 3000
 mongoose.connect(
-    `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/`,
+  `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/`,
 
     (error) => {
         if (error) { console.log(error) };

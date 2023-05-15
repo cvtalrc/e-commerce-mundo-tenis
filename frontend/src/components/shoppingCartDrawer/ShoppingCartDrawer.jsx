@@ -19,10 +19,10 @@ export default function ShoppingCartDrawer(SetOpenShoppingCart) {
                 }
             >
                 <ListItemButton>
-                    <ListItemText primary="Producto 1" />
+                    <ListItemText primary="Product 1" />
                 </ListItemButton>
                 <ListItemButton>
-                    <ListItemText primary="Producto 2" />
+                    <ListItemText primary="Product 2" />
                 </ListItemButton>
 
             </List>
