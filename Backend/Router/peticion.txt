@@ -1,0 +1,36 @@
+PETICIONES:
+-----------
+    PRODUCTOS:
+    ----------
+        Agregar producto-> Http://localhost:3000/API/product/add
+            {
+                "title":"Pelota de tenis",
+                "brand": "Tenis",
+                "price": 20202,
+                "description": "lorem skjskjj",
+                "sport": "Tenis",
+                "category":"ksjjsk",
+                "imgUrl":"/ksjs/jskjd7/"
+            }
+        Eliminar producto-> Http://localhost:3000/API/product/remove
+            {
+	            "id":"6462393b3724b7d054933eca"
+            }
+        obtener productos-> Http://localhost:3000/API/product/all
+
+    USUARIO:
+    ----------
+        Registrar usuario-> Http://localhost:3000/API/user/sign-up
+            {
+	            "name":"Pablo",
+	            "pass": "pablito",
+                "rut":"209458225",
+                "type":"Admin"
+	
+            }
+        ingresar usuario-> Http://localhost:3000/API/user/sign-in
+            {
+                "rut":"209458225",
+                "pass": "pablito"
+
+            }
