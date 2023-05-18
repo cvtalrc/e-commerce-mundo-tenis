@@ -6,6 +6,9 @@ const Jwt = new JWTService();
 async function sign_up(req, res) {
   const { body } = req;
   if (!body.rut) return res.status(200).send({ message: "Rut obligatorio", status: "warning" });
+  if (!body.pass) return res.status(200).send({ message: "Contraseña obligatoria", status: "warning" });
+  if (!body.name) return res.status(200).send({ message: "Nombre de usuario obligatorio", status: "warning" });
+  
   const findUser = await User.findOne({ rut: body.rut });
   if (findUser) return res.status(200).send({ message: "El usuario ya existe", status: "warning" });
   const usuario = {
@@ -29,6 +32,7 @@ async function sign_in(req, res) {
   const { body } = req;
   if (!body.rut) return res.status(200).send({ message: "Rut obligatorio", status: "warning" });
   if (!body.pass) return res.status(200).send({ message: "Contraseña obligatoria", status: "warning" });
+  
   const findUser = await User.findOne({ rut: body.rut });
   if (!findUser) return res.status(200).send({ message: "El usuario no existe", status: "error" });
   if (findUser.pass != body.pass) return res.status(200).send({ message: "La contraseña no es correcta", status: "error" });
