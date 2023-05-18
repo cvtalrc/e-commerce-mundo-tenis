@@ -1,6 +1,6 @@
 const DB_USER = "admin"; //Usuario admin de la base de datos
-const DB_PASS = "cata1234"; // Contraseña del administrador de la base de datos
-const DB_HOST = "e-commerce-mundo-tenis.xyw2xwf.mongodb.net";
+const DB_PASS = "ferfer"; // Contraseña del administrador de la base de datos
+const DB_HOST = "mundo-tenis-cga.qgamcku.mongodb.net";
 const IP_SERVER = "localhost";
 
 module.exports = {
