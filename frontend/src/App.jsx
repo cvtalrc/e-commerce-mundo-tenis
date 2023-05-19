@@ -8,6 +8,7 @@ import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
 import React, { useEffect } from 'react';
 import Login from './views/login/Login';
+import Admin from './views/admin/Admin';
 import axios from "axios";
 
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
                 <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
                 <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
+                <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
             </Routes>
             <Footer />
         </React.Fragment>
