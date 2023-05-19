@@ -25,7 +25,7 @@ function add(req, res) {
   });
 }
 
-async function modificate(req, res) {
+async function update(req, res) {
   const {id, titleC, brandC, priceC, descriptionC, sizeC, quantityC, sportC, categoryC, imgUrlC } = req.body;
   stockProduct = await Product.findById(id).select('stock');
   stockC = stockProduct.stock;
@@ -85,7 +85,7 @@ function getId(req, res) {
 
 module.exports = {
   add,
-  modificate,
+  update,
   removeAll,
   getAll,
   getId,
