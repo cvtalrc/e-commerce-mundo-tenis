@@ -1,4 +1,4 @@
-import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box } from "@mui/material";
+import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from "react";
 import NavListDrawer from './NavListDrawer'
@@ -20,11 +20,12 @@ export default function Navbar(navArrayLinks) {
 
     return (
         <>
-            <AppBar position="static" sx={{ paddingBottom: 0, paddingTop: 0 }}
+            <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}
             >
                 <Toolbar>
-                    {/* <img src={logo} /> */}
-                    {/* <Search>
+                    <Container sx={{display: 'flex', flexDirection:'row', justifyContent: 'right'}}>
+                        {/* <img src={logo} /> */}
+                        {/* <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -33,48 +34,48 @@ export default function Navbar(navArrayLinks) {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </Search> */}
-                    <Box sx={{ flexGrow: 1 }}></Box>
-                    <Box sx={{ justifyContent: 'right', display: { xs: 'none', sm: 'flex' } }}>
-
-
-                        <Button
-                            color="inherit"
-                            component={NavLink}
-                            to="/"
-                        >
-                            {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
-                            inicio
-
-                        </Button>
-                        <Button
-                            color="inherit"
-                            component={NavLink}
-                            to="/login"
-                        >
-                            {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
-                            iniciar sesión
-                        </Button>
-                    </Box>
-
-                    <Button color="inherit">
-                        <Badge badgeContent={0} color="error" showZero>
-                            <ShoppingCartIcon
+                        {/* <Box sx={{ flexGrow: 1 }}></Box> */}
+                        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                            <Button
                                 color="inherit"
-                                size="large"
-                                onClick={() => SetOpenShoppingCart(true)}>
-                            </ShoppingCartIcon>
-                        </Badge>
-                    </Button>
+                                component={NavLink}
+                                to="/"
+                            >
+                                {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
+                                inicio
 
-                    <IconButton
-                        color="inherit"
-                        size="large"
-                        onClick={() => SetOpenMenu(true)}
-                        sx={{ display: { xs: "flex", sm: "none" } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                            </Button>
+                            <Button
+                                color="inherit"
+                                component={NavLink}
+                                to="/login"
+                            >
+                                {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
+                                iniciar sesión
+                            </Button>
+                            
+                        </Box>
 
+                        <Button color="inherit">
+                            <Badge badgeContent={0} color="error" showZero>
+                                <ShoppingCartIcon
+                                    color="inherit"
+                                    size="large"
+                                    onClick={() => SetOpenShoppingCart(true)}>
+                                </ShoppingCartIcon>
+                            </Badge>
+                        </Button>
+                        
+
+                        <IconButton
+                            color="inherit"
+                            size="large"
+                            onClick={() => SetOpenMenu(true)}
+                            sx={{ display: { xs: "flex", sm: "none" } }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Container>
                 </Toolbar>
             </AppBar>
 
