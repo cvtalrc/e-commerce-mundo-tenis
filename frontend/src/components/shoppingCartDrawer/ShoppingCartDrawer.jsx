@@ -7,9 +7,9 @@ import { NavLink } from "react-router-dom";
 
 export default function ShoppingCartDrawer(SetOpenShoppingCart) {
     return (
-        <Box sx={{ width: 250 }}>
+        <Box sx={{ width: 450 }}>
             <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                sx={{ width: '100%', maxWidth: 450, bgcolor: 'background.paper' }}
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
@@ -29,8 +29,8 @@ export default function ShoppingCartDrawer(SetOpenShoppingCart) {
 
             <Box sx={{position: 'absolute', bottom: 0, width: '100%', paddingBottom: 1 }}>
                 <Button
-                    color="primary"
-                    variant="contained"
+                    color="secondary"
+                    variant="outlined"
                     component={NavLink}
                     to="/order"
                     sx={{ display: "flex", alignItems: "center", margin: 1.5 }}

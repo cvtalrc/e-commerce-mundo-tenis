@@ -1,6 +1,6 @@
 import { Typography, Container, Box, Grid } from "@mui/material";
 import Card from "../../components/Product/Card";
-import AppPagination from "../../components/AppPagination/AppPagination";
+import AppPagination from "../../components/appPagination/AppPagination";
 import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { helpHttp } from "../../helpers/helpHttp";
@@ -11,29 +11,14 @@ export default function Home() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     let api = helpHttp();
-    let url = "http://localhost:3000/api/Product/all"
-
-    // useEffect(() => {
-    //     api
-    //         .get(url)
-    //         .then((res) => {
-    //             console.log(res);
-    //             if (!res.err) {
-    //                 setProducts(res);
-    //                 //   setError(null);
-    //             } else {
-    //                 setProducts(null);
-    //                 //   setError(res);
-    //             }
-    //         });
-    // }, [url]);
+    let url = "http://localhost:3000/api/product"
 
     useEffect(() => {
         setLoading(true);
         api
             .get(url)
             .then((res) => {
-                //console.log(res);
+                console.log(res);
                 if (!res.err) {
                     setProducts(res);
                     setError(null);
@@ -148,23 +133,23 @@ export default function Home() {
             )}
             {
                 products &&
-                <Box>
-                    <Box sx={{ bgcolor: "#f6f5f2", height: '50vh', width: '100vw', marginBottom: ".5rem", display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{mb:4}}>
+                    <Box sx={{ bgcolor: "#f6f5f2", height: '30vh', width: '100wh' ,marginBottom: ".5rem", display: 'flex', justifyContent: 'center' }}>
                         <Typography
                             color='inherit'
                             variant="h4"
-                            sx={{ padding: 25 }}
+                            sx={{ padding: 15 }}
                         >Banner</Typography>
                     </Box>
 
-                    <Container>
+                    <Container >
+                    
                         <Grid container>
 
                             {products.map(({ _id, title, brand, price, description, sport, category, imgUrl }) => <Grid key={_id} item md={3} sm={4} xs={6}> <Card key={_id} {...{ _id, title, brand, price, description, sport, category, imgUrl }} /> </Grid>)}
 
                         </Grid>
 
-                        <AppPagination />
                     </Container >
                 </Box>
             }

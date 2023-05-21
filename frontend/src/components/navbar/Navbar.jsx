@@ -23,8 +23,8 @@ export default function Navbar(navArrayLinks) {
             <AppBar position="static" sx={{ paddingBottom: 0, paddingTop: 0 }}
             >
                 <Toolbar>
-                    <img src={logo} />
-                    <Search>
+                    {/* <img src={logo} /> */}
+                    {/* <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -32,10 +32,10 @@ export default function Navbar(navArrayLinks) {
                                 placeholder="Buscar..."
                                 inputProps={{ 'aria-label': 'search' }}
                             />
-                        </Search>
+                        </Search> */}
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Box sx={{ justifyContent: 'right', display: { xs: 'none', sm: 'flex' } }}>
-                        
+
 
                         <Button
                             color="inherit"

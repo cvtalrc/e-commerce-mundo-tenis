@@ -47,6 +47,8 @@ export const helpHttp = () => {
 
     const del = (url, options = {}) => {
         options.method = "DELETE";
+        console.log(options);
+        console.log(url);
         return customFetch(url, options);
     };
 

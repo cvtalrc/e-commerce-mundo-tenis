@@ -26,13 +26,13 @@ function add(req, res) {
 }
 
 async function update(req, res) {
-  const {id, titleC, brandC, priceC, descriptionC, sizeC, quantityC, sportC, categoryC, imgUrlC } = req.body;
-  stockProduct = await Product.findById(id).select('stock');
+  const {_id, titleC, brandC, priceC, descriptionC, sizeC, quantityC, sportC, categoryC, imgUrlC } = req.body;
+  stockProduct = await Product.findById(_id).select('stock');
   stockC = stockProduct.stock;
   stockC.set(sizeC,quantityC);
   console.log(stockC);
 
-  Product.findByIdAndUpdate(id, {
+  Product.findByIdAndUpdate(_id, {
     title: titleC, 
     brand: brandC, 
     price: priceC, 
@@ -85,7 +85,7 @@ function getId(req, res) {
 
 
 function remove(req, res) {
-  const { id } = req.body;
+  const { id } = req.params;
   Product.deleteOne({ _id: id }, (error) => {
     if (error) {
       return res.status(400).send({ msj: "Error al remove el producto" });
@@ -94,7 +94,6 @@ function remove(req, res) {
     }
   });
 }
-
 
 module.exports = {
   add,
