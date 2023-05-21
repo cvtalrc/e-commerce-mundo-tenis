@@ -1,6 +1,6 @@
 const DB_USER = "admin"; //Usuario admin de la base de datos
-const DB_PASS = "ferfer"; // Contraseña del administrador de la base de datos
-const DB_HOST = "mundo-tenis-cga.qgamcku.mongodb.net";
+const DB_PASS = "djsirola"; // Contraseña del administrador de la base de datos
+const DB_HOST = "web-mern1.cgydoy4.mongodb.net";
 const IP_SERVER = "localhost";
 
 module.exports = {
@@ -9,3 +9,4 @@ module.exports = {
   DB_HOST,
   IP_SERVER
 };
+

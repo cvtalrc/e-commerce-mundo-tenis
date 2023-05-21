@@ -4,13 +4,15 @@ PETICIONES:
     ----------
         Agregar producto-> Http://localhost:3000/API/product/add
             {
-                "title":"Pelota de tenis",
-                "brand": "Tenis",
-                "price": 20202,
-                "description": "lorem skjskjj",
-                "sport": "Tenis",
-                "category":"ksjjsk",
-                "imgUrl":"/ksjs/jskjd7/"
+                "title":"holaaa",
+                "brand":"sasas",
+                "price":288829,
+                "description":"aksjaks",
+                "size":"skdjksdj",
+                "quantify":"ksjksdjks",
+                "sport":"alsaasja",
+                "category":"slsdkjslkd",
+                "imgUrl":"2ksjdksjd"
             }
         Eliminar producto-> Http://localhost:3000/API/product/remove
             {

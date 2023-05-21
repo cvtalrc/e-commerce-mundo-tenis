@@ -83,10 +83,24 @@ function getId(req, res) {
   });
 }
 
+
+function remove(req, res) {
+  const { id } = req.body;
+  Product.deleteOne({ _id: id }, (error) => {
+    if (error) {
+      return res.status(400).send({ msj: "Error al remove el producto" });
+    } else {
+      res.status(200).send({ msj: "Producto eliminado exitosamente" });
+    }
+  });
+}
+
+
 module.exports = {
   add,
   update,
   removeAll,
   getAll,
   getId,
+  remove,
 };
