@@ -23,7 +23,7 @@ export default function Navbar(navArrayLinks) {
             <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}
             >
                 <Toolbar>
-                    <Container sx={{display: 'flex', flexDirection:'row', justifyContent: 'right'}}>
+                    <Container maxWidth="xl" sx={{display: 'flex', flexDirection:'row', justifyContent: 'right'}}>
                         {/* <img src={logo} /> */}
                         {/* <Search>
                             <SearchIconWrapper>
