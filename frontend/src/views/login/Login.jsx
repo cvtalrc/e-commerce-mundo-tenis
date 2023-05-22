@@ -1,10 +1,9 @@
-import { Typography } from "@mui/material";
+import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function Login() {
     return (
-        <>
-            <Typography variant="h3">Login</Typography>
-        </>
+        <LoginForm>
+        </LoginForm>
     )
 
 }

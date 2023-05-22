@@ -14,7 +14,7 @@ export default function ShoppingCartDrawer(SetOpenShoppingCart) {
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader component="div" id="nested-list-subheader">
-                        MI CARRITO
+                        ARTÍCULOS DEPORTIVOS
                     </ListSubheader>
                 }
             >

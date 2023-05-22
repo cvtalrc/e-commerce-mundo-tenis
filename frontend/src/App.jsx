@@ -10,7 +10,7 @@ import React, { useEffect } from 'react';
 import Login from './views/login/Login';
 import Admin from './views/admin/Admin';
 import axios from "axios";
-
+import NewAccount from './views/register/Register';
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
 
 const navArrayLinks = [
@@ -21,6 +21,10 @@ const navArrayLinks = [
     {
         title: "Login",
         path: "/login"
+    },
+    {
+        title: "Register",
+        path: "/register"
     },
     {
         title: "Sport",
@@ -48,6 +52,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<NewAccount />} />
                 <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
                 <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
                 <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
