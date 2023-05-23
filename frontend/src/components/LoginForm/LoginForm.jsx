@@ -12,6 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import * as EmailValidator from 'react-email-validator';
+import Fade from '@mui/material/Fade';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -31,12 +36,45 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  
+  const [errorMsg, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
+    });
+    
+    const email = data.get('email')
+
+    if(!EmailValidator.validate(email)) {
+      setErrorMessage("Formato de email inválido")
+
+      // Desaparecer el mensaje de error después de 3 segundos
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
+
+      return
+    } 
+
+    const rute = "http://localhost:3000/api"
+    axios.post(`${rute}/sign-in`, {
+      email: data.get('email'),
+      pass: data.get('password'),
+    }) 
+     //Realiza las acciones necesarias con la respuesta del backend
+    .then((response) => {
+      console.log('Respuesta del backend:', response.data);
+      if(response.data.message == "Ingreso de usuario exitoso")
+      navigate('/')
+    })
+     // Maneja el error de la solicitud
+    .catch((error) => {
+      console.error('Error en la solicitud:', error);
     });
   };
 
@@ -63,7 +101,11 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Iniciar sesión
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box 
+            component="form" 
+            onSubmit={handleSubmit} 
+            noValidate 
+            sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -73,6 +115,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              type="email"
               placeholder='ejemplo@gmail.com'
             />
             <TextField
@@ -94,6 +137,11 @@ export default function SignIn() {
             >
               Ingresar
             </Button>
+            <Fade in={!!errorMsg} timeout={500}>
+              <Typography variant="body2" color="error" align="center">
+                {errorMsg}
+              </Typography>
+            </Fade>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

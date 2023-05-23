@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -29,18 +32,80 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const validationErrors = {}
+
+  if(!data.get('firstName')) {
+      validationErrors.firstName = "Ingrese su nombre."
+    }
+    if(!data.get('lastName')) {
+      validationErrors.lastName = "Ingrese su apellido."
+    }
+    if(!data.get('address')) {
+      validationErrors.address = "Ingrese su dirección."
+    }
+    if(!data.get('cell-number')) {
+      validationErrors.cellNumber = "Ingrese su número telefónico."
+    }
+    if(!data.get('email')) {
+      validationErrors.email = "Ingrese su correo electrónico."
+    }
+    if(!data.get('rut')) {
+      validationErrors.rut = "Ingrese su rut."
+    }
+    if(!data.get('password')) {
+      validationErrors.password = "Ingrese su constraseña."
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+
+      setTimeout(() => {
+        setErrors({});
+      }, 5000);
+      return;
+    }
+
+    const rute = "http://localhost:3000/api"
+    axios.post(`${rute}/sign-up`, {
       name: data.get('firstName'),
-      lastName: data.get('lastName'),
-      address: data.get('address'),
-      cellphone: data.get('cell-number'),
+      lastname: data.get('lastName'),
       email: data.get('email'),
-      password: data.get('password'),
-      emails: data.get('allowExtraEmails')
+      pass: data.get('password'),
+      rut: data.get('rut'),
+      address: data.get('address'),
+      type: 'user'
+    }) 
+     //Realiza las acciones necesarias con la respuesta del backend
+    .then((response) => {
+      console.log('Respuesta del backend:', response.data);
+      if(response.data.status == "success") {
+        navigate('/login')
+      }
+    })
+     // Maneja el error de la solicitud
+    .catch((error) => {
+      console.error('Error en la solicitud:', error);
     });
+
+
+    // console.log({
+    //   name: data.get('firstName'),
+    //   lastName: data.get('lastName'),
+    //   address: data.get('address'),
+    //   cellphone: data.get('cell-number'),
+    //   email: data.get('email'),
+    //   rut: data.get('rut'),
+    //   password: data.get('password'),
+    //   emails: data.get('allowExtraEmails')
+    // });
   };
 
   return (
@@ -78,6 +143,8 @@ export default function SignUp() {
                   label="Nombre"
                   autoFocus
                   placeholder='Esteban'
+                  error={errors.firstName !== undefined}
+                  helperText={errors.firstName || ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -89,6 +156,8 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                   placeholder='González'
+                  error={errors.lastName !== undefined}
+                  helperText={errors.lastName  || ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -100,6 +169,8 @@ export default function SignUp() {
                   name="address"
                   autoComplete="address"
                   placeholder='Avenida Los Libertadores 1244'
+                  error={errors.address !== undefined}
+                  helperText={errors.address  || ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -108,10 +179,25 @@ export default function SignUp() {
                   fullWidth
                   id="cell-number"
                   label="Celular"
-                  type="number"
+                  type="text"
                   name="cell-number"
                   autoComplete="cell-number"
                   placeholder='+56912345678'
+                  error={errors.cellNumber !== undefined}
+                  helperText={errors.cellNumber || ' '}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="rut"
+                  label="RUT"
+                  type="text"
+                  name="rut"
+                  placeholder='10.542.578-9'
+                  error={errors.rut !== undefined}
+                  helperText={errors.rut || ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -123,6 +209,8 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   placeholder='ejemplo@gmail.com'
+                  error={errors.email !== undefined}
+                  helperText={errors.email || ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -135,6 +223,8 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   placeholder='********'
+                  error={errors.password !== undefined}
+                  helperText={errors.password || ' '}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -161,7 +251,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-       <Copyright sx={{ mt: 5 }} />
+       {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );
