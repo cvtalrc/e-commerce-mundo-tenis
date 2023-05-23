@@ -11,6 +11,7 @@ import Login from './views/login/Login';
 import Admin from './views/admin/Admin';
 import axios from "axios";
 import NewAccount from './views/register/Register';
+
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
 
 const navArrayLinks = [

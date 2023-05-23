@@ -10,6 +10,7 @@ export default function Home() {
     const [products, setProducts] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    
     let api = helpHttp();
     let url = "http://localhost:3000/api/product"
 

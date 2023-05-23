@@ -16,7 +16,7 @@ export default function Navbar(navArrayLinks) {
 
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
-    const sports = ["Tenis", "Padel"]
+    const sports = ["Tenis", "Padel"];
 
     return (
         <>
@@ -51,7 +51,7 @@ export default function Navbar(navArrayLinks) {
                                 to="/login"
                             >
                                 {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
-                                iniciar sesión
+                                Iniciar sesión
                             </Button>
                             
                         </Box>

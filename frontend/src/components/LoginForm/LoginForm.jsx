@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -17,6 +15,7 @@ import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 
 function Copyright(props) {
   return (
