@@ -18,7 +18,7 @@ function add(req, res) {
 
   product.save((error, prodStorage) => {
     if (error) {
-      return res.status(400).send({ msj: "Error al crear el usuario, intentar nuevamente" });
+      return res.status(400).send({ msj: "Error al crear el producto, intentar nuevamente" });
     } else {
       res.status(200).send(prodStorage);
     }

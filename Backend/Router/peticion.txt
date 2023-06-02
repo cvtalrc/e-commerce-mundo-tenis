@@ -4,15 +4,15 @@ PETICIONES:
     ----------
         Agregar producto-> Http://localhost:3000/API/product/add
             {
-                "title":"holaaa",
-                "brand":"sasas",
-                "price":288829,
-                "description":"aksjaks",
-                "size":"skdjksdj",
-                "quantify":"ksjksdjks",
-                "sport":"alsaasja",
-                "category":"slsdkjslkd",
-                "imgUrl":"2ksjdksjd"
+                "title":"Guantes de arquero",
+                "brand":"afp",
+                "price":15000,
+                "description":"Guantes de muy buena calidad",
+                "size":"1",
+                "quantify":"3",
+                "sport":"futbol",
+                "category":"accesorio",
+                "imgUrl":"./img/deportes/futbol/guantes.png"
             }
         Eliminar producto-> Http://localhost:3000/API/product/remove
             {
@@ -25,8 +25,11 @@ PETICIONES:
         Registrar usuario-> Http://localhost:3000/API/user/sign-up
             {
 	            "name":"Pablo",
+				"lastname": "Díaz",
+				"email": "pablo.diaz_c@mail.udp.cl",
 	            "pass": "pablito",
-                "rut":"209458225",
+                "rut":"20.945.822-5",
+				"address":"Bombero de puente alto #01751",
                 "type":"Admin"
 	
             }
@@ -34,5 +37,12 @@ PETICIONES:
             {
                 "rut":"209458225",
                 "pass": "pablito"
-
+            }
+    Carro:
+    ----------
+        Agregar al carro -> Http://localhost:3000/API/cart/add
+            {
+                "User": "20.955545",
+				"TitleProduct" : "padel",
+				"Quantify": 1
             }
