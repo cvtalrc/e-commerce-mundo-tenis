@@ -11,6 +11,7 @@ import Login from './views/login/Login';
 import Admin from './views/admin/Admin';
 import axios from "axios";
 import NewAccount from './views/register/Register';
+import { useState } from 'react'
 
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
 
@@ -47,21 +48,33 @@ const navArrayLinks = [
 ]
 
 function App() {
+    const [userName, setUserName] = useState(null);
+
+    // Función para actualizar el nombre de usuario después de iniciar sesión
+    const updateUserName = (name) => {
+        setUserName(name);
+    };
+
+    const handleLogout = () => {
+        // Lógica para cerrar sesión
+        setUserName(null); // Actualizar el nombre de usuario a nulo
+    };
+
     return (
-        <React.Fragment>
-            <Navbar navArrayLinks={navArrayLinks} />
-            <Routes>
-                <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<NewAccount />} />
-                <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
-                <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
-                <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
-                <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
-                <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
-            </Routes>
-            <Footer />
-        </React.Fragment>
+            <React.Fragment>
+                <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogOut={handleLogout}/>
+                <Routes>
+                    <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
+                    <Route path="/login" element={<Login updateUserName={updateUserName}/>} />
+                    <Route path="/register" element={<NewAccount />} />
+                    <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
+                    <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
+                    <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
+                    <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
+                    <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
+                </Routes>
+                <Footer />
+            </React.Fragment>
     );
 };
 

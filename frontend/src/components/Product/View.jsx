@@ -39,11 +39,13 @@ export default function View({ product }) {
                 <AddIcon fontSize="small" />
               </Button>
             </ButtonGroup>
-            <Button color="secondary" variant="outlined" sx={{width: { sm: '40%', xs: '100%'}, mt:4}}>
+            <Button onClick={() => {
+              console.log("no hace nada")
+            }} 
+            color="secondary" variant="outlined" sx={{width: { sm: '40%', xs: '100%'}, mt:4}}>
             <ShoppingCartIcon fontSize="small" sx={{mr: 2}} />
             Agregar al carro
             </Button>
-
           </Box>
         </Grid>
       </Grid>

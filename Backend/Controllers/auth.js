@@ -49,7 +49,8 @@ async function sign_in(req, res) {
     message: "Ingreso de usuario exitoso",
     refreshToken: Jwt.createAccessToken(findUser),
     accessToken: Jwt.createAccessToken(findUser),
-    status: "success"
+    status: "success",
+    name: findUser.name
   });
 }
 module.exports = {
