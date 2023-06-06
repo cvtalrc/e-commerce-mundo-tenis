@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from "./components/navbar/Navbar";
 import Home from "./views/home/Home";
 import Categories from "./views/categories/Categories";
@@ -12,6 +12,7 @@ import Admin from './views/admin/Admin';
 import axios from "axios";
 import NewAccount from './views/register/Register';
 import { useState } from 'react'
+import { Modal } from './components/Alerts/Modal';
 
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
 
@@ -49,20 +50,29 @@ const navArrayLinks = [
 
 function App() {
     const [userName, setUserName] = useState(null);
+    const navigate = useNavigate();
 
     // Función para actualizar el nombre de usuario después de iniciar sesión
     const updateUserName = (name) => {
         setUserName(name);
     };
 
-    const handleLogout = () => {
-        // Lógica para cerrar sesión
-        setUserName(null); // Actualizar el nombre de usuario a nulo
-    };
+    const handleLogout = async () => {
+        const result = await Modal(
+            'Confirmar cierre de sesión',
+            '¿Estás seguro que quieres cerrar sesión',
+            'warning',
+        )
+        if(result.confirmed){
+            setUserName(null)
+            navigate('/')
+        }
+        
+    }
 
     return (
             <React.Fragment>
-                <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogOut={handleLogout}/>
+                <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout}/>
                 <Routes>
                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
                     <Route path="/login" element={<Login updateUserName={updateUserName}/>} />

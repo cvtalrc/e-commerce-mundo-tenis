@@ -12,7 +12,7 @@ import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu"
 
-export default function Navbar({ userName, handleLogOut }) {
+export default function Navbar({ userName, handleLogout }) {
 
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
@@ -49,17 +49,18 @@ export default function Navbar({ userName, handleLogOut }) {
                                 <>
                                     <Button
                                         color="inherit"
-                                        component={NavLink}
-                                        to="/login"
+                                        sx={{
+                                            '&:hover': {
+                                                cursor: 'auto',
+                                            },
+                                        }}
                                     >
                                         ¡Hola, {userName}!
                                     </Button>
                                     
                                     <Button
                                         color="inherit"
-                                        component={NavLink}
-                                        to='/'
-                                        onClick={handleLogOut}
+                                        onClick={handleLogout}
                                     > 
                                         Cerrar sesión
                                     </Button>

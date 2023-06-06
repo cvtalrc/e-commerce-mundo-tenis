@@ -15,6 +15,7 @@ import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Toast } from '../Alerts/Toast';
 
 function Copyright(props) {
   return (
@@ -67,6 +68,11 @@ export default function SignIn({ updateUserName }) {
         const userName = response.data.name
         updateUserName(userName)
         console.log(response.data.name)
+        Toast(
+          'bottom-end',
+          'success',
+          'Se ha iniciado sesión'
+        )
         navigate('/')
       }
     })
@@ -90,7 +96,7 @@ export default function SignIn({ updateUserName }) {
             border: 'groove',
             borderRadius: 3,
             padding: '50px',
-            boxShadow: '1px 1px 60px 5px rgba(118, 145, 255, 1)'
+            boxShadow: '1px 1px 60px 5px rgba(25, 137, 243, 1)'
           }}
         >
           <Avatar sx={{ m: 0.5, bgcolor: 'primary.main' }}>
