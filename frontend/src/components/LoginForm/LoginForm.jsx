@@ -91,7 +91,7 @@ export default function SignIn() {
             border: 'groove',
             borderRadius: 3,
             padding: '50px',
-            boxShadow: '1px 1px 60px 5px rgba(118, 145, 255, 1)'
+            boxShadow: '1px 1px 60px 5px rgba(25, 137, 243, 1)'
           }}
         >
           <Avatar sx={{ m: 0.5, bgcolor: 'primary.main' }}>
