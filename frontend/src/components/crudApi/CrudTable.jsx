@@ -54,6 +54,8 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
     { field: 'description', headerName: 'Descripción', width: 130 },
     { field: 'size', headerName: 'Talla', width: 130 },
     { field: 'quantity', headerName: 'Cantidad', width: 130 },
+    // { field: 'params.row.stock.stock.size', headerName: 'talla', width: 130 },
+    { field: 'stock.stock.quantity', headerName: 'cantidad', width: 130 },
     { field: 'sport', headerName: 'Deporte', width: 130 },
     { field: 'category', headerName: 'Categoría', width: 130 },
     { field: 'imgUrl', headerName: 'Imagen', width: 130 },
@@ -78,7 +80,7 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
   console.log(rows);
   return (
     <>
-      <Typography variant="h4" sx={{mb:2}}>Stock de Productos</Typography>
+      <Typography variant="h5" sx={{mb:2}}>Stock de Productos</Typography>
       <div style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center' }}>
         {rows.length > 0 ?
           <DataGrid
@@ -92,8 +94,8 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
             }}
             pageSizeOptions={[5, 10]}
           >
-            <Button onClick={() => setDataToEdit(el)}>Editar</Button>
-            <Button onClick={() => deleteData(_id)}>Eliminar</Button>
+            {/* <Button onClick={() => setDataToEdit(el)}>Editar</Button>
+            <Button onClick={() => deleteData(_id)}>Eliminar</Button> */}
           </DataGrid> :
           <Typography> Sin datos </Typography>}
       </div >
