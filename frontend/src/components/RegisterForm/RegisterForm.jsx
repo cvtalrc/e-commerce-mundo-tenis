@@ -122,7 +122,7 @@ export default function SignUp() {
             border: 'groove',
             borderRadius: 3,
             padding: '50px',
-            boxShadow: '1px 1px 60px 5px rgba(118, 145, 255, 1)'
+            boxShadow: '1px 1px 60px 5px rgba(25, 137, 243, 1)'
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
@@ -225,12 +225,6 @@ export default function SignUp() {
                   placeholder='********'
                   error={errors.password !== undefined}
                   helperText={errors.password || ' '}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" id="allow-extra-emails" color="primary" />}
-                  label="Quiero recibir nuevas ofertas, promociones de marketing y actualizaciones via email."
                 />
               </Grid>
             </Grid>

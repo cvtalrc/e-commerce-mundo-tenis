@@ -10,12 +10,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { Toast } from '../Alerts/Toast';
 
 function Copyright(props) {
   return (
@@ -34,7 +34,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({ updateUserName }) {
   
   const [errorMsg, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -42,10 +42,6 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
     
     const email = data.get('email')
 
@@ -68,8 +64,17 @@ export default function SignIn() {
      //Realiza las acciones necesarias con la respuesta del backend
     .then((response) => {
       console.log('Respuesta del backend:', response.data);
-      if(response.data.message == "Ingreso de usuario exitoso")
-      navigate('/')
+      if(response.data.message == "Ingreso de usuario exitoso"){
+        const userName = response.data.name
+        updateUserName(userName)
+        console.log(response.data.name)
+        Toast(
+          'bottom-end',
+          'success',
+          'Se ha iniciado sesión'
+        )
+        navigate('/')
+      }
     })
      // Maneja el error de la solicitud
     .catch((error) => {

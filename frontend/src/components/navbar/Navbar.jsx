@@ -1,4 +1,4 @@
-import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container } from "@mui/material";
+import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container, Typography } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from "react";
 import NavListDrawer from './NavListDrawer'
@@ -10,9 +10,9 @@ import StyledInputBase from "../search/StyledInputBase";
 import { NavLink } from "react-router-dom";
 import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import logo from '../../assets/logo.svg';
-import ButtonMenu from "../ButtonMenu/ButtonMenu";
+import ButtonMenu from "../ButtonMenu/ButtonMenu"
 
-export default function Navbar(navArrayLinks) {
+export default function Navbar({ userName, handleLogout }) {
 
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
@@ -45,17 +45,36 @@ export default function Navbar(navArrayLinks) {
                                 inicio
 
                             </Button>
-                            <Button
-                                color="inherit"
-                                component={NavLink}
-                                to="/login"
-                            >
-                                {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
-                                Iniciar sesión
-                            </Button>
-                            
+                            {userName ? (
+                                <>
+                                    <Button
+                                        color="inherit"
+                                        sx={{
+                                            '&:hover': {
+                                                cursor: 'auto',
+                                            },
+                                        }}
+                                    >
+                                        ¡Hola, {userName}!
+                                    </Button>
+                                    
+                                    <Button
+                                        color="inherit"
+                                        onClick={handleLogout}
+                                    > 
+                                        Cerrar sesión
+                                    </Button>
+                                </>
+                            ) : (
+                                <Button
+                                    color="inherit"
+                                    component={NavLink}
+                                    to="/login"
+                                >
+                                    Iniciar sesión
+                                </Button>
+                            )}
                         </Box>
-
                         <Button color="inherit">
                             <Badge badgeContent={0} color="error" showZero>
                                 <ShoppingCartIcon

@@ -19,7 +19,7 @@ export default function Footer() {
           }}
         >
           <Container maxWidth="lg">
-            <Grid container spacing={5}>
+            <Grid container spacing={30}>
               <Grid item xs={12} sm={4}>
                 <Typography variant="h6" color="text.primary" gutterBottom>
                   Sobre nosotros
@@ -34,20 +34,20 @@ export default function Footer() {
                   Contáctanos
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  DIRECCION DE CONTACTO
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
                   Correo: EMAIL@EMAIL.CL
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Teléfono: +569888888
+                  Teléfono: +56952360764
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Typography variant="h6" color="text.primary" gutterBottom>
                   Síguenos
                 </Typography>
-                <Link href="https://www.facebook.com/" color="inherit">
+                <Link href="https://www.facebook.com/encordadoscga/" 
+                      color="inherit"
+                      sx={{ pl: 1, pr: 1 }}
+                >
                   <Facebook />
                 </Link>
                 <Link
@@ -56,9 +56,6 @@ export default function Footer() {
                   sx={{ pl: 1, pr: 1 }}
                 >
                   <Instagram />
-                </Link>
-                <Link href="https://www.twitter.com/" color="inherit">
-                  <Twitter />
                 </Link>
               </Grid>
             </Grid>
