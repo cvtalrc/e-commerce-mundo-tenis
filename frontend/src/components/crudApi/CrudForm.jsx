@@ -57,11 +57,9 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         setDataToEdit(null);
     };
 
-    console.log(form.stock);
-
     return (
         <div style={{ marginBottom: 30 }}>
-            <Typography variant="h4" sx={{ mb: 2 }}>{dataToEdit ? "Editar Producto" : "Agregar Producto"}</Typography>
+            <Typography variant="h5" sx={{ mb: 2 }}>{dataToEdit ? "Editar Producto" : "Agregar Producto"}</Typography>
             <Box
                 sx={{
                     '& .MuiTextField-root': { width: '100%' }, width: '100%'
