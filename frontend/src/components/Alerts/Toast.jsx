@@ -5,7 +5,7 @@ export const Toast = (position, icon, title) => {
     toast: true,
     position: position,
     showConfirmButton: false,
-    timer: 1000,
+    timer: 2000,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)

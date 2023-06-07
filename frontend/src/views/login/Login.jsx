@@ -1,8 +1,8 @@
 import LoginForm from "../../components/LoginForm/LoginForm";
 
-export default function Login( { updateUserName } ) {
+export default function Login( { handleLogin } ) {
     return (
-        <LoginForm updateUserName={updateUserName}>
+        <LoginForm handleLogin={handleLogin}>
         </LoginForm>
     )
 

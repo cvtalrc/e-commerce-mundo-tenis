@@ -52,9 +52,16 @@ function App() {
     const [userName, setUserName] = useState(null);
     const navigate = useNavigate();
 
-    // Función para actualizar el nombre de usuario después de iniciar sesión
-    const updateUserName = (name) => {
-        setUserName(name);
+    useEffect(() => {
+        const storedUserName = localStorage.getItem("userName");
+        if (storedUserName) {
+          setUserName(storedUserName);
+        }
+    }, []);
+
+    const handleLogin = (userName) => {
+        setUserName(userName);
+        localStorage.setItem("userName", userName);
     };
 
     const handleLogout = async () => {
@@ -65,6 +72,7 @@ function App() {
         )
         if(result.confirmed){
             setUserName(null)
+            localStorage.removeItem("userName");
             navigate('/')
         }
         
@@ -75,7 +83,7 @@ function App() {
                 <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout}/>
                 <Routes>
                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-                    <Route path="/login" element={<Login updateUserName={updateUserName}/>} />
+                    <Route path="/login" element={<Login handleLogin={handleLogin}/>} />
                     <Route path="/register" element={<NewAccount />} />
                     <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
                     <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
