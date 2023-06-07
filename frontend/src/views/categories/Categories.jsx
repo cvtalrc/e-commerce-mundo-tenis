@@ -105,7 +105,6 @@ export default function Categories() {
                     </Grid>
                     <Grid md={9} sm={9} xs={12} sx={{p: 1}} item>
                         <PaginationCard key={`sale`} products={products} type={`categories`} />
-
                     </Grid>
                 </Grid>
             </Container>

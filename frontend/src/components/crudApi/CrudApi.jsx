@@ -59,9 +59,35 @@ const CrudApi = () => {
   const updateData = (data) => {
     let endpoint = `${url}/update`;
     console.log(endpoint);
+    
+    const updatedObject = {
+      ...data, // Crear una copia del objeto original
+      titleC: data.title, // Asignar nuevo nombre a la variable
+      brandC: data.brand, 
+      priceC: data.price, 
+      descriptionC: data.description, 
+      stockC: data.stock, 
+      sportC: data.sport, 
+      categoryC: data.category, 
+      imgUrlC: data.imgUrl, 
+      saleC: data.sale, 
+      percentageSaleC: data.percentageSale, 
+    };
+    
+    // Opcionalmente, eliminar las variables originales
+    delete updatedObject.title;
+    delete updatedObject.brand;
+    delete updatedObject.price;
+    delete updatedObject.description;
+    delete updatedObject.stock;
+    delete updatedObject.sport;
+    delete updatedObject.category;
+    delete updatedObject.imgUrl;
+    delete updatedObject.sale;
+    delete updatedObject.percentageSale;
 
     let options = {
-      body: data,
+      body: updatedObject,
       headers: { "content-type": "application/json" },
     };
 

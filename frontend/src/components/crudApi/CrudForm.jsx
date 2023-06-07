@@ -1,6 +1,7 @@
 import { TextField, Box, Typography, Container, Button, Grid, FormControlLabel, Checkbox } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const initialForm = {
     title: "",
@@ -55,6 +56,15 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         setNewStockItem({ size: "", quantity: "" });
     };
 
+    const handleRemoveStockItem = (index) => {
+        const updatedStock = form.stock.filter((item, itemIndex) => itemIndex !== index);
+
+        setForm((prevForm) => ({
+            ...prevForm,
+            stock: updatedStock
+        }));
+    };
+
     const handleCheckboxChange = (event) => {
         setIsChecked(event.target.checked);
         setForm({
@@ -74,11 +84,11 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         console.log(form);
         console.log(form._id);
 
-        // if (form._id === undefined) {
-        //     createData(form);
-        // } else {
-        //     updateData(form);
-        // }
+        if (form._id === undefined) {
+            createData(form);
+        } else {
+            updateData(form);
+        }
 
         handleReset();
     };
@@ -169,33 +179,64 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 value={form.category}
                             />
                         </Grid>
+                        {form.stock.length > 1 ?
+                            (form.stock.map((item, index) => (
+                                < React.Fragment key={index}>
+                                    <Grid sm={5.5} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="text"
+                                            name={`stock[${index}].size`}
+                                            placeholder="Talla"
+                                            label="Talla"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.size}
+                                        />
+                                    </Grid>
+                                    <Grid sm={5.5} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="number"
+                                            name={`stock[${index}].quantity`}
+                                            placeholder="Cantidad"
+                                            label="Cantidad"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.quantity}
+                                        />
+                                    </Grid>
+                                    <Grid sm={1} item>
+                                        <Button color="error" variant="outlined" sx={{ mr: 2, borderRadius: 1 }} fullWidth onClick={() => handleRemoveStockItem(index)}>
+                                            <RemoveIcon sx={{ height: '42px' }} />
+                                        </Button>
+                                    </Grid>
+                                </React.Fragment>
+                            ))) : ((form.stock.map((item, index) => (
+                                < React.Fragment key={index}>
+                                    <Grid sm={6} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="text"
+                                            name={`stock[${index}].size`}
+                                            placeholder="Talla"
+                                            label="Talla"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.size}
+                                        />
+                                    </Grid>
+                                    <Grid sm={6} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="number"
+                                            name={`stock[${index}].quantity`}
+                                            placeholder="Cantidad"
+                                            label="Cantidad"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.quantity}
+                                        />
+                                    </Grid>
+                                </React.Fragment>
+                            ))))}
 
-                        {form.stock.map((item, index) => (
-                            < React.Fragment key={index}>
-                                <Grid sm={6} item>
-                                    <TextField
-                                        color="secondary"
-                                        type="text"
-                                        name={`stock[${index}].size`}
-                                        placeholder="Talla"
-                                        label="Talla"
-                                        onChange={(event) => handleChangeStockItem(event, index)}
-                                        value={item.size}
-                                    />
-                                </Grid>
-                                <Grid sm={6} item>
-                                    <TextField
-                                        color="secondary"
-                                        type="number"
-                                        name={`stock[${index}].quantity`}
-                                        placeholder="Cantidad"
-                                        label="Cantidad"
-                                        onChange={(event) => handleChangeStockItem(event, index)}
-                                        value={item.quantity}
-                                    />
-                                </Grid>
-                            </React.Fragment>
-                        ))}
 
                         <Grid sm={5.5} item>
                             <TextField
@@ -222,7 +263,6 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
                         <Grid sm={1} item>
                             <Button color="secondary" variant="outlined" sx={{ mr: 2, borderRadius: 1 }} fullWidth onClick={handleAddStockItem}>
-
                                 <AddIcon sx={{ height: '42px' }} />
                             </Button>
                         </Grid>
@@ -266,7 +306,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
                             {isChecked && (
                                 <TextField
-                                sx={{mt: 1.5}}
+                                    sx={{ mt: 1.5 }}
                                     color="secondary"
                                     type="number"
                                     name="percentageSale"
@@ -281,7 +321,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
                     </Grid>
                     <Box sx={{ display: 'flex', justifyContent: 'right', mt: 2 }}>
-                        <Button color="secondary" variant="contained" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Agregar</Button>
+                        <Button color="secondary" variant="contained" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Enviar</Button>
                         <Button color="secondary" variant="contained" sx={{ width: '200px' }} type="reset" onClick={handleReset}>Limpiar</Button>
                     </Box>
 

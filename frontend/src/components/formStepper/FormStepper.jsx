@@ -70,7 +70,7 @@ const FormStepper = () => {
 
   return (
     <div>
-      <ColorStepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep}>
         {steps.map((step, index) => {
           const labelProps = {};
           const stepProps = {};
@@ -81,7 +81,7 @@ const FormStepper = () => {
             </Step>
           );
         })}
-      </ColorStepper>
+      </Stepper>
 
       {activeStep === steps.length ? (
         <Typography variant="h3" align="center">
