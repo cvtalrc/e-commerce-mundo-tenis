@@ -53,6 +53,7 @@ export default function Navbar({ userName, handleLogout }) {
                                             '&:hover': {
                                                 cursor: 'auto',
                                             },
+                                            pointerEvents: 'none'
                                         }}
                                     >
                                         ¡Hola, {userName}!

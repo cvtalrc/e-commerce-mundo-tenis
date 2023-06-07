@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
@@ -34,7 +34,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn({ updateUserName }) {
+export default function SignIn({ handleLogin }) {
   
   const [errorMsg, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ export default function SignIn({ updateUserName }) {
       console.log('Respuesta del backend:', response.data);
       if(response.data.message == "Ingreso de usuario exitoso"){
         const userName = response.data.name
-        updateUserName(userName)
+        handleLogin(userName)
         console.log(response.data.name)
         Toast(
           'bottom-end',

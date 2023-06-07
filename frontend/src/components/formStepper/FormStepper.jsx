@@ -25,11 +25,19 @@ function getSteps() {
 }
 
 function getStepContent(step) {
+  let skipCase = false
+
   switch (step) {
     case 0:
+      if(localStorage.getItem('userName')) {
+        skipCase = true
+      }  
       return < ShoppingCart />;
     case 1:
-      return <LoginForm />;
+      if (skipCase) {
+        skipCase = false
+        setActiveStep(step + 1)
+      }
     case 2:
       return <Typography>Dirección</Typography>
     case 3:
