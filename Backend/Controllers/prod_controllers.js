@@ -1,9 +1,7 @@
 const Product = require("../Models/Product");
 
 function add(req, res) {
-  const { title, brand, price, description, size, quantity, sport, category, imgUrl } = req.body;
-  const stock = new Map();
-  stock.set(size, quantity);
+  const { title, brand, price, description, stock, sport, category, imgUrl, sale, percentageSale } = req.body;
 
   const product = new Product({
     title,
@@ -13,7 +11,9 @@ function add(req, res) {
     stock,
     sport,
     category,
-    imgUrl
+    imgUrl,
+    sale,
+    percentageSale
   });
 
   product.save((error, prodStorage) => {
@@ -25,12 +25,8 @@ function add(req, res) {
   });
 }
 
-async function update(req, res) {
-  const {_id, titleC, brandC, priceC, descriptionC, sizeC, quantityC, sportC, categoryC, imgUrlC } = req.body;
-  stockProduct = await Product.findById(_id).select('stock');
-  stockC = stockProduct.stock;
-  stockC.set(sizeC,quantityC);
-  console.log(stockC);
+function update(req, res) {
+  const {_id, titleC, brandC, priceC, descriptionC, stockC, sportC, categoryC, imgUrlC, saleC, percentageSaleC } = req.body;
 
   Product.findByIdAndUpdate(_id, {
     title: titleC, 
@@ -40,7 +36,9 @@ async function update(req, res) {
     stock : stockC,
     sport: sportC, 
     category: categoryC, 
-    imgUrl: imgUrlC
+    imgUrl: imgUrlC,
+    sale: saleC,
+    percentageSale: percentageSaleC
     }, function (err, product) {
     if (err){
       return res.status(400).send(err)
