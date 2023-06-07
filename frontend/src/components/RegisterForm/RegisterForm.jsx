@@ -42,25 +42,25 @@ export default function SignUp() {
 
     const validationErrors = {}
 
-  if(!data.get('firstName')) {
+    if (!data.get('firstName')) {
       validationErrors.firstName = "Ingrese su nombre."
     }
-    if(!data.get('lastName')) {
+    if (!data.get('lastName')) {
       validationErrors.lastName = "Ingrese su apellido."
     }
-    if(!data.get('address')) {
+    if (!data.get('address')) {
       validationErrors.address = "Ingrese su dirección."
     }
-    if(!data.get('cell-number')) {
+    if (!data.get('cell-number')) {
       validationErrors.cellNumber = "Ingrese su número telefónico."
     }
-    if(!data.get('email')) {
+    if (!data.get('email')) {
       validationErrors.email = "Ingrese su correo electrónico."
     }
-    if(!data.get('rut')) {
+    if (!data.get('rut')) {
       validationErrors.rut = "Ingrese su rut."
     }
-    if(!data.get('password')) {
+    if (!data.get('password')) {
       validationErrors.password = "Ingrese su constraseña."
     }
 
@@ -82,18 +82,18 @@ export default function SignUp() {
       rut: data.get('rut'),
       address: data.get('address'),
       type: 'user'
-    }) 
-     //Realiza las acciones necesarias con la respuesta del backend
-    .then((response) => {
-      console.log('Respuesta del backend:', response.data);
-      if(response.data.status == "success") {
-        navigate('/login')
-      }
     })
-     // Maneja el error de la solicitud
-    .catch((error) => {
-      console.error('Error en la solicitud:', error);
-    });
+      //Realiza las acciones necesarias con la respuesta del backend
+      .then((response) => {
+        console.log('Respuesta del backend:', response.data);
+        if (response.data.status == "success") {
+          navigate('/login')
+        }
+      })
+      // Maneja el error de la solicitud
+      .catch((error) => {
+        console.error('Error en la solicitud:', error);
+      });
 
 
     // console.log({
@@ -109,144 +109,149 @@ export default function SignUp() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="sm">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 10,
-            marginBottom: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            border: 'groove',
-            borderRadius: 3,
-            padding: '50px',
-            boxShadow: '1px 1px 60px 5px rgba(25, 137, 243, 1)'
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Crea tu cuenta
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Nombre"
-                  autoFocus
-                  placeholder='Esteban'
-                  error={errors.firstName !== undefined}
-                  helperText={errors.firstName || ' '}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Apellido"
-                  name="lastName"
-                  autoComplete="family-name"
-                  placeholder='González'
-                  error={errors.lastName !== undefined}
-                  helperText={errors.lastName  || ' '}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="address"
-                  label="Direccion"
-                  name="address"
-                  autoComplete="address"
-                  placeholder='Avenida Los Libertadores 1244'
-                  error={errors.address !== undefined}
-                  helperText={errors.address  || ' '}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="cell-number"
-                  label="Celular"
-                  type="text"
-                  name="cell-number"
-                  autoComplete="cell-number"
-                  placeholder='+56912345678'
-                  error={errors.cellNumber !== undefined}
-                  helperText={errors.cellNumber || ' '}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="rut"
-                  label="RUT"
-                  type="text"
-                  name="rut"
-                  placeholder='10.542.578-9'
-                  error={errors.rut !== undefined}
-                  helperText={errors.rut || ' '}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Correo electrónico"
-                  name="email"
-                  autoComplete="email"
-                  placeholder='ejemplo@gmail.com'
-                  error={errors.email !== undefined}
-                  helperText={errors.email || ' '}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Contraseña"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  placeholder='********'
-                  error={errors.password !== undefined}
-                  helperText={errors.password || ' '}
-                />
-              </Grid>
+    <Container component="main" maxWidth="sm">
+      <Box
+        sx={{
+          marginTop: 10,
+          marginBottom: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          border: 'groove',
+          borderRadius: 3,
+          padding: '50px',
+          boxShadow: '1px 1px 60px 5px rgba(25, 137, 243, 1)'
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography color="secondary" component="h1" variant="h5">
+          Crea tu cuenta
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                color="secondary"
+                autoComplete="given-name"
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="Nombre"
+                autoFocus
+                placeholder='Esteban'
+                error={errors.firstName !== undefined}
+                helperText={errors.firstName || ' '}
+              />
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Registrarse
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  ¿Ya tienes una cuenta? Inicia sesión
-                </Link>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                color="secondary"
+                required
+                fullWidth
+                id="lastName"
+                label="Apellido"
+                name="lastName"
+                autoComplete="family-name"
+                placeholder='González'
+                error={errors.lastName !== undefined}
+                helperText={errors.lastName || ' '}
+              />
             </Grid>
-          </Box>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                color="secondary"
+                required
+                fullWidth
+                id="address"
+                label="Direccion"
+                name="address"
+                autoComplete="address"
+                placeholder='Avenida Los Libertadores 1244'
+                error={errors.address !== undefined}
+                helperText={errors.address || ' '}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                color="secondary"
+                required
+                fullWidth
+                id="cell-number"
+                label="Celular"
+                type="text"
+                name="cell-number"
+                autoComplete="cell-number"
+                placeholder='+56912345678'
+                error={errors.cellNumber !== undefined}
+                helperText={errors.cellNumber || ' '}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                color="secondary"
+                required
+                fullWidth
+                id="rut"
+                label="RUT"
+                type="text"
+                name="rut"
+                placeholder='10.542.578-9'
+                error={errors.rut !== undefined}
+                helperText={errors.rut || ' '}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                color="secondary"
+                required
+                fullWidth
+                id="email"
+                label="Correo electrónico"
+                name="email"
+                autoComplete="email"
+                placeholder='ejemplo@gmail.com'
+                error={errors.email !== undefined}
+                helperText={errors.email || ' '}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                color="secondary"
+                required
+                fullWidth
+                name="password"
+                label="Contraseña"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                placeholder='********'
+                error={errors.password !== undefined}
+                helperText={errors.password || ' '}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            color="secondary"
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Registrarse
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="/login" variant="body2">
+                ¿Ya tienes una cuenta? Inicia sesión
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-       {/* <Copyright sx={{ mt: 5 }} /> */}
-      </Container>
-    </ThemeProvider>
+      </Box>
+      {/* <Copyright sx={{ mt: 5 }} /> */}
+    </Container>
   );
 }

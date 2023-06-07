@@ -7,6 +7,8 @@ export const Toast = (position, icon, title) => {
     showConfirmButton: false,
     timer: 1000,
     timerProgressBar: true,
+    confirmButtonColor: 'secondary.main',
+    cancelButtonColor: '#d33',
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)

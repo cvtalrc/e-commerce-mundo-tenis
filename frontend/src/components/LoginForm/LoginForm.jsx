@@ -83,9 +83,7 @@ export default function SignIn({ updateUserName }) {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="sm">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 10,
@@ -99,10 +97,10 @@ export default function SignIn({ updateUserName }) {
             boxShadow: '1px 1px 60px 5px rgba(25, 137, 243, 1)'
           }}
         >
-          <Avatar sx={{ m: 0.5, bgcolor: 'primary.main' }}>
+          <Avatar sx={{ m: 0.5, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography color="secondary" component="h1" variant="h5">
             Iniciar sesión
           </Typography>
           <Box 
@@ -111,6 +109,7 @@ export default function SignIn({ updateUserName }) {
             noValidate 
             sx={{ mt: 1 }}>
             <TextField
+              color="secondary"
               margin="normal"
               required
               fullWidth
@@ -123,6 +122,7 @@ export default function SignIn({ updateUserName }) {
               placeholder='ejemplo@gmail.com'
             />
             <TextField
+              color="secondary"
               margin="normal"
               required
               fullWidth
@@ -135,6 +135,7 @@ export default function SignIn({ updateUserName }) {
             />
             <Button
               type="submit"
+              color="secondary"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -161,6 +162,5 @@ export default function SignIn({ updateUserName }) {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
