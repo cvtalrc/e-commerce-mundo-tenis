@@ -31,7 +31,7 @@ export default function Navbar({ userName, handleLogout }) {
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Buscar..."
-                                inputProps={{ 'aria-label': 'search' }}
+                                inputProps={{ 'aria-label': 'buscar' }}
                             />
                         </Search> */}
                         {/* <Box sx={{ flexGrow: 1 }}></Box> */}
