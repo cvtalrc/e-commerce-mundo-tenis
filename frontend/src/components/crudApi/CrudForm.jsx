@@ -171,8 +171,8 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                         </Grid>
 
                         {form.stock.map((item, index) => (
-                            <>
-                                <Grid sm={6} key={index} item>
+                            < React.Fragment key={index}>
+                                <Grid sm={6} item>
                                     <TextField
                                         color="secondary"
                                         type="text"
@@ -183,7 +183,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                         value={item.size}
                                     />
                                 </Grid>
-                                <Grid sm={6} key={index} item>
+                                <Grid sm={6} item>
                                     <TextField
                                         color="secondary"
                                         type="number"
@@ -194,7 +194,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                         value={item.quantity}
                                     />
                                 </Grid>
-                            </>
+                            </React.Fragment>
                         ))}
 
                         <Grid sm={5.5} item>
