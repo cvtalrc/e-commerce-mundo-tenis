@@ -4,11 +4,12 @@ const Productschema = mongoose.Schema({
   brand: String,
   price: Number,
   description: String,
-  stock: Map,             //Map(key, value) => stock(size, quantity)
+  stock: Array,            // stock[size][quantity]
   sport: String,
   category: String,
-  imgUrl: String
-
+  imgUrl: String,
+  sale: Boolean,
+  percentageSale: Number
 
 });
 

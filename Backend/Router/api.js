@@ -7,7 +7,6 @@ const api = express.Router();
 
 //API POST 
 api.post("/product/", func_product.add);
-api.put("/product/update", func_product.update);
 api.post("/product/removeAll", func_product.removeAll);
 api.delete("/product/:id", func_product.remove);
 api.post("/sign-up", func_auth.sign_up); //registrar
