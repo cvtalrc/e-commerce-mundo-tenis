@@ -72,14 +72,14 @@ const FormStepper = () => {
 
   return (
     <div>
-      <Stepper activeStep={activeStep}>
+      <Stepper color="secondary" activeStep={activeStep}>
         {steps.map((step, index) => {
           const labelProps = {};
           const stepProps = {};
 
           return (
-            <Step  {...stepProps} key={index}>
-              <StepLabel {...labelProps}>{step}</StepLabel>
+            <Step  color="secondary" {...stepProps} key={index}>
+              <StepLabel color="secondary" {...labelProps}>{step}</StepLabel>
             </Step>
           );
         })}

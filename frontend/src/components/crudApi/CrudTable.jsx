@@ -46,6 +46,9 @@ import { Button, Container, Typography } from '@mui/material';
 
 
 const CrudTable = ({ data, setDataToEdit, deleteData }) => {
+  // {Array.from(data.stock).map(([size, quantity]) => (
+  //   <p key={size}>Stock {size}: {quantity}</p>
+  // ))}
   const columns = [
     { field: '_id', headerName: 'ID', width: 70 },
     { field: 'title', headerName: 'Nombre', width: 130 },
@@ -54,8 +57,6 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
     { field: 'description', headerName: 'Descripción', width: 130 },
     { field: 'size', headerName: 'Talla', width: 130 },
     { field: 'quantity', headerName: 'Cantidad', width: 130 },
-    // { field: 'params.row.stock.stock.size', headerName: 'talla', width: 130 },
-    { field: 'stock.stock.quantity', headerName: 'cantidad', width: 130 },
     { field: 'sport', headerName: 'Deporte', width: 130 },
     { field: 'category', headerName: 'Categoría', width: 130 },
     { field: 'imgUrl', headerName: 'Imagen', width: 130 },
@@ -64,14 +65,14 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
       headerName: "",
       sortable: false,
       renderCell: ({ row }) =>
-        <Button color="secondary" variant="outlined" onClick={() => setDataToEdit(row)}>Editar</Button>,
+        <Button color="secondary" variant="contained" onClick={() => setDataToEdit(row)}>Editar</Button>,
     },
     {
       field: "delete",
       headerName: "",
       sortable: false,
       renderCell: ({ row }) =>
-        <Button color="secondary" variant="outlined" onClick={() => deleteData(row._id)}>Eliminar</Button>,
+        <Button color="secondary" variant="contained" onClick={() => deleteData(row._id)}>Eliminar</Button>,
     }
 
   ];
@@ -96,7 +97,8 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
           >
             {/* <Button onClick={() => setDataToEdit(el)}>Editar</Button>
             <Button onClick={() => deleteData(_id)}>Eliminar</Button> */}
-          </DataGrid> :
+          </DataGrid> 
+          :
           <Typography> Sin datos </Typography>}
       </div >
     </>
