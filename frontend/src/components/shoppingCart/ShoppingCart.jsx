@@ -1,10 +1,22 @@
-import {  Typography } from "@mui/material";
+// import {  Typography } from "@mui/material";
 
 
-export default function ShoppingCart(props) {
+// export default function ShoppingCart(props) {
+//   return (
+
+//     <Typography> Resumen </Typography>
+
+//   )
+// }
+
+import React from 'react'
+
+const ShoppingCart = () => {
   return (
-
-    <Typography> Resumen </Typography>
-
+    <div>
+    <h2>Carrito de compras</h2>
+    </div>
   )
 }
+
+export default ShoppingCart
