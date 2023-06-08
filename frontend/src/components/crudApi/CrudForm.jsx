@@ -1,21 +1,25 @@
-import { TextField, Box, Typography, Container, Button, Grid } from "@mui/material";
+import { TextField, Box, Typography, Container, Button, Grid, FormControlLabel, Checkbox } from "@mui/material";
 import React, { useState, useEffect } from "react";
-
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const initialForm = {
     title: "",
     brand: "",
     price: "",
     description: "",
+    stock: [],
     sport: "",
-    size: "",
-    quantity: "",
     category: "",
-    imgUrl: ""
+    imgUrl: "",
+    sale: false,
+    percentageSale: ""
 };
 
 const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     const [form, setForm] = useState(initialForm);
+    const [newStockItem, setNewStockItem] = useState({ size: "", quantity: "" });
+    const [isChecked, setIsChecked] = useState(initialForm.sale);
 
     useEffect(() => {
         if (dataToEdit) {
@@ -32,10 +36,47 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         });
     };
 
+    const handleChangeStockItem = (event, index) => {
+        console.log(e.target.value)
+        const { name, value } = event.target;
+        const updatedStock = [...form.stock];
+        updatedStock[index][name] = value;
+
+        setForm((prevForm) => ({
+            ...prevForm,
+            stock: updatedStock
+        }));
+    };
+
+    const handleAddStockItem = () => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            stock: [...prevForm.stock, { ...newStockItem }]
+        }));
+        setNewStockItem({ size: "", quantity: "" });
+    };
+
+    const handleRemoveStockItem = (index) => {
+        const updatedStock = form.stock.filter((item, itemIndex) => itemIndex !== index);
+
+        setForm((prevForm) => ({
+            ...prevForm,
+            stock: updatedStock
+        }));
+    };
+
+    const handleCheckboxChange = (event) => {
+        setIsChecked(event.target.checked);
+        setForm({
+            ...form,
+            sale: event.target.checked,
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!form.title || !form.brand || !form.price || !form.description || !form.sport || !form.category || !form.imgUrl) {
+        if (!form.title || !form.brand || !form.price || !form.description || !form.sport || !form.category || !form.imgUrl || form.stock.length < 1) {
             alert("Datos incompletos");
             return;
         }
@@ -66,7 +107,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                 }}
             >
                 <form>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={1}>
                         <Grid sm={12} item>
                             {dataToEdit ?
                                 <TextField
@@ -82,8 +123,9 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 : ""}
                         </Grid>
 
-                        <Grid sm={6} item>
+                        <Grid sm={12} item>
                             <TextField
+                                color="secondary"
                                 type="text"
                                 name="title"
                                 placeholder="Nombre"
@@ -94,6 +136,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                         </Grid>
                         <Grid sm={3} item>
                             <TextField
+                                color="secondary"
                                 type="text"
                                 name="brand"
                                 placeholder="Marca"
@@ -104,6 +147,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                         </Grid>
                         <Grid sm={3} item>
                             <TextField
+                                color="secondary"
                                 type="number"
                                 name="price"
                                 placeholder="Precio"
@@ -115,26 +159,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
                         <Grid sm={3} item>
                             <TextField
-                                type="text"
-                                name="size"
-                                placeholder="Talla"
-                                label="Talla"
-                                onChange={handleChange}
-                                value={form.size}
-                            />
-                        </Grid>
-                        <Grid sm={3} item>
-                            <TextField
-                                type="number"
-                                name="quantity"
-                                placeholder="Cantidad"
-                                onChange={handleChange}
-                                value={form.quantity}
-                            />
-                        </Grid>
-
-                        <Grid sm={3} item>
-                            <TextField
+                                color="secondary"
                                 type="text"
                                 name="sport"
                                 placeholder="Deporte"
@@ -145,6 +170,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                         </Grid>
                         <Grid sm={3} item>
                             <TextField
+                                color="secondary"
                                 type="text"
                                 name="category"
                                 placeholder="Categoría"
@@ -153,18 +179,97 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 value={form.category}
                             />
                         </Grid>
-                        <Grid sm={12} item>
+                        {form.stock.length > 1 ?
+                            (form.stock.map((item, index) => (
+                                < React.Fragment key={index}>
+                                    <Grid sm={5.5} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="text"
+                                            name={`stock[${index}].size`}
+                                            placeholder="Talla"
+                                            label="Talla"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.size}
+                                        />
+                                    </Grid>
+                                    <Grid sm={5.5} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="number"
+                                            name={`stock[${index}].quantity`}
+                                            placeholder="Cantidad"
+                                            label="Cantidad"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.quantity}
+                                        />
+                                    </Grid>
+                                    <Grid sm={1} item>
+                                        <Button color="error" variant="outlined" sx={{ mr: 2, borderRadius: 1 }} fullWidth onClick={() => handleRemoveStockItem(index)}>
+                                            <RemoveIcon sx={{ height: '42px' }} />
+                                        </Button>
+                                    </Grid>
+                                </React.Fragment>
+                            ))) : ((form.stock.map((item, index) => (
+                                < React.Fragment key={index}>
+                                    <Grid sm={6} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="text"
+                                            name={`stock[${index}].size`}
+                                            placeholder="Talla"
+                                            label="Talla"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.size}
+                                        />
+                                    </Grid>
+                                    <Grid sm={6} item>
+                                        <TextField
+                                            color="secondary"
+                                            type="number"
+                                            name={`stock[${index}].quantity`}
+                                            placeholder="Cantidad"
+                                            label="Cantidad"
+                                            onChange={(event) => handleChangeStockItem(event, index)}
+                                            value={item.quantity}
+                                        />
+                                    </Grid>
+                                </React.Fragment>
+                            ))))}
+
+
+                        <Grid sm={5.5} item>
                             <TextField
+                                color="secondary"
                                 type="text"
-                                name="imgUrl"
-                                placeholder="Imagen"
-                                label="Imagen"
-                                onChange={handleChange}
-                                value={form.imgUrl}
+                                name="size"
+                                placeholder="Talla"
+                                label="Talla"
+                                onChange={(event) => setNewStockItem({ ...newStockItem, size: event.target.value })}
+                                value={newStockItem.size}
                             />
                         </Grid>
+                        <Grid sm={5.5} item>
+                            <TextField
+                                color="secondary"
+                                type="number"
+                                name="quantity"
+                                placeholder="Cantidad"
+                                label="Cantidad"
+                                onChange={(event) => setNewStockItem({ ...newStockItem, quantity: event.target.value })}
+                                value={newStockItem.quantity}
+                            />
+                        </Grid>
+
+                        <Grid sm={1} item>
+                            <Button color="secondary" variant="outlined" sx={{ mr: 2, borderRadius: 1 }} fullWidth onClick={handleAddStockItem}>
+                                <AddIcon sx={{ height: '42px' }} />
+                            </Button>
+                        </Grid>
+
                         <Grid sm={12} item>
                             <TextField
+                                color="secondary"
                                 type="text"
                                 name="description"
                                 placeholder="Descripción"
@@ -173,13 +278,53 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 value={form.description}
                             />
                         </Grid>
-                        
+
+                        <Grid sm={12} item>
+                            <TextField
+                                color="secondary"
+                                type="text"
+                                name="imgUrl"
+                                placeholder="Imagen"
+                                label="Imagen"
+                                onChange={handleChange}
+                                value={form.imgUrl}
+                            />
+                        </Grid>
+
+                        <Grid sm={12} item>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={isChecked}
+                                        onChange={handleCheckboxChange}
+                                        name="sale"
+                                        color="secondary"
+                                    />
+                                }
+                                label="Añadir oferta"
+                            />
+
+                            {isChecked && (
+                                <TextField
+                                    sx={{ mt: 1.5 }}
+                                    color="secondary"
+                                    type="number"
+                                    name="percentageSale"
+                                    placeholder="Porcentaje de oferta"
+                                    label="Porcentaje de oferta"
+                                    onChange={handleChange}
+                                    value={form.percentageSale}
+                                />
+                            )}
+                        </Grid>
+
+
                     </Grid>
-                    <Box sx={{display:'flex', justifyContent: 'right', mt: 2}}>
-                    <Button color="secondary" variant="outlined" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Agregar</Button>
-                    <Button color="secondary"variant="outlined"  sx={{ width: '200px' }} type="reset" onClick={handleReset}>Limpiar</Button>
+                    <Box sx={{ display: 'flex', justifyContent: 'right', mt: 2 }}>
+                        <Button color="secondary" variant="contained" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Enviar</Button>
+                        <Button color="secondary" variant="contained" sx={{ width: '200px' }} type="reset" onClick={handleReset}>Limpiar</Button>
                     </Box>
-                    
+
                 </form>
             </Box>
         </div >

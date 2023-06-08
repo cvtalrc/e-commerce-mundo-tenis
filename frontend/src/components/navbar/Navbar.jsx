@@ -31,7 +31,7 @@ export default function Navbar({ userName, handleLogout }) {
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Buscar..."
-                                inputProps={{ 'aria-label': 'search' }}
+                                inputProps={{ 'aria-label': 'buscar' }}
                             />
                         </Search> */}
                         {/* <Box sx={{ flexGrow: 1 }}></Box> */}
@@ -77,11 +77,11 @@ export default function Navbar({ userName, handleLogout }) {
                             )}
                         </Box>
                         <Button color="inherit">
-                            <Badge badgeContent={0} color="error" showZero>
+                            <Badge badgeContent={0} color="error" onClick={() => SetOpenShoppingCart(true)} showZero >
                                 <ShoppingCartIcon
                                     color="inherit"
                                     size="large"
-                                    onClick={() => SetOpenShoppingCart(true)}>
+                                    >
                                 </ShoppingCartIcon>
                             </Badge>
                         </Button>
@@ -112,7 +112,7 @@ export default function Navbar({ userName, handleLogout }) {
                 onClose={() => SetOpenShoppingCart(false)}>
                 <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart} />
             </Drawer>
-            <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "#1565cd", color: "white" }}>
+            <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "secondary.main", color: "white" }}>
                 {sports.map((sport) => (
                     <ButtonMenu key={sport} sport={sport}></ButtonMenu>
                 ))}

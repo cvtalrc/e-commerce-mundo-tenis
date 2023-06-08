@@ -11,8 +11,6 @@ import {
 
 import LoginForm from "../LoginForm/LoginForm";
 import ShoppingCart from "../shoppingCart/ShoppingCart";
-import { green } from "@mui/material/colors";
-
 
 function getSteps() {
   return [
@@ -78,7 +76,7 @@ const FormStepper = () => {
           const stepProps = {};
 
           return (
-            <Step  {...stepProps} key={index}>
+            <Step {...stepProps} key={index}>
               <StepLabel {...labelProps}>{step}</StepLabel>
             </Step>
           );

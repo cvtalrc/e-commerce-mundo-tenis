@@ -1,5 +1,4 @@
 import { Typography, Container, Box, Grid, Pagination } from "@mui/material";
-import Card from "../../components/Product/Card";
 import { useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { helpHttp } from "../../helpers/helpHttp";

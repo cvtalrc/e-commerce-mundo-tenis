@@ -30,7 +30,7 @@ export default function ShoppingCartDrawer(SetOpenShoppingCart) {
             <Box sx={{position: 'absolute', bottom: 0, width: '100%', paddingBottom: 1 }}>
                 <Button
                     color="secondary"
-                    variant="outlined"
+                    variant="contained"
                     component={NavLink}
                     to="/order"
                     sx={{ display: "flex", alignItems: "center", margin: 1.5 }}
