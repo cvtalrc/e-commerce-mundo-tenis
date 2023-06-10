@@ -3,6 +3,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { useState } from "react";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { NavLink } from "react-router-dom";
+import ProductItem from "../Product/ProductItem";
 
 
 export default function ShoppingCartDrawer(SetOpenShoppingCart) {
@@ -19,12 +20,8 @@ export default function ShoppingCartDrawer(SetOpenShoppingCart) {
                 }
             >
                 <ListItemButton>
-                    <ListItemText primary="Product 1" />
+                    {products.map((product) => <ProductItem key={product.id} data={product} addToCart={addToCart}/>)}
                 </ListItemButton>
-                <ListItemButton>
-                    <ListItemText primary="Product 2" />
-                </ListItemButton>
-
             </List>
 
             <Box sx={{position: 'absolute', bottom: 0, width: '100%', paddingBottom: 1 }}>
