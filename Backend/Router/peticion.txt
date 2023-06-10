@@ -1,85 +1,94 @@
 PETICIONES:
 -----------
-    PRODUCTOS:
-    ----------
-        Agregar producto-> Http://localhost:3000/API/product/add
-            {
-                "title":"Polera Yonex",
-                "brand":"Yonex",
-                "price":15000,
-                "description":"Polera blah blah",
-                "stock" : [
-                        {
-                            "size": "S",
-                            "quantity": 10
-                        },
+PRODUCTOS:
+----------
+  Agregar producto-> Http://localhost:3000/API/product/add
+    {
+      "title":"Polera Yonex",
+      "brand":"Yonex",
+      "price":15000,
+      "description":"Polera blah blah",
+      "stock" : [
+              {
+                "size": "S",
+                "quantity": 10
+              },
 
-                        {
-                            "size": "M",
-                            "quantity": 3
-                        },
+              {
+                "size": "M",
+                "quantity": 3
+              },
 
-                        {
-                            "size": "L",
-                            "quantity": 50
-                        }
-                ],
-                "sport":"tenis",
-                "category":"textiles",
-                "imgUrl":"https://locosporeltenis.cl/12168-thickbox_default/polera-yonex.jpg",
-                "sale" : false,
-                "percentageSale": "0"
-            }
+              {
+                "size": "L",
+                "quantity": 50
+              }
+      ],
+      "sport":"tenis",
+      "category":"textiles",
+      "imgUrl":"https://locosporeltenis.cl/12168-thickbox_default/polera-yonex.jpg",
+      "sale" : false,
+      "percentageSale": "0"
+    }
 
-        Actualizar producto -> Http://localhost:3000/API/product/update
-            {
-                "id" : "6465753f8201ac47dde44293",
-                "titleC": "Tarro PRINCE PADEL X3",
-                "brandC": "Prince",
-                "priceC": 4990,
-                "descriptionC": "La pelota PRINCE PADEL tiene excelente calidad y consistencia. Su color amarillo óptico la hace ideal para el entrenamiento.",
-                "stockC" : [
-                    {
-                        "size": "S",
-                        "quantity": 10
-                    }
-                ],
-                "sportC": "Padel",
-                "categoryC": "Pelotas",
-                "imgUrlC": "https://locosporeltenis.cl/12168-thickbox_default/tarro-prince-padel-x3.jpg",
-                "saleC" : false,
-                "percentageSaleC: 0"
-            }
+  Actualizar producto -> Http://localhost:3000/API/product/update
+    {
+      "id" : "6480b3ff0488f23d4d06d531",
+      "titleC": "Tarro PRINCE PADEL X3",
+      "brandC": "Prince",
+      "priceC": 4990,
+      "descriptionC": "La pelota PRINCE PADEL tiene excelente calidad y consistencia. Su color amarillo óptico la hace ideal para el entrenamiento.",
+      "stockC" : [
+          {
+              "size": "S",
+              "quantity": 10
+          }
+      ],
+      "sportC": "Padel",
+      "categoryC": "Pelotas",
+      "imgUrlC": "https://locosporeltenis.cl/12168-thickbox_default/tarro-prince-padel-x3.jpg",
+      "saleC" : false,
+      "percentageSaleC": 0
+    }
 
-        Eliminar producto-> Http://localhost:3000/API/product/remove
-            {
-	            "id":"6480afc82d3530bfb64c88f2"
-            }
-        Obtener productos-> Http://localhost:3000/API/product/all
+  Eliminar producto-> Http://localhost:3000/API/product/remove
+    {
+      "id":"6480afc82d3530bfb64c88f2"
+    }
+  Obtener productos-> Http://localhost:3000/API/product/all
 
-    USUARIO:
-    ----------
-        Registrar usuario-> Http://localhost:3000/API/user/sign-up
-            {
-	            "name":"Fer",
-				"lastname": "Lorca",
-				"email": "ferfer@gmail.com",
-	            "pass": "ferfer",
-                "rut":"20.298.298-0",
-				"address":"jeje",
-                "type":"Admin"
-	
-            }
-        ingresar usuario-> Http://localhost:3000/API/user/sign-in
-            {
-                "email":"ferfer@gmail.com",
-                "pass": "jeje"
-            }
-    Carro:
-    ----------
-        Agregar al carro -> Http://localhost:3000/API/cart/add
-            {
-                "User": "ferfer@gmail.com",
-				"TitleProduct" : "Polera Yonex",
-				"Quantify": 1
-            }
+USUARIO:
+----------
+  Registrar usuario-> Http://localhost:3000/API/user/sign-up
+    {
+      "name":"Fer",
+      "lastname": "Lorca",
+      "email": "ferfer@gmail.com",
+      "pass": "ferfer",
+      "rut":"20.298.298-0",
+      "address":"jeje",
+      "type":"Admin"
+
+    }
+
+  Ingresar usuario-> Http://localhost:3000/API/user/sign-in
+    {
+      "email":"ferfer@gmail.com",
+      "pass": "jeje"
+    }
+    
+Carro:
+----------
+  Agregar al carro -> Http://localhost:3000/API/cart/add
+    {
+      "User": "ferfer@gmail.com",
+      "TitleProduct" : "Polera Yonex",
+      "quantity": 1
+    }
+
+    {	 
+      "User": "juj@gmail.com",
+      "TitleProduct" : "Polera yonex",
+      "Size" : "S",
+      "Quantity": 5
+    }
