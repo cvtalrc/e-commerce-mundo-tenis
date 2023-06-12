@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu"
+import ShoppingCart from "../shoppingCart/ShoppingCart";
 
 export default function Navbar({ userName, handleLogout }) {
 
@@ -110,7 +111,7 @@ export default function Navbar({ userName, handleLogout }) {
                 open={openShoppingCart}
                 anchor="right"
                 onClose={() => SetOpenShoppingCart(false)}>
-                <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart} />
+                <ShoppingCart SetOpenShoppingCart={SetOpenShoppingCart} />
             </Drawer>
             <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "secondary.main", color: "white" }}>
                 {sports.map((sport) => (

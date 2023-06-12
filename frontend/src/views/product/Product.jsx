@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import View from "../../components/Product/View";
 import './Product.css'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { helpHttp } from "../../helpers/helpHttp";
 
 //realizar búsqueda a db del producto en específico 
@@ -17,15 +17,15 @@ export default function Product() {
     // const [loading, setLoading] = useState(false);
     let api = helpHttp();
     let url = `http://localhost:3000/api/product/${id}`
-    console.log(url)
+    //console.log(url)
   
     useEffect(() => {
       // setLoading(true);
-      console.log(product)
+      //console.log(product)
       api
         .get(url)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           if (!res.err) {
             setProduct(res);
             // setError(null);
@@ -37,14 +37,15 @@ export default function Product() {
         });
     }, [url]);
   
-    console.log(product)
+    console.log("producto: ", product)
+
 
     return (
         <>
             {/* <Typography variant="h4">Deporte: {sport}</Typography>
             <Typography variant="h4">Categoría: {category}</Typography>
             <Typography variant="h4">id: {id}</Typography> */}
-            <View product={product} ></View>
+            <View product={product}></View>
         </>
     )
 }
