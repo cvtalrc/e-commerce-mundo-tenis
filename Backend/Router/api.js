@@ -1,9 +1,16 @@
 const express = require("express");
+var session = require('express-session')
 const func_product = require("../Controllers/prod_controllers");
 const func_shoppingCart = require("../Controllers/shoppingCart_controllers");
+const func_order = require("../Controllers/order_controllers");
 const func_auth = require("../Controllers/auth");
 
 const api = express.Router();
+api.use(session({
+    secret: 'holahola',
+    resave: true,
+    saveUninitialized: true
+}));
 
 //API POST 
 api.post("/product/", func_product.add);
@@ -15,6 +22,7 @@ api.post("/cart",func_shoppingCart.createEmpty_shoppingCart);
 api.post("/cart/add",func_shoppingCart.addtoCart);
 api.post("/cart/remove",func_shoppingCart.removeFromCart);
 api.post("/cart/removeAll",func_shoppingCart.emptyCart);
+api.post("/order/",func_order.createOrder);
 
 //API PUT 
 api.put("/product/update", func_product.update);
@@ -22,6 +30,6 @@ api.put("/product/update", func_product.update);
 //API GET
 api.get("/product/", func_product.getAll);
 api.get("/product/:id", func_product.getId);
-api.get("/cart/:User", func_shoppingCart.GetCart);
+api.get("/cart", func_shoppingCart.GetCart);
 
 module.exports = api;

@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import View from "../../components/Product/View";
 import './Product.css'
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { helpHttp } from "../../helpers/helpHttp";
 import ProductsContext from "../../context/ProductsContext";
 
@@ -41,6 +41,7 @@ export default function Product() {
 
     const product = products.filter((productF) => productF._id === id);
     
+
 
     return (
         <>

@@ -1,11 +1,31 @@
 import { Button, Container, Grid, List, Typography, Box, ButtonGroup, Badge } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { fetchProducts, shoppingInitialState, shoppingReducer } from "../../reducers/shoppingReducer";
+import { TYPES } from "../../actions/shoppingActions";
 
 export default function View({ product }) {
   const [itemCount, setItemCount] = useState(1);
+  const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState)
+  const {products, cart} = state
+
+  useEffect(() => {
+    fetchProducts()
+      .then(products => {
+        dispatch({ type: TYPES.FETCH_PRODUCTS_SUCCESS, payload: products })
+      })
+      .catch(e => {
+        dispatch({ type: TYPES.FETCH_PRODUCTS_FAILURE })
+        console.log("error: ", e)
+      })
+  }, [])
+
+  const addToCart = (_id) => {
+    dispatch({ type: TYPES.ADD_TO_CART, payload: _id });
+    console.log(_id)
+  };
   console.log(product)
   const priceSale = product.price - (product.price * (product.percentageSale / 100))
 
@@ -49,7 +69,7 @@ export default function View({ product }) {
               </Button>
             </ButtonGroup>
             <Button onClick={() => {
-              console.log("no hace nada")
+              addToCart(product._id);
             }} 
             color="secondary" variant="outlined" sx={{width: { sm: '40%', xs: '100%'}, mt:4}}>
             <ShoppingCartIcon fontSize="small" sx={{mr: 2}} />

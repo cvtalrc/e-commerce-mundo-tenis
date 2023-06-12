@@ -13,6 +13,7 @@ import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu"
 import { CloudDownloadSharp } from "@mui/icons-material";
 import { helpHttp } from "../../helpers/helpHttp";
+import ShoppingCart from "../shoppingCart/ShoppingCart";
 
 export default function Navbar({ userName, handleLogout }) {
 
@@ -153,7 +154,7 @@ export default function Navbar({ userName, handleLogout }) {
                 open={openShoppingCart}
                 anchor="right"
                 onClose={() => SetOpenShoppingCart(false)}>
-                <ShoppingCartDrawer SetOpenShoppingCart={SetOpenShoppingCart} />
+                <ShoppingCart SetOpenShoppingCart={SetOpenShoppingCart} />
             </Drawer>
             <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "secondary.main", color: "white" }}>
                 {sports.map((sport) => (
