@@ -34,7 +34,6 @@ export default function Navbar({ userName, handleLogout }) {
                             <StyledInputBase
                                 placeholder="Buscar..."
                                 inputProps={{ 'aria-label': 'buscar' }}
-                                handleChange = {handleChange}
                                 
                             />
                         </Search>

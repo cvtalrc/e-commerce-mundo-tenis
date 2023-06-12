@@ -9,7 +9,7 @@ const ShoppingCart = (SetOpenShoppingCart) => {
   const [cart, setCart] = useState(null)
   
   let api = helpHttp();
-  let user = `felipegutierrez@gmail.com`;
+  let user = localStorage.getItem('userEmail')
   let url = `http://localhost:3000/api/cart/${user}` //para ver contenido del carro
 
   useEffect(() => {

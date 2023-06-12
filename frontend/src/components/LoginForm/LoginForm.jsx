@@ -35,7 +35,6 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn({ handleLogin }) {
-  
   const [errorMsg, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -66,7 +65,8 @@ export default function SignIn({ handleLogin }) {
       console.log('Respuesta del backend:', response.data);
       if(response.data.message == "Ingreso de usuario exitoso"){
         const userName = response.data.name
-        handleLogin(userName)
+        const userEmail = response.data.email
+        handleLogin(userName, userEmail)
         console.log(response.data.name)
         Toast(
           'bottom-end',
