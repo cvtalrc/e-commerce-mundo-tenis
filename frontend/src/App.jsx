@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { Modal } from './components/Alerts/Modal';
 import { ProductsProvider } from './context/ProductsContext';
 import Search from './views/search/Search';
+import { UserProvider } from './context/UserContext';
 
 const navArrayLinks = [
     {
@@ -50,6 +51,7 @@ const navArrayLinks = [
 
 function App() {
     const [userName, setUserName] = useState(null);
+    const [email, setEmail] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -59,9 +61,12 @@ function App() {
         }
     }, []);
 
-    const handleLogin = (userName) => {
+    const handleLogin = (userName, userEmail) => {
         setUserName(userName);
+        setEmail(userEmail)
         localStorage.setItem("userName", userName);
+        localStorage.setItem("userEmail", userEmail);
+        
     };
 
     const handleLogout = async () => {
@@ -80,11 +85,11 @@ function App() {
 
     return (
         <React.Fragment>
+            <UserProvider>
             <ProductsProvider>
                 <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout} />
                 <Routes>
                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-
                     <Route path="/login" element={<Login handleLogin={handleLogin} />} />
                     <Route path="/register" element={<NewAccount />} />
                     <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
@@ -96,6 +101,7 @@ function App() {
                 </Routes>
                 <Footer />
             </ProductsProvider>
+            </UserProvider>
         </React.Fragment>
     );
 };
