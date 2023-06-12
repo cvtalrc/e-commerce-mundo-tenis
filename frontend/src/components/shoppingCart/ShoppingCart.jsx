@@ -1,33 +1,45 @@
-import { useReducer } from "react";
-import { TYPES } from "../../actions/shoppingActions";
-import {
-  shoppingInitialState,
-  shoppingReducer,
-} from "../../reducers/shoppingReducer";
-import CartItem from "../CartItem/CartItem";
-import View from "../Product/View";
+import { useEffect, useState } from "react";
 import { Box, List, ListSubheader, Grid, Button } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import ProductItem from "../Product/ProductItem";
+import { helpHttp } from "../../helpers/helpHttp";
+import axios from 'axios'
+import CartItem from "../CartItem/CartItem";
 
 const ShoppingCart = (SetOpenShoppingCart) => {
-  const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState);
+  const [cart, setCart] = useState(null)
+  
+  let api = helpHttp();
+  let user = `felipegutierrez@gmail.com`;
+  let url = `http://localhost:3000/api/cart/${user}` //para ver contenido del carro
 
-  const { cart } = state;
+  useEffect(() => {
+    api
+      .get(url)
+      .then((res) => {
+        //console.log(res);
+        if (!res.err) {
+          setCart(res.data.items);
+        } else {
+          console.error(res);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, []);
 
-  const delFromCart = (id, all = false) => {
-    console.log(id, all);
-    if (all) {
-      dispatch({ type: TYPES.REMOVE_ALL_FROM_CART, payload: id });
-    } else {
-      dispatch({ type: TYPES.REMOVE_ONE_FROM_CART, payload: id });
-    }
-  };
+  // const delFromCart = (id, all = false) => {
+  //   console.log(id, all);
+  //   if (all) {
+  //     //dispatch({ type: TYPES.REMOVE_ALL_FROM_CART, payload: id });
+  //   } else {
+  //     //dispatch({ type: TYPES.REMOVE_ONE_FROM_CART, payload: id });
+  //   }
+  // };
 
-  const clearCart = () => {
-    dispatch({ type: TYPES.CLEAR_CART });
-    console.log("eliminando todo")
-  };
+  // const clearCart = () => {
+  //   //dispatch({ type: TYPES.CLEAR_CART });
+  // };
 
   // return (
   //   <div>
@@ -48,8 +60,9 @@ const ShoppingCart = (SetOpenShoppingCart) => {
   //   </div>
   // );
 
-  return (
-    <Box sx={{ width: 450 }}>
+  return (<>
+  { cart && 
+      <Box sx={{ width: 450 }}>
         <List
             sx={{ width: '100%', maxWidth: 450, bgcolor: 'background.paper' }}
             component="nav"
@@ -61,14 +74,15 @@ const ShoppingCart = (SetOpenShoppingCart) => {
             }
         >  
               <Grid >
-              {cart.map((item, index) => (
-                <CartItem key={index} data={item} delFromCart={delFromCart} />
-              ))}
-              <button onClick={clearCart}>Limpiar Carrito</button>
+              {
+                // console.log("carrito", cart) 
+                cart.map((item, index) => (
+                <CartItem key={index} data={item}  />
+              ))
+              }
+              {/* <button onClick={clearCart}>Limpiar Carrito</button> */}
             </Grid>
         </List>
-
-          
 
         <Box sx={{position: 'absolute', bottom: 0, width: '100%', paddingBottom: 1 }}>
             <Button
@@ -82,10 +96,10 @@ const ShoppingCart = (SetOpenShoppingCart) => {
                 Comprar
             </Button>
         </Box>
-
-
     </Box>
-
+    
+  }
+  </>
   )
 };
 

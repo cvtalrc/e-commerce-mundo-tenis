@@ -63,7 +63,7 @@ function removeAll(req, res) {
 function getAll(req, res) {
   Product.find({}, (error, products) => {
     if (error) {
-      return res.status(400).send({ msj: "No se pudo encontrar el producto" });
+      return res.status(400).send({ msj: "No existen productos" });
     } else {
       res.status(200).send(products);
     }

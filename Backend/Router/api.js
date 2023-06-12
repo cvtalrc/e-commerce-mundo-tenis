@@ -6,11 +6,11 @@ const func_order = require("../Controllers/order_controllers");
 const func_auth = require("../Controllers/auth");
 
 const api = express.Router();
-api.use(session({
-    secret: 'holahola',
-    resave: true,
-    saveUninitialized: true
-}));
+// api.use(session({
+//     secret: 'holahola',
+//     resave: true,
+//     saveUninitialized: true
+// }));
 
 //API POST 
 api.post("/product/", func_product.add);
@@ -30,6 +30,8 @@ api.put("/product/update", func_product.update);
 //API GET
 api.get("/product/", func_product.getAll);
 api.get("/product/:id", func_product.getId);
-api.get("/cart", func_shoppingCart.GetCart);
+api.get("/cart/:User", func_shoppingCart.GetCart);
+api.get("/user/", func_auth.getAll);
+api.get("/user/:User", func_auth.getUser);
 
 module.exports = api;

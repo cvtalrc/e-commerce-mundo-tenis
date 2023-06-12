@@ -31,6 +31,7 @@ export function shoppingReducer(state, action) {
             let itemInCart = state.cart.find((item) => item._id === newItem._id);
             
             console.log({ ...state.cart })
+            console.log("cantidad", itemInCart.quantity)
 
             return itemInCart
             ? {

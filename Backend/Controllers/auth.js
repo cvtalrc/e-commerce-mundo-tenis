@@ -13,7 +13,7 @@ async function sign_up(req, res) {
   if (!body.rut) return res.status(200).send({ message: "Rut obligatorio", status: "warning" });
 
   
-  const findUser = await User.findOne({ rut: body.rut });
+  const findUser = await User.findOne({ rut: body.email });
   if (findUser) return res.status(200).send({ message: "El usuario ya existe", status: "warning" });
   const usuario = {
     name: body.name,
@@ -50,10 +50,30 @@ async function sign_in(req, res) {
     refreshToken: Jwt.createAccessToken(findUser),
     accessToken: Jwt.createAccessToken(findUser),
     status: "success",
-    name: findUser.name
+    name: findUser.name,
+    email: findUser.email
+  });
+}
+
+async function getUser(req, res) {
+  const email = req.params.User;
+  const user = await User.findOne({ email: email });
+  if (!user) return res.status(200).send({ message: "El usuario no existe", status: "error" });
+  return res.status(200).send({user});
+}
+
+async function getAll(req, res) {
+  User.find({}, (error, users) => {
+    if (error) {
+      return res.status(400).send({ msj: "No existen usuarios" });
+    } else {
+      res.status(200).send(users);
+    }
   });
 }
 module.exports = {
   sign_up,
   sign_in,
+  getUser,
+  getAll
 };

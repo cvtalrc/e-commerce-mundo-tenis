@@ -80,15 +80,32 @@ USUARIO:
 Carro:
 ----------
   Agregar al carro -> Http://localhost:3000/API/cart/add
-    {
-      "User": "ferfer@gmail.com",
-      "TitleProduct" : "Polera Yonex",
-      "quantity": 1
-    }
-
     {	 
       "User": "juj@gmail.com",
       "TitleProduct" : "Polera yonex",
       "Size" : "S",
       "Quantity": 5
+    }
+
+    Ver el carro -> Http://localhost:3000/API/cart
+      {
+        "User": "felipegutierrez@gmail.com"
+      }
+
+  Eliminar el carro -> Http://localhost:3000/API/cart/removeAll
+    {	 
+      "User": "juj@gmail.com",
+    }
+
+  Eliminar producto del carro -> Http://localhost:3000/API/cart/remove
+    {	 
+      "User": "juj@gmail.com",
+      "TitleProduct" : "Polera yonex",
+      "Size" : "S",
+      "Quantity": 5
+    }
+
+  Crear carro -> Http://localhost:3000/API/cart
+    {
+      "User": "felipegutierrez@gmail.com"
     }
