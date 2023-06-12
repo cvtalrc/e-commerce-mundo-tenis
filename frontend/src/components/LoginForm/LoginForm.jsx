@@ -14,7 +14,7 @@ import { useState } from 'react';
 import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Toast } from '../Alerts/Toast';
 
 function Copyright(props) {
@@ -149,14 +149,20 @@ export default function SignIn({ handleLogin }) {
             </Fade>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Button href="#" 
+                variant="body2" 
+                component={NavLink}
+                to="/">
                   ¿Olvidaste la contraseña?
-                </Link>
+                </Button>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Button
+                variant="body2"
+                component={NavLink}
+                to="/register">
                   {"¿No tienes una cuenta? Regístrate"}
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

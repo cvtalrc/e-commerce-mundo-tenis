@@ -50,7 +50,8 @@ async function sign_in(req, res) {
     refreshToken: Jwt.createAccessToken(findUser),
     accessToken: Jwt.createAccessToken(findUser),
     status: "success",
-    name: findUser.name
+    name: findUser.name,
+    email: findUser.email
   });
 }
 module.exports = {

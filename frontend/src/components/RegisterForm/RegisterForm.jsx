@@ -14,7 +14,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { helpHttp } from '../../helpers/helpHttp';
+import { useEffect } from 'react';
 
 function Copyright(props) {
   return (
@@ -73,7 +75,7 @@ export default function SignUp() {
       return;
     }
 
-    const rute = "http://localhost:3000/api"
+    const rute = "http://localhost:3000/API"
     axios.post(`${rute}/sign-up`, {
       name: data.get('firstName'),
       lastname: data.get('lastName'),
@@ -87,6 +89,21 @@ export default function SignUp() {
       .then((response) => {
         console.log('Respuesta del backend:', response.data);
         if (response.data.status == "success") {
+          //CREACION DEL CARRO UNA VEZ SE REGISTRA
+          let api = helpHttp()
+          let url = "Http://localhost:3000/API/cart"
+          let options = {
+            body: data.get("email"),
+            headers: { "content-type": "application/json" },
+          };
+
+          api
+            .post(url, options)
+            .then((res) => {
+              if (!res.err) {
+                console.log("carro creado", options.body)
+              }
+            })
           navigate('/login')
         }
       })
@@ -244,9 +261,9 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Button component={NavLink} to="/login" variant="body2">
                 ¿Ya tienes una cuenta? Inicia sesión
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </Box>
