@@ -1,6 +1,6 @@
 import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container, Typography } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavListDrawer from './NavListDrawer'
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,29 +11,72 @@ import { NavLink } from "react-router-dom";
 import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu"
+import { CloudDownloadSharp } from "@mui/icons-material";
+import { helpHttp } from "../../helpers/helpHttp";
 
 export default function Navbar({ userName, handleLogout }) {
 
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
+    // const [search, setSearch] = useState("");
     const sports = ["Tenis", "Padel"];
+    // const [totalProducts, setTotalProducts] = useState(null)
+    // const [productsSearch, setProductsSearch] = useState(null);
+    // const [products, setProducts] = useState(null);
+
+    // setTotalProducts(products)
+    // setProductsSearch(products)
+
+    // let api = helpHttp();
+    // let url = "http://localhost:3000/api/product"
+
+    // useEffect(() => {
+    //     api
+    //         .get(url)
+    //         .then((res) => {
+    //             console.log(res);
+    //             if (!res.err) {
+    //                 setProducts(res);
+    //             } else {
+    //                 setProducts(null);
+    //             }
+    //         });
+    // }, [url]);
+
+    // const handleChange = e => {
+    //     setSearch(e.target.value);
+    //     filterS(e.target.value)
+    // }
+
+    // const filterS = (x) => {
+    //     console.log(totalProducts)
+    //     let result = productsSearch.filter((element) => {
+    //         console.log(element.title)
+    //         if(element.title.toString().toLowerCase().includes(x.toLowerCase())){
+    //             return element;
+    //         }
+    //     });
+
+    //     setTotalProducts(result)
+        
+    // }
 
     return (
         <>
-            <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}
-            >
+            <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Toolbar>
-                    <Container maxWidth="xl" sx={{display: 'flex', flexDirection:'row', justifyContent: 'right'}}>
+                    <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
                         {/* <img src={logo} /> */}
-                        {/* <Search>
+                        <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Buscar..."
                                 inputProps={{ 'aria-label': 'buscar' }}
+                                
                             />
-                        </Search> */}
+                        </Search>
                         {/* <Box sx={{ flexGrow: 1 }}></Box> */}
                         <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
                             <Button
@@ -58,11 +101,11 @@ export default function Navbar({ userName, handleLogout }) {
                                     >
                                         ¡Hola, {userName}!
                                     </Button>
-                                    
+
                                     <Button
                                         color="inherit"
                                         onClick={handleLogout}
-                                    > 
+                                    >
                                         Cerrar sesión
                                     </Button>
                                 </>
@@ -81,11 +124,11 @@ export default function Navbar({ userName, handleLogout }) {
                                 <ShoppingCartIcon
                                     color="inherit"
                                     size="large"
-                                    >
+                                >
                                 </ShoppingCartIcon>
                             </Badge>
                         </Button>
-                        
+
 
                         <IconButton
                             color="inherit"

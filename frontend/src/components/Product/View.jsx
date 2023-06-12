@@ -6,6 +6,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function View({ product }) {
   const [itemCount, setItemCount] = useState(1);
+  console.log(product)
+  const priceSale = product.price - (product.price * (product.percentageSale / 100))
 
   return (
     <Container sx={{ pt: 10, pb: 10 }}>
@@ -17,7 +19,14 @@ export default function View({ product }) {
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>{product.title}</Typography>
           <Typography variant="h6" sx={{ mb: 1 }} >{product.brand}</Typography>
           <Typography sx={{ mb: 2, textAlign: 'justify', color: 'gray' }}>{product.description}</Typography>
-          <Typography variant="h5" bgcolor="secondary" sx={{ mb: 4 }} >$ {product.price}</Typography>
+          {product.sale ? 
+          (<Box sx={{ display: 'flex', justifyContent: 'left', mb: 4, mt: 3  }}>
+          <Typography variant="h5" color="red" sx={{ fontWeight: '700', whiteSpace: 'nowrap' }} >$ {priceSale}</Typography>
+          <Typography variant="h5" color="secondary" sx={{ fontWeight: '700', textDecoration: 'line-through', ml: 1 }}>$ {product.price} </Typography>
+        </Box>)
+          :
+          (<Typography variant="h5" color="secondary" sx={{ mb: 4, mt: 3, fontWeight: 700 }} >$ {product.price}</Typography>)}
+          
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
            
             <ButtonGroup>
