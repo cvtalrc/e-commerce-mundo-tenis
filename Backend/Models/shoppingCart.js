@@ -4,7 +4,7 @@ const cartschema = mongoose.Schema({
   User: String,
   items: [{
     TitleProduct:  { type: String, required: true },
-    Size : { type: String, required: true },
+    Size : String,
     Quantity: { type: Number, default: 1 },
     price: { type: Number, required: true },
   }],

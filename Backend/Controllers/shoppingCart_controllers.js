@@ -4,12 +4,12 @@ const shoppingCart = require("../Models/shoppingCart");
 //CREAR CARRO VACIO
 async function createEmpty_shoppingCart(req, res) {
   const Cart = new shoppingCart({
-    User: req.body.User,// || req.sessionID,
+    User: req.body.User,
     items:[],
     total:0
   });
   try{
-    const find_cart = await shoppingCart.findOne({ User: req.body.User || req.sessionID});
+    const find_cart = await shoppingCart.findOne({User: req.body.User});
     if (find_cart) return res.status(200).send({msj:"El carro asociado a este usuario ya existe", status:"warning"});
 
     const newShoppingCart = await shoppingCart.create(Cart);
@@ -23,7 +23,7 @@ async function createEmpty_shoppingCart(req, res) {
 
 //AGREGAR PRODUCTO AL CARRO 
 async function addtoCart(req,res){
-  const User = req.body.User || req.sessionID;
+  const User = req.body.User;
   const TitleProduct = req.body.TitleProduct;
   const Size = req.body.Size;
   const Quantity = req.body.Quantity;
@@ -90,7 +90,7 @@ const calculateTotal = (items) => {
 
 //ELIMINACION DE PRODUCTOS DEL CARRO
 async function removeFromCart(req, res){
-  const User = req.body.User || req.sessionID;
+  const User = req.body.User;
   const TitleProduct = req.body.TitleProduct;
   const Size = req.body.Size;
   const Quantity = req.body.Quantity;
@@ -147,7 +147,7 @@ async function GetCart(req,res){
 
 //VACIAR EL CARRITO 
 async function emptyCart(req, res){
-  const User = req.body.User || req.sessionID;
+  const User = req.body.User;
   try{
     const cart = await shoppingCart.findOne({User:User});
     if(!cart) return res.status(400).send({msj:"Carrito no encontrado", status:"error"});

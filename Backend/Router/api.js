@@ -31,5 +31,7 @@ api.put("/product/update", func_product.update);
 api.get("/product/", func_product.getAll);
 api.get("/product/:id", func_product.getId);
 api.get("/cart/:User", func_shoppingCart.GetCart);
+api.get("/user/", func_auth.getAll);
+api.get("/user/:User", func_auth.getUser);
 
 module.exports = api;
