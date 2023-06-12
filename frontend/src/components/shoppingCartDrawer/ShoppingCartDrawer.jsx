@@ -4,7 +4,7 @@ import { useState, useReducer, useEffect } from "react";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { NavLink } from "react-router-dom";
 import ProductItem from "../Product/ProductItem";
-import { fetchProducts, shoppingInitialState, shoppingReducer } from "../../reducers/shoppingReducer";
+import { shoppingInitialState, shoppingReducer } from "../../reducers/shoppingReducer";
 import { TYPES } from "../../actions/shoppingActions";
 import CartItem from "../CartItem/CartItem";
 

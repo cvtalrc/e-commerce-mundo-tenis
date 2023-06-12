@@ -8,6 +8,8 @@ export default function PaginationCard({ products, type }) {
     let PER_PAGE = 8;
     if (type === 'sale') {
         PER_PAGE = 4;
+    } else if(type === 'categories'){
+        PER_PAGE = 9;
     }
 
     let count = Math.ceil(products.length / PER_PAGE);
@@ -30,7 +32,7 @@ export default function PaginationCard({ products, type }) {
                     (_DATA.currentData().map(product =>
                         <Grid key={product._id} item md={3} sm={4} xs={6}> <Card key={product._id} product={product} /> </Grid>))
 
-                } 
+                }
 
             </Grid>
             <Box sx={{ display: "flex", justifyContent: "right" }}>

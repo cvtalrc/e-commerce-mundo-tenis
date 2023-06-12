@@ -1,6 +1,6 @@
 import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container, Typography } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import NavListDrawer from './NavListDrawer'
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -12,55 +12,14 @@ import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu"
 import { CloudDownloadSharp } from "@mui/icons-material";
-import { helpHttp } from "../../helpers/helpHttp";
 import ShoppingCart from "../shoppingCart/ShoppingCart";
+import ProductsContext from "../../context/ProductsContext";
 
 export default function Navbar({ userName, handleLogout }) {
-
+    const {handleChange} = useContext(ProductsContext)
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
-    // const [search, setSearch] = useState("");
     const sports = ["Tenis", "Padel"];
-    // const [totalProducts, setTotalProducts] = useState(null)
-    // const [productsSearch, setProductsSearch] = useState(null);
-    // const [products, setProducts] = useState(null);
-
-    // setTotalProducts(products)
-    // setProductsSearch(products)
-
-    // let api = helpHttp();
-    // let url = "http://localhost:3000/api/product"
-
-    // useEffect(() => {
-    //     api
-    //         .get(url)
-    //         .then((res) => {
-    //             console.log(res);
-    //             if (!res.err) {
-    //                 setProducts(res);
-    //             } else {
-    //                 setProducts(null);
-    //             }
-    //         });
-    // }, [url]);
-
-    // const handleChange = e => {
-    //     setSearch(e.target.value);
-    //     filterS(e.target.value)
-    // }
-
-    // const filterS = (x) => {
-    //     console.log(totalProducts)
-    //     let result = productsSearch.filter((element) => {
-    //         console.log(element.title)
-    //         if(element.title.toString().toLowerCase().includes(x.toLowerCase())){
-    //             return element;
-    //         }
-    //     });
-
-    //     setTotalProducts(result)
-        
-    // }
 
     return (
         <>
@@ -75,6 +34,7 @@ export default function Navbar({ userName, handleLogout }) {
                             <StyledInputBase
                                 placeholder="Buscar..."
                                 inputProps={{ 'aria-label': 'buscar' }}
+                                handleChange = {handleChange}
                                 
                             />
                         </Search>

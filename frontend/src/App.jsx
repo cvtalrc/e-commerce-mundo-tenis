@@ -14,7 +14,7 @@ import NewAccount from './views/register/Register';
 import { useState } from 'react'
 import { Modal } from './components/Alerts/Modal';
 import { ProductsProvider } from './context/ProductsContext';
-{/*********** FALTA LOGIN Y SIGNIN **********/ }
+import Search from './views/search/Search';
 
 const navArrayLinks = [
     {
@@ -92,6 +92,7 @@ function App() {
                     <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
                     <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
                     <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
+                    <Route path="/search" element={<Search/>} />
                 </Routes>
                 <Footer />
             </ProductsProvider>

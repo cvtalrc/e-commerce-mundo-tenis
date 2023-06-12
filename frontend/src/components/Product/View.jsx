@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { fetchProducts, shoppingInitialState, shoppingReducer } from "../../reducers/shoppingReducer";
+import { shoppingInitialState, shoppingReducer } from "../../reducers/shoppingReducer";
 import { TYPES } from "../../actions/shoppingActions";
 
 export default function View({ product }) {
@@ -11,21 +11,21 @@ export default function View({ product }) {
   const [state, dispatch] = useReducer(shoppingReducer, shoppingInitialState)
   const {products, cart} = state
 
-  useEffect(() => {
-    fetchProducts()
-      .then(products => {
-        dispatch({ type: TYPES.FETCH_PRODUCTS_SUCCESS, payload: products })
-      })
-      .catch(e => {
-        dispatch({ type: TYPES.FETCH_PRODUCTS_FAILURE })
-        console.log("error: ", e)
-      })
-  }, [])
+  // useEffect(() => {
+  //   fetchProducts()
+  //     .then(products => {
+  //       dispatch({ type: TYPES.FETCH_PRODUCTS_SUCCESS, payload: products })
+  //     })
+  //     .catch(e => {
+  //       dispatch({ type: TYPES.FETCH_PRODUCTS_FAILURE })
+  //       console.log("error: ", e)
+  //     })
+  // }, [])
 
-  const addToCart = (_id) => {
-    dispatch({ type: TYPES.ADD_TO_CART, payload: _id });
-    console.log(_id)
-  };
+  // const addToCart = (_id) => {
+  //   dispatch({ type: TYPES.ADD_TO_CART, payload: _id });
+  //   console.log(_id)
+  // };
   console.log(product)
   const priceSale = product.price - (product.price * (product.percentageSale / 100))
 
