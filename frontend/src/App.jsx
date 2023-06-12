@@ -13,7 +13,7 @@ import axios from "axios";
 import NewAccount from './views/register/Register';
 import { useState } from 'react'
 import { Modal } from './components/Alerts/Modal';
-
+import { ProductsProvider } from './context/ProductsContext';
 {/*********** FALTA LOGIN Y SIGNIN **********/ }
 
 const navArrayLinks = [
@@ -55,7 +55,7 @@ function App() {
     useEffect(() => {
         const storedUserName = localStorage.getItem("userName");
         if (storedUserName) {
-          setUserName(storedUserName);
+            setUserName(storedUserName);
         }
     }, []);
 
@@ -70,20 +70,22 @@ function App() {
             '¿Estás seguro que quieres cerrar sesión',
             'warning',
         )
-        if(result.confirmed){
+        if (result.confirmed) {
             setUserName(null)
             localStorage.removeItem("userName");
             navigate('/')
         }
-        
+
     }
 
     return (
-            <React.Fragment>
-                <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout}/>
+        <React.Fragment>
+            <ProductsProvider>
+                <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout} />
                 <Routes>
                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-                    <Route path="/login" element={<Login handleLogin={handleLogin}/>} />
+
+                    <Route path="/login" element={<Login handleLogin={handleLogin} />} />
                     <Route path="/register" element={<NewAccount />} />
                     <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
                     <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
@@ -92,7 +94,8 @@ function App() {
                     <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
                 </Routes>
                 <Footer />
-            </React.Fragment>
+            </ProductsProvider>
+        </React.Fragment>
     );
 };
 
