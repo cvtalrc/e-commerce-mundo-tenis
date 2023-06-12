@@ -1,4 +1,4 @@
-import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container, Typography } from "@mui/material";
+import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container, Typography, TextField } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState, useEffect, useContext } from "react";
 import NavListDrawer from './NavListDrawer'
@@ -16,7 +16,7 @@ import ShoppingCart from "../shoppingCart/ShoppingCart";
 import ProductsContext from "../../context/ProductsContext";
 
 export default function Navbar({ userName, handleLogout }) {
-    const {handleChange} = useContext(ProductsContext)
+    const { handleChangeSearch, handleSubmitSearch } = useContext(ProductsContext)
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
     const sports = ["Tenis", "Padel"];
@@ -28,15 +28,16 @@ export default function Navbar({ userName, handleLogout }) {
                     <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
                         {/* <img src={logo} /> */}
                         <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Buscar..."
-                                inputProps={{ 'aria-label': 'buscar' }}
-                                handleChange = {handleChange}
-                                
-                            />
+                            <form>
+                                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                    <StyledInputBase
+                                        placeholder="Buscar..."
+                                        inputProps={{ 'aria-label': 'buscar' }}
+                                        onChange={handleChangeSearch}
+                                    />
+                                    <Button color="inherit" size="small" onClick={handleSubmitSearch}> <SearchIconWrapper><SearchIcon /></SearchIconWrapper></Button>
+                                </Box>
+                            </form>
                         </Search>
                         {/* <Box sx={{ flexGrow: 1 }}></Box> */}
                         <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
