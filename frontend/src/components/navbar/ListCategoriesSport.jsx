@@ -6,6 +6,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material"
 
 export default function ListCategoriesSport({ sport, SetOpenMenu }) {
     //sport define la consulta al back, por el momento se declaran ambos deportes 
+    const [categories, setCategories] = useState(null)
 
     const [open, setOpen] = useState(false);
 
@@ -13,23 +14,25 @@ export default function ListCategoriesSport({ sport, SetOpenMenu }) {
         setOpen(!open);
     };
 
-    let categories = [];
-    console.log(sport);
-    if (sport == 'Tenis') {
-        categories = [
-            "Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"
-        ]
-    } else if (sport == 'Padel')
-        categories = [
-            "Palas", "Bolsos", "Pelotas", "Textiles", "Zapatillas", "Accesorios"
-        ]
+    // let categories = [];
+    // console.log(sport);
+    if (sport === 'Tenis') {
+        setCategories(["Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"])
+        // categories = [
+        //     "Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"
+        // ]
+    } else if (sport === 'Padel')
+        setCategories(["Palas", "Bolsos", "Pelotas", "Textiles", "Zapatillas", "Accesorios"])
+    // categories = [
+    //     "Palas", "Bolsos", "Pelotas", "Textiles", "Zapatillas", "Accesorios"
+    // ]
 
     console.log(categories)
 
     return (
         <div>
             <ListItemButton onClick={handleClick}>
-                <ListItemText primary={sport} />
+                <ListItemText key={sport} primary={sport} />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>

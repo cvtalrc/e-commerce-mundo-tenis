@@ -1,11 +1,11 @@
 import { Box, List, ListSubheader, ListItemButton, ListItemText, Button } from "@mui/material";
 import ListCategoriesSport from "./ListCategoriesSport";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 
 export default function NavListDrawer(SetOpenMenu) {
-
-    const sports = ["Tenis", "Padel"];
+    const [sports, setSports] = useState(["Tenis", "Padel"])
     return (
         <Box sx={{ width: 250, height: '100vh' }}>
             <List

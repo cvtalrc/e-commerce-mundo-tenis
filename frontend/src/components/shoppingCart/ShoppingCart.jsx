@@ -10,6 +10,7 @@ const ShoppingCart = (SetOpenShoppingCart) => {
   
   let api = helpHttp();
   let user = localStorage.getItem('userEmail')
+  //console.log(user)
   let url = `http://localhost:3000/api/cart/${user}` //para ver contenido del carro
 
   useEffect(() => {

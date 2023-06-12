@@ -59,7 +59,6 @@ const ProductsProvider = ({ children }) => {
                 || element.brand.toString().toLowerCase().includes(searchTerm.toLowerCase())
                 || element.category.toString().toLowerCase().includes(searchTerm.toLowerCase())
                 || element.sport.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                || element.description.toString().toLowerCase().includes(searchTerm.toLowerCase())
             ) {
                 return element;
             }

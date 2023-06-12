@@ -1,4 +1,4 @@
-import { Button, Container, Grid, List, Typography, Box, ButtonGroup, Badge } from "@mui/material";
+import { Button, Container, Grid, List, Typography, Box, ButtonGroup, Badge, MenuItem, Select, TextField } from "@mui/material";
 import { useContext, useEffect, useReducer, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -16,7 +16,7 @@ export default function View({ product }) {
   const [itemCount, setItemCount] = useState(1);
   const [addToCartTrigger, setAddToCartTrigger] = useState(false);
   const [form, setForm] = useState(initialForm);
-  
+
   const handleReset = (e) => {
     setForm(initialForm);
   };
@@ -31,8 +31,8 @@ export default function View({ product }) {
     form.Size = size
     form.Quantity = quantity
 
-    console.log({...form})
-    
+    console.log({ ...form })
+
     let options = {
       body: form,
       headers: { "content-type": "application/json" },
@@ -44,13 +44,13 @@ export default function View({ product }) {
         if (!res.err) {
           console.log(res);
           setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
-        } 
+        }
       })
       .catch((e) => {
         console.error(e);
       });
 
-     handleReset() 
+    handleReset()
   };
 
   useEffect(() => {
@@ -58,6 +58,11 @@ export default function View({ product }) {
       setAddToCartTrigger(false); // Reinicia el estado para futuras llamadas
     }
   }, [addToCartTrigger]);
+
+  const handleChange = (e) => {
+    form.Size = e.target.value
+    console.log(form.Size)
+  };
 
   return (
     <Container sx={{ pt: 10, pb: 10 }}>
@@ -69,9 +74,27 @@ export default function View({ product }) {
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>{product.title}</Typography>
           <Typography variant="h6" sx={{ mb: 1 }} >{product.brand}</Typography>
           <Typography sx={{ mb: 2, textAlign: 'justify', color: 'gray' }}>{product.description}</Typography>
+          {product.stock[0].size.length > 0 ? (<TextField
+            id="outlined-select-currency"
+            select
+            color="secondary"
+            label="Talla"
+            helperText="Por favor seleccione una talla."
+            onChange={(e) => setForm({ ...form, Size: e.target.value })}
+            value={form.Size || ''}
+            sx={{ mb: 3, mt: 2}}
+          >
+            {product.stock.map((option) => (
+              <MenuItem key={option.size} value={option.size}>
+                {option.size}
+              </MenuItem>
+            ))}
+          </TextField>): ''}
+          
+
           <Typography variant="h5" bgcolor="secondary" sx={{ mb: 4 }} >$ {product.price}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-           
+
             <ButtonGroup>
               <Button
                 onClick={() => {
@@ -92,11 +115,11 @@ export default function View({ product }) {
               </Button>
             </ButtonGroup>
             <Button onClick={() => {
-              addToCart(product._id, product.title, "XXL", itemCount);
-            }} 
-            color="secondary" variant="outlined" sx={{width: { sm: '40%', xs: '100%'}, mt:4}}>
-            <ShoppingCartIcon fontSize="small" sx={{mr: 2}} />
-            Agregar al carro
+              addToCart(product._id, product.title, form.Size, itemCount);
+            }}
+              color="secondary" variant="outlined" sx={{ width: { sm: '40%', xs: '100%' }, mt: 4 }}>
+              <ShoppingCartIcon fontSize="small" sx={{ mr: 2, fontWeight: 700 }} />
+              Agregar al carro
             </Button>
           </Box>
         </Grid>

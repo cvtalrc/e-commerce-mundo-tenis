@@ -7,6 +7,7 @@ import { useContext } from "react";
 export default function Categories() {
     const { sport, category } = useParams();
     const { products } = useContext(ProductsContext)
+    console.log(products)
     const productsCategory = products.filter((productF) => (productF.category === category) && (productF.sport === sport));
     
     return (
