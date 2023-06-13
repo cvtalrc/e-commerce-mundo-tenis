@@ -4,65 +4,60 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { helpHttp } from "../../helpers/helpHttp";
-
-const initialForm = {
-  User: "",
-  TitleProduct: "",
-  Size: "",
-  Quantity: ""
-};
+import CartContext from "../../context/CartContext"; 
 
 export default function View({ product }) {
+  const {addToCart, form, setForm } = useContext(CartContext)
   const [itemCount, setItemCount] = useState(1);
-  const [addToCartTrigger, setAddToCartTrigger] = useState(false);
-  const [form, setForm] = useState(initialForm);
 
-  const handleReset = (e) => {
-    setForm(initialForm);
-  };
+  let formattedPrice = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  const email = localStorage.getItem("userEmail");
-  const api = helpHttp();
-  const url = "Http://localhost:3000/API/cart/add";
+  // const handleReset = (e) => {
+  //   setForm(initialForm);
+  // };
 
-  const addToCart = (_id, title, size, quantity) => {
-    form.User = email
-    form.TitleProduct = title
-    form.Size = size
-    form.Quantity = quantity
+  // const email = localStorage.getItem("userEmail");
+  // const api = helpHttp();
+  // const url = "Http://localhost:3000/API/cart/add";
 
-    console.log({ ...form })
+  // const addToCart = (_id, title, size, quantity) => {
+  //   form.User = email
+  //   form.TitleProduct = title
+  //   form.Size = size
+  //   form.Quantity = quantity
 
-    let options = {
-      body: form,
-      headers: { "content-type": "application/json" },
-    };
+  //   console.log({ ...form })
 
-    api
-      .post(url, options)
-      .then((res) => {
-        if (!res.err) {
-          console.log(res);
-          setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+  //   let options = {
+  //     body: form,
+  //     headers: { "content-type": "application/json" },
+  //   };
 
-    handleReset()
-  };
+  //   api
+  //     .post(url, options)
+  //     .then((res) => {
+  //       if (!res.err) {
+  //         console.log(res);
+  //         setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
 
-  useEffect(() => {
-    if (addToCartTrigger) {
-      setAddToCartTrigger(false); // Reinicia el estado para futuras llamadas
-    }
-  }, [addToCartTrigger]);
+  //   handleReset()
+  // };
 
-  const handleChange = (e) => {
-    form.Size = e.target.value
-    console.log(form.Size)
-  };
+  // useEffect(() => {
+  //   if (addToCartTrigger) {
+  //     setAddToCartTrigger(false); // Reinicia el estado para futuras llamadas
+  //   }
+  // }, [addToCartTrigger]);
+
+  // const handleChange = (e) => {
+  //   form.Size = e.target.value
+  //   console.log(form.Size)
+  // };
 
   return (
     <Container sx={{ pt: 10, pb: 10 }}>
@@ -92,7 +87,7 @@ export default function View({ product }) {
           </TextField>): ''}
           
 
-          <Typography variant="h5" bgcolor="secondary" sx={{ mb: 4 }} >$ {product.price}</Typography>
+          <Typography variant="h5" bgcolor="secondary" sx={{ mb: 4 }} >$ {formattedPrice}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 
             <ButtonGroup>
