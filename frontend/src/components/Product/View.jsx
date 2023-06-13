@@ -118,7 +118,7 @@ export default function View({ product }) {
               addToCart(product._id, product.title, form.Size, itemCount);
             }}
               color="secondary" variant="outlined" sx={{ width: { sm: '40%', xs: '100%' }, mt: 4 }}>
-              <ShoppingCartIcon fontSize="small" sx={{ mr: 2, fontWeight: 700 }} />
+              <ShoppingCartIcon fontSize="small" sx={{ mr: 2 }} />
               Agregar al carro
             </Button>
           </Box>

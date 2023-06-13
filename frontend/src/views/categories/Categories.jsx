@@ -8,21 +8,25 @@ export default function Categories() {
     const { sport, category } = useParams();
     const { products } = useContext(ProductsContext)
     console.log(products)
-    const productsCategory = products.filter((productF) => (productF.category === category) && (productF.sport === sport));
-    
+
+    const productsCategory = products!= null ? products.filter((productF) => (productF.category === category) && (productF.sport === sport)) : 0;
+
     return (
         <>
-            <Container sx={{ pt: 5, pb: 5 }}>
-                <Typography variant="h4" sx={{ fontWeight: 700, mb: 5 }} >{category}</Typography>
-                <Grid container>
-                    <Grid md={3} sm={3} sx={{p: 1}} item>
-                        <Typography> Opciones para filtrar</Typography>
+            {
+                products != null &&
+                <Container sx={{ pt: 5, pb: 5 }}>
+                    <Typography variant="h4" sx={{ fontWeight: 700, mb: 5 }} >{category}</Typography>
+                    <Grid container>
+                        <Grid md={3} sm={3} sx={{ p: 1 }} item>
+                            <Typography> Opciones para filtrar</Typography>
+                        </Grid>
+                        <Grid md={9} sm={9} xs={12} sx={{ p: 1 }} item>
+                            <PaginationCard key={`sale`} products={productsCategory} type={`categories`} />
+                        </Grid>
                     </Grid>
-                    <Grid md={9} sm={9} xs={12} sx={{p: 1}} item>
-                        <PaginationCard key={`sale`} products={productsCategory} type={`categories`} />
-                    </Grid>
-                </Grid>
-            </Container>
+                </Container>
+            }
         </>
     )
 }

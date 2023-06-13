@@ -17,7 +17,7 @@ const UserProvider = ({ children }) => {
         api
             .get(url)
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 if (!res.err) {
                     setUsers(res);
                     setError(null);

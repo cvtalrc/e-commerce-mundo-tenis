@@ -1,12 +1,19 @@
 import { NavLink } from "react-router-dom";
 import Divider from '@mui/material/Divider';
 import { ListItemButton, ListItemText, Collapse, List } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
+import ProductsContext from "../../context/ProductsContext";
 
 export default function ListCategoriesSport({ sport, SetOpenMenu }) {
-    //sport define la consulta al back, por el momento se declaran ambos deportes 
-    const [categories, setCategories] = useState(null)
+
+    const { categoriesTenis, categoriesPadel } = useContext(ProductsContext)
+    let categories = []
+    if(sport === 'Tenis'){
+        categories = categoriesTenis
+    }else {
+        categories = categoriesPadel
+    }
 
     const [open, setOpen] = useState(false);
 
@@ -14,20 +21,7 @@ export default function ListCategoriesSport({ sport, SetOpenMenu }) {
         setOpen(!open);
     };
 
-    // let categories = [];
-    // console.log(sport);
-    if (sport === 'Tenis') {
-        setCategories(["Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"])
-        // categories = [
-        //     "Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"
-        // ]
-    } else if (sport === 'Padel')
-        setCategories(["Palas", "Bolsos", "Pelotas", "Textiles", "Zapatillas", "Accesorios"])
-    // categories = [
-    //     "Palas", "Bolsos", "Pelotas", "Textiles", "Zapatillas", "Accesorios"
-    // ]
-
-    console.log(categories)
+    //console.log(categories)
 
     return (
         <div>
@@ -36,12 +30,12 @@ export default function ListCategoriesSport({ sport, SetOpenMenu }) {
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
+                <List key={sport} component="div" disablePadding>
 
                     {categories.map(category => ( //agregar iconos y links
-                        <>
-
-                            <ListItemButton sx={{ pl: 4 }}
+                            <ListItemButton
+                                key={category}
+                                sx={{ pl: 4 }}
                                 component={NavLink}
                                 to={`/${sport}/${category}`}
                                 onClick={() => SetOpenMenu(false)}>
@@ -52,11 +46,9 @@ export default function ListCategoriesSport({ sport, SetOpenMenu }) {
                                 />
 
                             </ListItemButton>
-
-                        </>
-
                     ))}
                     <ListItemButton sx={{ pl: 4 }}
+                        key={sport}
                         component={NavLink}
                         to={`/sport/${sport}`}
                         onClick={() => SetOpenMenu(false)}>
