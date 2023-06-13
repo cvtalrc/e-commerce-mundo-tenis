@@ -16,6 +16,7 @@ import { Modal } from './components/Alerts/Modal';
 import { ProductsProvider } from './context/ProductsContext';
 import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
+import { CartProvider } from './context/CartContext';
 
 const navArrayLinks = [
     {
@@ -87,6 +88,7 @@ function App() {
         <React.Fragment>
             <UserProvider>
             <ProductsProvider>
+                <CartProvider>
                 <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout} />
                 <Routes>
                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
@@ -100,6 +102,7 @@ function App() {
                     <Route path="/search" element={<Search/>} />
                 </Routes>
                 <Footer />
+                </CartProvider>
             </ProductsProvider>
             </UserProvider>
         </React.Fragment>

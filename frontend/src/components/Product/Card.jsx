@@ -3,8 +3,10 @@ import { NavLink } from "react-router-dom";
 
 export default function Card({ product }) {
 
-  const priceSale = product.price - (product.price * (product.percentageSale / 100))
-
+  const priceSale = parseFloat((product.price - (product.price * (product.percentageSale / 100))).toFixed(0));
+  let formattedPriceSale = priceSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  let formattedPrice = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  
   return (
     <List key={product._id} to={`/${product.sport}/${product.category}/${product._id}`} component={NavLink} sx={{ textDecoration: 'none', color: 'black' }}>
       <Box sx={{ padding: 3, textAlign: 'center', border: '1px solid #bebebe', borderRadius: 1 }}>
@@ -13,11 +15,11 @@ export default function Card({ product }) {
         <Typography sx={{ mb: 1 }}>{product.brand}</Typography>
         {product.sale ?
           (<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Typography color="red" sx={{ fontWeight: '700', whiteSpace: 'nowrap' }} >$ {priceSale}</Typography>
-            <Typography color="secondary" sx={{ fontWeight: '700', textDecoration: 'line-through', ml: 1 }}>$ {product.price} </Typography>
+            <Typography color="red" sx={{ fontWeight: '700', whiteSpace: 'nowrap' }} >$ {formattedPriceSale}</Typography>
+            <Typography color="secondary" sx={{ fontWeight: '700', textDecoration: 'line-through', ml: 1 }}>$ {formattedPrice} </Typography>
           </Box>)
           :
-          (<Typography color="secondary" sx={{ fontWeight: '700' }} > $ {product.price}</Typography>)
+          (<Typography color="secondary" sx={{ fontWeight: '700' }} > $ {formattedPrice}</Typography>)
         }
 
       </Box>
