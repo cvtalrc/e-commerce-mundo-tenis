@@ -20,9 +20,8 @@ export default function NavListDrawer(SetOpenMenu) {
             >
 
                 {sports.map((sport) => (
-                    <>
                         <ListCategoriesSport key={sport} sport={sport} SetOpenMenu={SetOpenMenu} />
-                    </>
+                    
                 ))}
 
                 <ListItemButton
