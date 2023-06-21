@@ -63,8 +63,8 @@ export default function Filter({ products, brands, dataFilter, setDataFilter }) 
 
     return (
         <Grid md={2} sm={2} sx={{ pt: 1, pr:1 }} item>
-            <Box sx={{ backgroundColor: "#ebebed", borderRadius: 1, display: 'flex',justifyContent:'center',mb: 2 }}>
-                <Typography variant="body1" sx={{ fontWeight: 700, p: 1 }}>FILTRAR</Typography>
+            <Box sx={{ backgroundColor: "secondary.main", borderRadius: 1, display: 'flex',justifyContent:'center',mb: 2 }}>
+                <Typography variant="body1" sx={{ fontWeight: 700, p: 1, color: 'white' }}>FILTRAR</Typography>
             </Box>
             <Box sx={{ padding: 3, border: '1px solid #bebebe', borderRadius: 1, display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="body1" sx={{ fontWeight: 700, mb: 1 }}>MARCA</Typography>

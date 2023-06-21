@@ -9,7 +9,7 @@ export default function PaginationCard({ products, type }) {
     if (type === 'sale') {
         PER_PAGE = 6;
     } else if(type === 'categories'){
-        PER_PAGE = 8;
+        PER_PAGE = 12;
     }
 
     let count = Math.ceil(products.length / PER_PAGE);

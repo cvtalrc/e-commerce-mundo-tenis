@@ -25,113 +25,116 @@ export default function Navbar({ userName, handleLogout }) {
         <>
             <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Toolbar>
-                    <Container maxWidth="xl" sx={{display:'flex', alignItems: 'center', m:0, pt:'10px'}}>
-                        <img src={logo} width={120} height={90} sx={{marginTop:'10px'}} />
-                    </Container>
-                    <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Container maxWidth="xl" sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', m: 0, pt: '10px' }}>
+                            <img src={logo} width={120} height={90} sx={{ marginTop: '10px' }} />
+                        </Box>
+                        <Box maxWidth="lg" sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', m: 0, pt: '10px'}}>
+                            <Search>
+                                <form>
+                                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <StyledInputBase
+                                            placeholder="Buscar..."
+                                            inputProps={{ 'aria-label': 'buscar' }}
+                                            onChange={handleChangeSearch}
+                                        />
+                                        <Button color="inherit" size="small" onClick={handleSubmitSearch}> <SearchIconWrapper><SearchIcon /></SearchIconWrapper></Button>
+                                    </Box>
+                                </form>
+                            </Search>
+                        </Box>
+                        <Box maxWidth="lg" sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
 
-                        <Search>
-                            <form>
-                                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                                    <StyledInputBase
-                                        placeholder="Buscar..."
-                                        inputProps={{ 'aria-label': 'buscar' }}
-                                        onChange={handleChangeSearch}
-                                    />
-                                    <Button color="inherit" size="small" onClick={handleSubmitSearch}> <SearchIconWrapper><SearchIcon /></SearchIconWrapper></Button>
-                                </Box>
-                            </form>
-                        </Search>
-                        {/* <Box sx={{ flexGrow: 1 }}></Box> */}
-                        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                            <Button
-                                color="inherit"
-                                component={NavLink}
-                                to="/"
-                            >
-                                {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
-                                inicio
-
-                            </Button>
-                            {userName ? (
-                                <>
-                                    <Button
-                                        color="inherit"
-                                        sx={{
-                                            '&:hover': {
-                                                cursor: 'auto',
-                                            },
-                                            pointerEvents: 'none'
-                                        }}
-                                    >
-                                        ¡Hola, {userName}!
-                                    </Button>
-
-                                    <Button
-                                        color="inherit"
-                                        onClick={handleLogout}
-                                    >
-                                        Cerrar sesión
-                                    </Button>
-                                </>
-                            ) : (
+                            <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
                                 <Button
                                     color="inherit"
                                     component={NavLink}
-                                    to="/login"
+                                    to="/"
                                 >
-                                    Iniciar sesión
+                                    {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
+                                    inicio
+
                                 </Button>
-                            )}
+                                {userName ? (
+                                    <>
+                                        <Button
+                                            color="inherit"
+                                            sx={{
+                                                '&:hover': {
+                                                    cursor: 'auto',
+                                                },
+                                                pointerEvents: 'none'
+                                            }}
+                                        >
+                                            ¡Hola, {userName}!
+                                        </Button>
+
+                                        <Button
+                                            color="inherit"
+                                            onClick={handleLogout}
+                                        >
+                                            Cerrar sesión
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <Button
+                                        color="inherit"
+                                        component={NavLink}
+                                        to="/login"
+                                    >
+                                        Iniciar sesión
+                                    </Button>
+                                )}
+                            </Box>
+                            <Button color="inherit">
+                                <Badge badgeContent={0} color="error" onClick={() => SetOpenShoppingCart(true)} showZero >
+                                    <ShoppingCartIcon
+                                        color="inherit"
+                                        size="large"
+                                    >
+                                    </ShoppingCartIcon>
+                                </Badge>
+                            </Button>
+
+
+                            <IconButton
+                                color="inherit"
+                                size="large"
+                                onClick={() => SetOpenMenu(true)}
+                                sx={{ display: { xs: "flex", sm: "none" } }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
                         </Box>
-                        <Button color="inherit">
-                            <Badge badgeContent={0} color="error" onClick={() => SetOpenShoppingCart(true)} showZero >
-                                <ShoppingCartIcon
-                                    color="inherit"
-                                    size="large"
-                                >
-                                </ShoppingCartIcon>
-                            </Badge>
-                        </Button>
-
-
-                        <IconButton
-                            color="inherit"
-                            size="large"
-                            onClick={() => SetOpenMenu(true)}
-                            sx={{ display: { xs: "flex", sm: "none" } }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
                     </Container>
                 </Toolbar>
                 <Drawer
-                open={openMenu}
-                anchor="right"
-                position="static"
-                onClose={() => SetOpenMenu(false)}>
-                <NavListDrawer SetOpenMenu={SetOpenMenu} />
-            </Drawer>
-            <Drawer
-                open={openShoppingCart}
-                anchor="right"
-                onClose={() => SetOpenShoppingCart(false)}>
-                <ShoppingCart SetOpenShoppingCart={SetOpenShoppingCart} />
-            </Drawer>
-            <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "#454546", color: "white" }}>
-                {sports.map((sport) => (
-                    <ButtonMenu key={sport} sport={sport}></ButtonMenu>
-                ))}
+                    open={openMenu}
+                    anchor="right"
+                    position="static"
+                    onClose={() => SetOpenMenu(false)}>
+                    <NavListDrawer SetOpenMenu={SetOpenMenu} />
+                </Drawer>
+                <Drawer
+                    open={openShoppingCart}
+                    anchor="right"
+                    onClose={() => SetOpenShoppingCart(false)}>
+                    <ShoppingCart SetOpenShoppingCart={SetOpenShoppingCart} />
+                </Drawer>
+                <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "#454546", color: "white" }}>
+                    {sports.map((sport) => (
+                        <ButtonMenu key={sport} sport={sport}></ButtonMenu>
+                    ))}
 
-                <Button
-                    color="inherit"
-                    component={NavLink}
-                    to="/sobre-nosotros"
-                >Sobre Nosotros</Button>
-            </Box>
+                    <Button
+                        color="inherit"
+                        component={NavLink}
+                        to="/sobre-nosotros"
+                    >Sobre Nosotros</Button>
+                </Box>
             </AppBar>
 
-            
+
         </>
     )
 }

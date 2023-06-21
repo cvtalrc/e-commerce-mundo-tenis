@@ -6,10 +6,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(2)})`,
+        paddingLeft: `calc(1em + ${theme.spacing(1)})`,
         transition: theme.transitions.create('width'),
-        width: '100%',
-        
+        width: '40vw',
     },
 }));
 

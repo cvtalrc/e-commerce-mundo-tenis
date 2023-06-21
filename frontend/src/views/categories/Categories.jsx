@@ -26,10 +26,10 @@ export default function Categories() {
                         <Grid container>
                             <Filter products={productsCategory} brands={brands} category={category} sport={sport} dataFilter={dataFilter} setDataFilter={setDataFilter} />
                             {dataFilter.length === 0 ?
-                                (<Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>
+                                (<Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>
                                     <PaginationCard key={`sale`} products={productsCategory} type={`categories`} />
                                 </Grid>) :
-                                (<Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>
+                                (<Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>
                                     <PaginationCard key={`sale`} products={dataFilter} type={`categories`} />
                                 </Grid>)
                             }

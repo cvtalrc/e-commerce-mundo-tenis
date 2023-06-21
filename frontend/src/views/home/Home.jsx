@@ -26,17 +26,13 @@ export default function Home() {
 
     const containerStyles = {
         width: "100%",
-        height: "330px",
+        height: "420px",
         marginBottom: "48px",
         marginTop: "18px"
     };
 
     return (
         <>
-            {/* <Box sx={containerStyles}>
-                <ImageSlider slides={slides} />
-            </Box> */}
-
             {/* mejorar loading y error */}
             {loading && <Box sx={{ display: 'flex', margin: 100 }}>
                 <CircularProgress />
@@ -47,9 +43,6 @@ export default function Home() {
             {
                 products &&
                 <Box sx={{ mb: 1 }}>
-                    {/* <Box sx={containerStyles}>
-                        <ImageSlider slides={slides} />
-                    </Box> */}
                     <Container maxWidth="xl" sx={{ bgcolor: 'white', mt: 2,borderRadius: 1 }}>
                         <Box sx={containerStyles} >
                             <ImageSlider slides={slides} />

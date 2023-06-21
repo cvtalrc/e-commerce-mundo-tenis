@@ -30,7 +30,7 @@ export default function Sports() {
                 <Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>
                   <PaginationCard key={`sale`} products={productsSport} type={`categories`} />
                 </Grid> :
-                (<Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>
+                (<Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>
                   <PaginationCard key={`sale`} products={dataFilter} type={`categories`} />
                 </Grid>)
               }
