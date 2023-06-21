@@ -78,7 +78,9 @@ function App() {
         )
         if (result.confirmed) {
             setUserName(null)
+            setEmail(null)
             localStorage.removeItem("userName");
+            localStorage.removeItem("userEmail");
             navigate('/')
         }
 
