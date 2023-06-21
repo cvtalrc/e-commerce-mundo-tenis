@@ -62,9 +62,9 @@ export default function Filter({ products, brands, dataFilter, setDataFilter }) 
     };
 
     return (
-        <Grid md={3} sm={3} sx={{ pt: 1, pr:1 }} item>
-            <Box sx={{ backgroundColor: "#ebebed", borderRadius: 1, flexGrow:1 }}>
-                <Typography variant="body1" sx={{ fontWeight: 700, mb: 2, p: 1 }}>FILTRAR</Typography>
+        <Grid md={2} sm={2} sx={{ pt: 1, pr:1 }} item>
+            <Box sx={{ backgroundColor: "#ebebed", borderRadius: 1, display: 'flex',justifyContent:'center',mb: 2 }}>
+                <Typography variant="body1" sx={{ fontWeight: 700, p: 1 }}>FILTRAR</Typography>
             </Box>
             <Box sx={{ padding: 3, border: '1px solid #bebebe', borderRadius: 1, display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="body1" sx={{ fontWeight: 700, mb: 1 }}>MARCA</Typography>
@@ -89,7 +89,6 @@ export default function Filter({ products, brands, dataFilter, setDataFilter }) 
                  <Box sx={{ pl:1, pr:1}}>     
                 <Slider
                     size="medium"
-                    color="secondary"
                     value={priceRange}
                     onChange={handlePriceChange}
                     min={minPrice}

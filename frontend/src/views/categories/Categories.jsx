@@ -19,10 +19,10 @@ export default function Categories() {
             {
                 products != null && brands != null && productsCategory !== null &&
                 <>
-                    <Container sx={{ mt: 2, mb: 2, p: 0 }}>
+                    <Container maxWidth="xl" sx={{ mt: 2, mb: 2, p: 0 }}>
                         <Typography variant="h4" sx={{ fontWeight: 700, p: 0 }} >{category}</Typography>
                     </Container>
-                    <Container sx={{ pt: 1, border: '1px solid #bebebe', mt: 2, mb: 2 }}>
+                    <Container maxWidth="xl" sx={{ pt: 1, mt: 2, mb: 2 }}>
                         <Grid container>
                             <Filter products={productsCategory} brands={brands} category={category} sport={sport} dataFilter={dataFilter} setDataFilter={setDataFilter} />
                             {dataFilter.length === 0 ?

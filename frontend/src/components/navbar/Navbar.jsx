@@ -25,8 +25,11 @@ export default function Navbar({ userName, handleLogout }) {
         <>
             <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}>
                 <Toolbar>
+                    <Container maxWidth="xl" sx={{display:'flex', alignItems: 'center', m:0, pt:'10px'}}>
+                        <img src={logo} width={120} height={90} sx={{marginTop:'10px'}} />
+                    </Container>
                     <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {/* <img src={logo} /> */}
+
                         <Search>
                             <form>
                                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -102,9 +105,7 @@ export default function Navbar({ userName, handleLogout }) {
                         </IconButton>
                     </Container>
                 </Toolbar>
-            </AppBar>
-
-            <Drawer
+                <Drawer
                 open={openMenu}
                 anchor="right"
                 position="static"
@@ -117,7 +118,7 @@ export default function Navbar({ userName, handleLogout }) {
                 onClose={() => SetOpenShoppingCart(false)}>
                 <ShoppingCart SetOpenShoppingCart={SetOpenShoppingCart} />
             </Drawer>
-            <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "secondary.main", color: "white" }}>
+            <Box position="static" sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: "center", paddingLeft: 5, backgroundColor: "#454546", color: "white" }}>
                 {sports.map((sport) => (
                     <ButtonMenu key={sport} sport={sport}></ButtonMenu>
                 ))}
@@ -128,6 +129,9 @@ export default function Navbar({ userName, handleLogout }) {
                     to="/sobre-nosotros"
                 >Sobre Nosotros</Button>
             </Box>
+            </AppBar>
+
+            
         </>
     )
 }

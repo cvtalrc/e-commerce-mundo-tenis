@@ -20,14 +20,14 @@ export default function Sports() {
     <>
       {products != null &&
         <>
-          <Container sx={{ mt: 2, mb: 2, p:0 }}>
+          <Container maxWidth="xl" sx={{ mt: 2, mb: 2, p:0 }}>
             <Typography variant="h4" sx={{ fontWeight: 700, p:0}} >{sport}</Typography>
           </Container>
-          <Container sx={{ pt: 1, border: '1px solid #bebebe', mt: 2, mb: 2 }}>
+          <Container maxWidth="xl" sx={{ pt: 1, mt: 2, mb: 2 }}>
             <Grid container>
               <Filter products={productsSport} brands={brands} dataFilter={dataFilter} setDataFilter={setDataFilter} />
               {dataFilter.length === 0 ?
-                <Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>
+                <Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>
                   <PaginationCard key={`sale`} products={productsSport} type={`categories`} />
                 </Grid> :
                 (<Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>

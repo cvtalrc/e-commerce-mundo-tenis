@@ -63,7 +63,7 @@ export default function View({ product }) {
   // };
 
   return (
-    <Container sx={{ p: 4, border: '1px solid #bebebe', mt: 4, mb: 4}}>
+    <Container sx={{ p: 4, mt: 4, mb: 4}}>
       <Grid container >
         <Grid item md={6}>
           <img src={product.imgUrl}></img>
