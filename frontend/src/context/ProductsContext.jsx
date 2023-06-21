@@ -23,7 +23,7 @@ const ProductsProvider = ({ children }) => {
         api
             .get(url)
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 if (!res.err) {
                     setProducts(res);
                     const filteredProducts = res.filter((product) => product.sale === true);

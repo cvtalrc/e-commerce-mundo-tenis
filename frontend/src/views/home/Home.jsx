@@ -9,7 +9,7 @@ export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
 
     return (
-            <Container>
+            <Container sx={{ border: '1px solid #bebebe', mb:2, mt:2}}>
                 {/* mejorar loading y error */}
                 {loading && <Box sx={{ display: 'flex', margin: 100 }}>
                     <CircularProgress />

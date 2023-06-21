@@ -10,6 +10,9 @@ export default function View({ product }) {
   const {addToCart, form, setForm } = useContext(CartContext)
   const [itemCount, setItemCount] = useState(1);
 
+  const priceSale = parseFloat((product.price - (product.price * (product.percentageSale / 100))).toFixed(0));
+  let formattedPriceSale = priceSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
   let formattedPrice = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   // const handleReset = (e) => {
@@ -60,7 +63,7 @@ export default function View({ product }) {
   // };
 
   return (
-    <Container sx={{ pt: 10, pb: 10 }}>
+    <Container sx={{ p: 4, border: '1px solid #bebebe', mt: 4, mb: 4}}>
       <Grid container >
         <Grid item md={6}>
           <img src={product.imgUrl}></img>
@@ -85,11 +88,17 @@ export default function View({ product }) {
               </MenuItem>
             ))}
           </TextField>): ''}
-          
 
-          <Typography variant="h5" bgcolor="secondary" sx={{ mb: 4 }} >$ {formattedPrice}</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          {product.sale ?
+          (<Box sx={{ display: 'flex', justifyContent: 'left' }}>
+            <Typography color="red"  variant="h5" sx={{ fontWeight: '700', whiteSpace: 'nowrap' }} >$ {formattedPriceSale}</Typography>
+            <Typography color="secondary"  variant="h5" sx={{ fontWeight: '700', textDecoration: 'line-through', ml: 1 }}>$ {formattedPrice} </Typography>
+          </Box>)
+          :
+          (<Typography color="secondary" variant="h5" sx={{ fontWeight: '700' }} > $ {formattedPrice}</Typography>)
+        }
 
+          <Box sx={{ display: 'flex', flexDirection: 'column', mt: 5 }}>
             <ButtonGroup>
               <Button
                 onClick={() => {

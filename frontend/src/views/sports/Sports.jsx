@@ -1,27 +1,43 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductsContext from '../../context/ProductsContext';
 import { Typography, Container, Box, Grid } from "@mui/material";
 import PaginationCard from "../../components/Product/PaginationCard";
+import Filter from '../../components/Product/Filter';
 
 export default function Sports() {
   const { sport } = useParams();
+  console.log(sport)
   const { products } = useContext(ProductsContext)
-  const productsSport = products.filter((productF) => productF.sport === sport);
+  console.log(products)
+  const [dataFilter, setDataFilter] = useState([])
+
+  const productsSport = products != null ? products.filter((productF) => productF.sport === sport) : null
+
+  const brands = productsSport != null ? [...new Set(productsSport.map(objeto => objeto.brand))] : null
 
   return (
     <>
-      <Container sx={{ pt: 5, pb: 5 }}>
-        <Typography variant="h4" sx={{ fontWeight: 700, mb: 5 }} >{sport}</Typography>
-        <Grid container>
-          <Grid md={3} sm={3} sx={{ p: 1 }} item>
-            <Typography> Opciones para filtrar</Typography>
-          </Grid>
-          <Grid md={9} sm={9} xs={12} sx={{ p: 1 }} item>
-            <PaginationCard key={`sale`} products={productsSport} type={`categories`} />
-          </Grid>
-        </Grid>
-      </Container>
+      {products != null &&
+        <>
+          <Container sx={{ mt: 2, mb: 2, p:0 }}>
+            <Typography variant="h4" sx={{ fontWeight: 700, p:0}} >{sport}</Typography>
+          </Container>
+          <Container sx={{ pt: 1, border: '1px solid #bebebe', mt: 2, mb: 2 }}>
+            <Grid container>
+              <Filter products={productsSport} brands={brands} dataFilter={dataFilter} setDataFilter={setDataFilter} />
+              {dataFilter.length === 0 ?
+                <Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>
+                  <PaginationCard key={`sale`} products={productsSport} type={`categories`} />
+                </Grid> :
+                (<Grid md={9} sm={9} xs={12} sx={{ pt: 1, pl: 1 }} item>
+                  <PaginationCard key={`sale`} products={dataFilter} type={`categories`} />
+                </Grid>)
+              }
+            </Grid>
+          </Container>
+        </>
+      }
     </>
   )
 }
