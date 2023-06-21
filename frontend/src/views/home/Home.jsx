@@ -4,12 +4,27 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { helpHttp } from "../../helpers/helpHttp";
 import PaginationCard from "../../components/Product/PaginationCard";
 import ProductsContext from "../../context/ProductsContext";
+import ImageSlider from "../../components/imageSlider/ImageSlider";
+import yonex from "../../img/yonex.jpeg"
+import dropShot from "../../img/drop-shot.jpeg"
 
 export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
 
+    const slides = [
+        { url: yonex, title: "yonex" },
+        { url: dropShot, title: "dropShot" }
+      ];
+
+      const containerStyles = {
+        width: "100%",
+        height: "320px",
+        marginBottom: "48px",
+        marginTop: "24px"
+      };
+
     return (
-            <Container sx={{ border: '1px solid #bebebe', mb:2, mt:2}}>
+            <Container sx={{ border: '1px solid #bebebe', mb:2, mt:2, bgcolor: 'white'}}>
                 {/* mejorar loading y error */}
                 {loading && <Box sx={{ display: 'flex', margin: 100 }}>
                     <CircularProgress />
@@ -19,14 +34,10 @@ export default function Home() {
                 )}
                 {
                     products &&
-                    <Box sx={{ mb: 4 }}>
-                        {/* <Box sx={{ bgcolor: "#f6f5f2", height: '30vh', width: '100wh', marginBottom: ".5rem", display: 'flex', justifyContent: 'center' }}>
-                        <Typography
-                            color='inherit'
-                            variant="h4"
-                            sx={{ padding: 15 }}
-                        ></Typography>
-                    </Box> */}
+                    <Box sx={{ mb: 1 }}>
+                        <Box sx={containerStyles}>
+                        <ImageSlider slides={slides} />
+                        </Box>
                         <Box sx={{ backgroundColor: "#ebebed", borderRadius: 1 }}>
                             <Typography variant="body1" sx={{ fontWeight: 700, mt: 2, mb: 2, p: 1 }}>OFERTAS</Typography>
                         </Box>
