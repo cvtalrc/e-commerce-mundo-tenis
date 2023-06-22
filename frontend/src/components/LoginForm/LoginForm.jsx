@@ -10,12 +10,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Toast } from '../Alerts/Toast';
+import UserContext from '../../context/UserContext';
 
 function Copyright(props) {
   return (
@@ -33,18 +34,29 @@ function Copyright(props) {
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function SignIn() {
+  const initialForm = {
+    email: "",
+    pass: ""
+  };
+
+  const [form, setForm] = useState(initialForm);
   const [errorMsg, setErrorMessage] = useState('');
-  const { handleLogin } = useContext(UserContext);
+  const { logIn } = useContext(UserContext);
 
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+  });
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    
-    const email = data.get('email')
+    console.log(form)
 
-    if(!EmailValidator.validate(email)) {
+    if(!EmailValidator.validate(form.email)) {
       setErrorMessage("Formato de email inválido")
 
       // Desaparecer el mensaje de error después de 3 segundos
@@ -53,9 +65,11 @@ export default function SignIn() {
       }, 3000);
 
       return
-    } 
+    } else {
+      logIn(form);
+    }
 
-    handleLogin();
+    
   };
 
   return (
@@ -89,9 +103,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
               label="Correo electrónico"
+              onChange={handleChange}
               name="email"
+              value={form.email}
               autoComplete="email"
               autoFocus
               type="email"
@@ -102,10 +117,11 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="pass"
               label="Contraseña"
+              onChange={handleChange}
+              value={form.pass}
               type="password"
-              id="password"
               autoComplete="current-password"
               placeholder='**********'
             />

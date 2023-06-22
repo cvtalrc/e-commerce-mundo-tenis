@@ -56,7 +56,9 @@ async function sign_in(req, res) {
   if (!findUser) return res.status(200).send({ message: "El usuario no existe", status: "error" });
   if (findUser.pass != body.pass) return res.status(200).send({ message: "La contraseña no es correcta", status: "error" });
 
-  const accessToken = jwt.sign({ userId: findUser.id }, SECRET_KEY);
+  delete findUser.pass
+
+  const accessToken = jwt.sign({ userId: findUser.id, ...findUser.toJSON() }, SECRET_KEY);
   
   res.cookie('refreshToken', accessToken, {
     httpOnly: true,

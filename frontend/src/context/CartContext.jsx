@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import { useNavigate } from 'react-router-dom';
+import UserContext from "./UserContext";
 
 const CartContext = createContext();
 
@@ -11,6 +12,7 @@ const CartProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [addToCartTrigger, setAddToCartTrigger] = useState(false);
     const [delFromCartTrigger, setDelFromCartTrigger] = useState(false);
+    const { user } = useContext(UserContext);
     
     const initialForm = {
         User: "",
@@ -20,16 +22,23 @@ const CartProvider = ({ children }) => {
     };
     
     const [form, setForm] = useState(initialForm);
-
-    const email = localStorage.getItem('userEmail');
-
+    
+    const email = user != null ? user.email : '';
+    if (user != null) {
+        console.log("usuario dentro del contexto del carro ", user.email)
+    }
     let api = helpHttp();
     let url = `http://localhost:3000/api/cart/${email}`;
+    let options = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem(user)}`
+    }
 
     useEffect(() => {
         //setLoading(true);
+        
         api
-            .get(url)
+            .get(url, options)
             .then((res) => {
                 console.log(res);
                 if (!res.err) {
@@ -52,10 +61,14 @@ const CartProvider = ({ children }) => {
         form.Quantity = quantity
 
         console.log({ ...form })
+        console.log("token ls", localStorage.getItem(user))
 
         let options = {
         body: form,
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", 
+                    Authorization: `Bearer ${localStorage.getItem('user')}`
+        },
+
         };
 
         api
