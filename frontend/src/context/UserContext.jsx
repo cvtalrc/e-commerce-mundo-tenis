@@ -64,8 +64,7 @@ const UserProvider = ({ children }) => {
                       )
                     navigate('/');
                 } else {
-                    console.log(res)
-                    prompt(res.err)
+                    console.log(res.err)
                 } 
             })
             .catch(e => {
