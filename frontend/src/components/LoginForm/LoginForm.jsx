@@ -64,10 +64,7 @@ export default function SignIn({ handleLogin }) {
     .then((response) => {
       console.log('Respuesta del backend:', response.data);
       if(response.data.message == "Ingreso de usuario exitoso"){
-        const userName = response.data.name
-        const userEmail = response.data.email
-        handleLogin(userName, userEmail)
-        console.log(response.data.name)
+        handleLogin();
         Toast(
           'bottom-end',
           'success',
@@ -150,15 +147,15 @@ export default function SignIn({ handleLogin }) {
             <Grid container>
               <Grid item xs>
                 <Button href="#" 
-                variant="body2" 
+                variant="body1" 
                 component={NavLink}
                 to="/">
                   ¿Olvidaste la contraseña?
                 </Button>
               </Grid>
-              <Grid item>
+              <Grid item xs>
                 <Button
-                variant="body2"
+                variant="body1"
                 component={NavLink}
                 to="/register">
                   {"¿No tienes una cuenta? Regístrate"}
