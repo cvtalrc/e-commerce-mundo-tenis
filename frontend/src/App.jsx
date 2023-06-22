@@ -9,7 +9,6 @@ import Footer from "./components/footer/Footer";
 import React, { useEffect } from 'react';
 import Login from './views/login/Login';
 import Admin from './views/admin/Admin';
-import axios from "axios";
 import NewAccount from './views/register/Register';
 import { useState } from 'react'
 import { Modal } from './components/Alerts/Modal';
@@ -73,7 +72,7 @@ function App() {
     const handleLogout = async () => {
         const result = await Modal(
             'Confirmar cierre de sesión',
-            '¿Estás seguro que quieres cerrar sesión',
+            '¿Estás seguro/a que quieres cerrar sesión?',
             'warning',
         )
         if (result.confirmed) {

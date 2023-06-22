@@ -5,11 +5,11 @@ import { useState } from "react";
 
 export default function PaginationCard({ products, type }) {
     let [page, setPage] = useState(1);
-    let PER_PAGE = 8;
+    let PER_PAGE = 12;
     if (type === 'sale') {
-        PER_PAGE = 4;
+        PER_PAGE = 6;
     } else if(type === 'categories'){
-        PER_PAGE = 9;
+        PER_PAGE = 12;
     }
 
     let count = Math.ceil(products.length / PER_PAGE);
@@ -26,18 +26,18 @@ export default function PaginationCard({ products, type }) {
             <Grid container spacing={2}>
                 {type === 'categories' ?
                     (_DATA.currentData().map(product =>
-                        <Grid key={product._id} item md={4} sm={6} xs={6}> <Card key={product._id} product={product} /> </Grid>))
+                        <Grid key={product._id} item md={3} sm={3} xs={6}> <Card key={product._id} product={product} /> </Grid>))
                     :
 
                     (_DATA.currentData().map(product =>
-                        <Grid key={product._id} item md={3} sm={4} xs={6}> <Card key={product._id} product={product} /> </Grid>))
+                        <Grid key={product._id} item md={2} sm={4} xs={6}> <Card key={product._id} product={product} /> </Grid>))
 
                 }
 
             </Grid>
             <Box sx={{ display: "flex", justifyContent: "right" }}>
                 <Pagination
-                    sx={{ m: 2.5 }}
+                    sx={{ mt: 2.5, mb: 2.5 }}
                     count={count}
                     size="medium"
                     color="secondary"

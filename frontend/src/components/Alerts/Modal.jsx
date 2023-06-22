@@ -6,15 +6,20 @@ export const Modal = async (title, text, icon, content) => {
       text: text,
       icon: icon,
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      showConfirmButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#1989F3',
+      cancelButtonColor: '#6f6f6f',
     });
   
     if (result.isConfirmed) {
         await Swal.fire({
-            title: title,
+            title: 'Cierre de sesión exitoso',
             text: content,
-            icon: 'success'
+            icon: 'success',
+            timer: 3000,
+            showConfirmButton: false,
         });
         return {confirmed: true}
     } else {
@@ -22,7 +27,9 @@ export const Modal = async (title, text, icon, content) => {
             title: "Cierre de sesión",
             text: 'Se ha cancelado el cierre de sesión',
             icon: 'info',
-            timer: 1500
+            timer: 3000,
+            showCancelButton: false,
+            showConfirmButton: false,
         })
         return {confirmed: false}
     }

@@ -21,7 +21,16 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Lato, sans-serif',
-  }
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: 'white', // Color de fondo predeterminado
+        },
+      },
+    },
+  },
 });
 
 export default theme;
