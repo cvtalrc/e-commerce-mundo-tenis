@@ -6,7 +6,7 @@ import Sports from "./views/sports/Sports";
 import Product from "./views/product/Product";
 import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Login from './views/login/Login';
 import Admin from './views/admin/Admin';
 import NewAccount from './views/register/Register';
@@ -61,13 +61,7 @@ function App() {
         }
     }, []);
 
-    const handleLogin = (userName, userEmail) => {
-        setUserName(userName);
-        setEmail(userEmail)
-        localStorage.setItem("userName", userName);
-        localStorage.setItem("userEmail", userEmail);
-        
-    };
+    
 
     const handleLogout = async () => {
         const result = await Modal(

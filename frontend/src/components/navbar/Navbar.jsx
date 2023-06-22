@@ -14,8 +14,10 @@ import ButtonMenu from "../ButtonMenu/ButtonMenu"
 import { CloudDownloadSharp } from "@mui/icons-material";
 import ShoppingCart from "../shoppingCart/ShoppingCart";
 import ProductsContext from "../../context/ProductsContext";
+import UserContext from "../../context/UserContext";
 
 export default function Navbar({ userName, handleLogout }) {
+    const { user } = useContext(UserContext);
     const { handleChangeSearch, handleSubmitSearch } = useContext(ProductsContext)
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
@@ -55,7 +57,7 @@ export default function Navbar({ userName, handleLogout }) {
                                     inicio
 
                                 </Button>
-                                {userName ? (
+                                {user != null ? (
                                     <>
                                         <Button
                                             color="inherit"
@@ -66,7 +68,7 @@ export default function Navbar({ userName, handleLogout }) {
                                                 pointerEvents: 'none'
                                             }}
                                         >
-                                            ¡Hola, {userName}!
+                                            ¡Hola, {user.name}!
                                         </Button>
 
                                         <Button

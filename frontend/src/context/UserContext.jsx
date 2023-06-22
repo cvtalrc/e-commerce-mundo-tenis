@@ -30,12 +30,30 @@ const UserProvider = ({ children }) => {
     }, [url]);
 
     const getUser = (email) => {
-        const foundUser = users.find((user) => user.email === email);
+        const foundUser = users.filter((user) => user.email === email);
+        setUser(foundUser);
     }
+
+    const handleLogin = () => {
+        localStorage.setItem("mail", user.mail);
+        localStorage.setItem('name', user.name);
+    }
+
+    const handleLogOut = () => {
+        localStorage.removeItem('mail');
+        localStorage.removeItem('name');
+    }
+
+    // const createCart = (email) => {
+
+    // }
 
     const data = {
         users,
         getUser,
+        user,
+        handleLogin,
+        handleLogOut,
         error,
         loading
     };

@@ -23,12 +23,26 @@ const CartProvider = ({ children }) => {
 
     const email = localStorage.getItem('userEmail');
 
-    const handleReset = (e) => {
-        setForm(initialForm);
-    };
-
     let api = helpHttp();
     let url = `http://localhost:3000/api/cart/${email}`;
+
+    useEffect(() => {
+        //setLoading(true);
+        api
+            .get(url)
+            .then((res) => {
+                console.log(res);
+                if (!res.err) {
+                    setCartProducts(res.data.items);
+                    setTotalPrice(res.data.total);
+                    setError(null);
+                } else {
+                    setCartProducts(null);
+                    setError(res);
+                }
+                //setLoading(false);
+            });
+    }, [url]);
 
     const addToCart = (_id, title, size, quantity) => {
         url = `http://localhost:3000/API/cart/add`
@@ -49,14 +63,15 @@ const CartProvider = ({ children }) => {
         .then((res) => {
             if (!res.err) {
             console.log(res);
-            setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
+            setPr
+            //setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
             }
         })
         .catch((e) => {
             console.error(e);
         });
 
-        handleReset()
+        setForm(initialForm);
     };
 
 //     const delFromCart = (title, size, quantity) => { //eliminando de a uno
@@ -89,32 +104,14 @@ const CartProvider = ({ children }) => {
 //     //     const clearCart = () => {
 //     //  dispatch({ type: TYPES.CLEAR_CART });
 //    };
-    
-    useEffect(() => {
-        //setLoading(true);
-        api
-            .get(url)
-            .then((res) => {
-                console.log(res);
-                if (!res.err) {
-                    setCartProducts(res.data.items);
-                    setTotalPrice(res.data.total);
-                    setError(null);
-                } else {
-                    setCartProducts(null);
-                    setError(res);
-                }
-                //setLoading(false);
-            });
-    }, [url]);
 
-    useEffect(() => {
-        if (addToCartTrigger) {
-            setAddToCartTrigger(false); // Reinicia el estado para futuras llamadas
-        } else if (delFromCartTrigger) {
-            setDelFromCartTrigger(false);
-        }
-    }, [addToCartTrigger, delFromCartTrigger]);
+    // useEffect(() => {
+    //     if (addToCartTrigger) {
+    //         setAddToCartTrigger(false); // Reinicia el estado para futuras llamadas
+    //     } else if (delFromCartTrigger) {
+    //         setDelFromCartTrigger(false);
+    //     }
+    // }, [addToCartTrigger, delFromCartTrigger]);
 
 
     const data = {
