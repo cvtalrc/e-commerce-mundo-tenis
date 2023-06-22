@@ -10,47 +10,51 @@ const CartProvider = ({ children }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [addToCartTrigger, setAddToCartTrigger] = useState(false);
-    const [delFromCartTrigger, setDelFromCartTrigger] = useState(false);
     const { user } = useContext(UserContext);
-    
+
     const initialForm = {
         User: "",
         TitleProduct: "",
         Size: "",
         Quantity: ""
     };
-    
+
     const [form, setForm] = useState(initialForm);
-    
+
     const email = user != null ? user.email : '';
     if (user != null) {
         console.log("usuario dentro del contexto del carro ", user.email)
     }
     let api = helpHttp();
     let url = `http://localhost:3000/api/cart/${email}`;
-    let options = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem(user)}`
-    }
 
     useEffect(() => {
         //setLoading(true);
-        
-        api
-            .get(url, options)
-            .then((res) => {
-                console.log(res);
-                if (!res.err) {
-                    setCartProducts(res.data.items);
-                    setTotalPrice(res.data.total);
-                    setError(null);
-                } else {
-                    setCartProducts(null);
-                    setError(res);
-                }
-                //setLoading(false);
-            });
+        let options = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem('user')}`
+                // "cookies": `${localStorage.getItem('user')}`
+            }
+        }
+
+        if (email != '') {
+            api
+                .get(url, options)
+                .then((res) => {
+                    console.log(res);
+                    if (!res.err) {
+                        setCartProducts(res.data.items);
+                        setTotalPrice(res.data.total);
+                        setError(null);
+                    } else {
+                        setCartProducts(null);
+                        setError(res);
+                    }
+                    //setLoading(false);
+                });
+        }
+
     }, [url]);
 
     const addToCart = (_id, title, size, quantity) => {
@@ -61,62 +65,63 @@ const CartProvider = ({ children }) => {
         form.Quantity = quantity
 
         console.log({ ...form })
-        console.log("token ls", localStorage.getItem(user))
+        console.log("token ls", localStorage.getItem('user'))
 
         let options = {
-        body: form,
-        headers: { "content-type": "application/json", 
-                    Authorization: `Bearer ${localStorage.getItem('user')}`
-        },
+            body: form,
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem('user')}`
+            },
 
         };
 
         api
-        .post(url, options)
-        .then((res) => {
-            if (!res.err) {
-            console.log(res);
-            setCartProducts([...cartProducts, res]);
-            //setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
-            }
-        })
-        .catch((e) => {
-            console.error(e);
-        });
+            .post(url, options)
+            .then((res) => {
+                if (!res.err) {
+                    console.log(res);
+                    setCartProducts([...cartProducts, res]);
+                    //setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
 
         setForm(initialForm);
     };
 
-//     const delFromCart = (title, size, quantity) => { //eliminando de a uno
-//         url = "http://localhost:3000/API/cart/remove"
-//         form.User = email
-//         form.TitleProduct = title
-//         form.Size = size
-//         form.Quantity = quantity
+    //     const delFromCart = (title, size, quantity) => { //eliminando de a uno
+    //         url = "http://localhost:3000/API/cart/remove"
+    //         form.User = email
+    //         form.TitleProduct = title
+    //         form.Size = size
+    //         form.Quantity = quantity
 
-//         console.log({... form})
+    //         console.log({... form})
 
-//         let options = {
-//             body: form,
-//             headers: { "content-type": "application/json" },
-//         };
+    //         let options = {
+    //             body: form,
+    //             headers: { "content-type": "application/json" },
+    //         };
 
-//         api
-//         .post(url, options)
-//         .then((res) => {
-//             if (!res.err) {
-//             console.log(res);
-//             setDelFromCartTrigger(true); // Actualiza el estado para disparar el efecto
-//             }
-//         })
-//         .catch((e) => {
-//             console.error(e);
-//         });
+    //         api
+    //         .post(url, options)
+    //         .then((res) => {
+    //             if (!res.err) {
+    //             console.log(res);
+    //             setDelFromCartTrigger(true); // Actualiza el estado para disparar el efecto
+    //             }
+    //         })
+    //         .catch((e) => {
+    //             console.error(e);
+    //         });
 
-//         handleReset()
-//     //     const clearCart = () => {
-//     //  dispatch({ type: TYPES.CLEAR_CART });
-//    };
+    //         handleReset()
+    //     //     const clearCart = () => {
+    //     //  dispatch({ type: TYPES.CLEAR_CART });
+    //    };
 
     // useEffect(() => {
     //     if (addToCartTrigger) {
@@ -131,7 +136,7 @@ const CartProvider = ({ children }) => {
         cartProducts,
         totalPrice,
         addToCart,
-        form, 
+        form,
         setForm,
         //delFromCart,
         error,

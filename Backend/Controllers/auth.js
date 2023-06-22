@@ -119,7 +119,7 @@ function removeAll(req, res) {
 }
 
 function authenticateToken(req, res, next) {
-  const token = req.cookies.accessToken;
+  const token = req.headers.authorization?.split(' ')[1];
   console.log(token);
   if (!token) {
     return res.status(401).send({ message: 'No se proporcionó un token de acceso', status: 'error' });

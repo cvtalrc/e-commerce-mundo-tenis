@@ -23,36 +23,39 @@ const CartItem = ({ data }) => {
   });
 
   return (
-    
-    <div style={{ borderBottom: "thin solid gray" }}>
-    <Container sx={{ pt: 4, pb: 4}}>
-      <Grid container> 
-        <Grid item md={3}>
-          <img src={productImgUrl}/>
-        </Grid>
-        <Grid item md={6}>
-          <Typography variant="h4" sx={{ fontWeight: 600, mb: 1, fontSize: 15, pl: 2 }}>{TitleProduct}</Typography>
-          <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 12, pl: 2 }}>${formattedPrice} x {Quantity} = ${formattedTotalPrice}</Typography>
-          {Size && (
-            <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 12, pl: 2 }}>Talla: {Size}</Typography>
-          )}
-        </Grid>
-        {/* <Grid item md={3}>
+    <>
+      {products != null &&
+        <div style={{ borderBottom: "thin solid gray" }}>
+          <Container sx={{ pt: 4, pb: 4 }}>
+            <Grid container>
+              <Grid item md={3}>
+                <img src={productImgUrl} />
+              </Grid>
+              <Grid item md={6}>
+                <Typography variant="h4" sx={{ fontWeight: 600, mb: 1, fontSize: 15, pl: 2 }}>{TitleProduct}</Typography>
+                <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 12, pl: 2 }}>${formattedPrice} x {Quantity} = ${formattedTotalPrice}</Typography>
+                {Size && (
+                  <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 12, pl: 2 }}>Talla: {Size}</Typography>
+                )}
+              </Grid>
+              {/* <Grid item md={3}>
           <Button onClick={delFromCart(TitleProduct, Size, Quantity)}>
             
             Eliminar
           </Button>
         </Grid> */}
-      </Grid>
-    </Container>
-    
-      
-      {/* <button onClick={() => delFromCart(_id)}>Eliminar Uno</button>
+            </Grid>
+          </Container>
+
+
+          {/* <button onClick={() => delFromCart(_id)}>Eliminar Uno</button>
       <br />
       <button onClick={() => delFromCart(_id, true)}>Eliminar Todos</button>
       <br />
       <br /> */}
-    </div>
+        </div>
+      }
+    </>
   );
 };
 
