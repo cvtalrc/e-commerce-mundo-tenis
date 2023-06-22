@@ -32,10 +32,10 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
-
-export default function SignIn({ handleLogin }) {
+export default function SignIn() {
   const [errorMsg, setErrorMessage] = useState('');
+  const { handleLogin } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -55,28 +55,7 @@ export default function SignIn({ handleLogin }) {
       return
     } 
 
-    const rute = "http://localhost:3000/api"
-    axios.post(`${rute}/sign-in`, {
-      email: data.get('email'),
-      pass: data.get('password'),
-    }) 
-     //Realiza las acciones necesarias con la respuesta del backend
-    .then((response) => {
-      console.log('Respuesta del backend:', response.data);
-      if(response.data.message == "Ingreso de usuario exitoso"){
-        handleLogin();
-        Toast(
-          'bottom-end',
-          'success',
-          'Se ha iniciado sesión'
-        )
-        navigate('/')
-      }
-    })
-     // Maneja el error de la solicitud
-    .catch((error) => {
-      console.error('Error en la solicitud:', error);
-    });
+    handleLogin();
   };
 
   return (
