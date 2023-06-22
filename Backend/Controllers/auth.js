@@ -1,8 +1,7 @@
 const User = require("../Models/User");
-const JWTService = require("../Services/jwt");
 const jwt = require("jsonwebtoken")
-const Jwt = new JWTService();
 const SECRET_KEY = 'mundotenisCGA_SECRETKEY'; // Reemplaza con tu clave secreta
+const shoppingCart = require("../Controllers/shoppingCart_controllers");
 
 async function sign_up(req, res) {
   const { body } = req;
@@ -14,7 +13,7 @@ async function sign_up(req, res) {
   if (!body.rut) return res.status(200).send({ message: "Rut obligatorio", status: "warning" });
 
   
-  const findUser = await User.findOne({ rut: body.email });
+  const findUser = await User.findOne({ email: body.email });
   if (findUser) return res.status(200).send({ message: "El usuario ya existe", status: "warning" });
   const usuario = {
     name: body.name,
@@ -26,7 +25,8 @@ async function sign_up(req, res) {
     type: body.type,
   }
   const insertUser = await User.create(usuario);
-
+  // Crear el carrito asociado al usuario
+  await shoppingCart.createEmpty_shoppingCart({ body: { User: usuario.email } });
 
   const accessToken = jwt.sign({ userId: insertUser.id }, SECRET_KEY);
   

@@ -28,7 +28,7 @@ api.put("/product/update", func_product.update);
 //API GET
 api.get("/product/", func_product.getAll);
 api.get("/product/:id", func_product.getId);
-api.get("/order/:id", func_order.getOrder);
+api.get("/order/:id", func_auth.authenticateToken, func_order.getOrder);
 api.get("/cart/:User", func_auth.authenticateToken, func_shoppingCart.GetCart);
 api.get("/user/", func_auth.getAll);
 api.get("/user/:User",  func_auth.authenticateToken, func_auth.getUser);
