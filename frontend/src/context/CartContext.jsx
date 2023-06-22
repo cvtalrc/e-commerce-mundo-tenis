@@ -63,7 +63,7 @@ const CartProvider = ({ children }) => {
         .then((res) => {
             if (!res.err) {
             console.log(res);
-            setPr
+            setCartProducts([...cartProducts, res]);
             //setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
             }
         })

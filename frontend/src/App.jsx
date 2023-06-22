@@ -50,44 +50,44 @@ const navArrayLinks = [
 ]
 
 function App() {
-    const [userName, setUserName] = useState(null);
-    const [email, setEmail] = useState(null)
-    const navigate = useNavigate();
+    // const [userName, setUserName] = useState(null);
+    // const [email, setEmail] = useState(null)
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedUserName = localStorage.getItem("userName");
-        if (storedUserName) {
-            setUserName(storedUserName);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const storedUserName = localStorage.getItem("userName");
+    //     if (storedUserName) {
+    //         setUserName(storedUserName);
+    //     }
+    // }, []);
 
     
 
-    const handleLogout = async () => {
-        const result = await Modal(
-            'Confirmar cierre de sesión',
-            '¿Estás seguro/a que quieres cerrar sesión?',
-            'warning',
-        )
-        if (result.confirmed) {
-            setUserName(null)
-            setEmail(null)
-            localStorage.removeItem("userName");
-            localStorage.removeItem("userEmail");
-            navigate('/')
-        }
+    // const handleLogout = async () => {
+    //     const result = await Modal(
+    //         'Confirmar cierre de sesión',
+    //         '¿Estás seguro/a que quieres cerrar sesión?',
+    //         'warning',
+    //     )
+    //     if (result.confirmed) {
+    //         setUserName(null)
+    //         setEmail(null)
+    //         localStorage.removeItem("userName");
+    //         localStorage.removeItem("userEmail");
+    //         navigate('/')
+    //     }
 
-    }
+    // }
 
     return (
         <React.Fragment>
             <UserProvider>
             <ProductsProvider>
                 <CartProvider>
-                <Navbar navArrayLinks={navArrayLinks} userName={userName} handleLogout={handleLogout} />
+                <Navbar navArrayLinks={navArrayLinks} />
                 <Routes>
                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-                    <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<NewAccount />} />
                     <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
                     <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
