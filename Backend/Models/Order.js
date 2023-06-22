@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const oderschema = mongoose.Schema({
     user: {
-        type: Object,
-        ref: 'User'
+        type: String,
+       required: true
     },
     cart: {
-        type: Object,
+        type: Array,
         required: true
     },
     address: {

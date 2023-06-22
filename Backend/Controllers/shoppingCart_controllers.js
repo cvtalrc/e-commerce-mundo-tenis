@@ -1,5 +1,6 @@
 const Product = require("../Models/Product");
 const shoppingCart = require("../Models/shoppingCart");
+const cron = require('node-cron');
 
 //CREAR CARRO VACIO
 async function createEmpty_shoppingCart(req, res) {
@@ -163,7 +164,36 @@ async function emptyCart(req, res){
   }
 }
 
+async function emptyAll(req, res){
+  try {
+    const carts = await shoppingCart.find(); // Obtener todos los carritos
+    if (carts.length === 0) {
+      return res.status(400).send({ msj: "No se encontraron carritos", status: "error" });
+    }
 
+    for (let i = 0; i < carts.length; i++) {
+      const cart = carts[i];
+      cart.items = [];
+      cart.total = 0;
+      await cart.save();
+    }
+
+    res.status(200).send({ msj: "Todos los carritos han sido vaciados", status: "success" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ msj: "Error al vaciar los carritos", status: "error" });
+  }
+}
+// Tarea programada para vaciar el carrito cada 24 horas
+cron.schedule('58 19 * * *', async () => {
+  try {
+    // Llamar a la función emptyCart
+    await emptyAll();
+    console.log('Se vaciaron todos los carritos automáticamente');
+  } catch (error) {
+    console.error('Error al los carritos automáticamente:', error);
+  }
+});
 module.exports = {
   createEmpty_shoppingCart,
   addtoCart,
