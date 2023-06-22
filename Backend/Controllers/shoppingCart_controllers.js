@@ -3,9 +3,9 @@ const shoppingCart = require("../Models/shoppingCart");
 const cron = require('node-cron');
 
 //CREAR CARRO VACIO
-async function createEmpty_shoppingCart(req, res) {
+async function createEmpty_shoppingCart(req, res, userID) {
   const Cart = new shoppingCart({
-    User: req.body.User,
+    User: userID,
     items:[],
     total:0
   });
@@ -13,10 +13,8 @@ async function createEmpty_shoppingCart(req, res) {
     const find_cart = await shoppingCart.findOne({User: req.body.User});
     if (find_cart) return res.status(200).send({msj:"El carro asociado a este usuario ya existe", status:"warning"});
 
-    const newShoppingCart = await shoppingCart.create(Cart);
-    return res.status(200).send({
-      create:newShoppingCart
-    });
+    await shoppingCart.create(Cart);
+
   }catch(error){
     return res.status(400).send({ message: error.message });
   }
