@@ -86,7 +86,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         console.log(form._id);
 
         if (form._id === '') {
-            delete formData._id;
+            delete form._id;
             createData(form);
         } else {
             updateData(form);

@@ -1,9 +1,10 @@
 import { Container, Pagination, Grid, Box } from "@mui/material";
 import usePagination from "../Pagination/Pagination";
 import Card from "./Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PaginationCard({ products, type }) {
+    console.log(products)
     let [page, setPage] = useState(1);
     let PER_PAGE = 12;
     if (type === 'sale') {
@@ -12,6 +13,11 @@ export default function PaginationCard({ products, type }) {
         PER_PAGE = 12;
     }
 
+    // useEffect(() => {
+    //     if (products != null) {
+    //       setProduct(products.filter((productF) => (productF.title === TitleProduct)))
+    //     }
+    //   }, [products])
     let count = Math.ceil(products.length / PER_PAGE);
     let _DATA = usePagination(products, PER_PAGE);
 

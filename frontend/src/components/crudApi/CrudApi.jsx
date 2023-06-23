@@ -3,11 +3,13 @@ import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
 import { Container, Typography } from "@mui/material";
 import CrudContext from "../../context/CrudContext";
+import ProductsContext from "../../context/ProductsContext";
 // import Loader from "./Loader";
 // import Message from "./Message";
 
 const CrudApi = () => {
-  const {products, createData, updateData, dataToEdit, setDataToEdit, deleteData} = useContext(CrudContext);
+  const {products} = useContext(ProductsContext)
+  const { createData, updateData, dataToEdit, setDataToEdit, deleteData} = useContext(CrudContext);
 
    return (
     <Container  sx={{mt: 6, mb: 6}}>

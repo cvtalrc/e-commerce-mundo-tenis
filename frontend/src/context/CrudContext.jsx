@@ -13,25 +13,6 @@ const CrudProvider = ({ children }) => {
     let api = helpHttp();
     let url = "http://localhost:3000/api/product";
 
-    useEffect(() => {
-        //setLoading(true);
-        helpHttp()
-            .get(url)
-            .then((res) => {
-                console.log(res);
-                if (!res.err) {
-                    //setDb(res);
-                    setProducts(res);
-                    setError(null);
-                } else {
-                    //setDb(null);
-                    setProducts(null);
-                    setError(res);
-                }
-                //setLoading(false);
-            });
-    }, [url]);
-
     const createData = (data) => {
         console.log(data);
 
@@ -125,7 +106,6 @@ const CrudProvider = ({ children }) => {
     };
 
     const data = {
-        products,
         error,
         loading,
         createData,
