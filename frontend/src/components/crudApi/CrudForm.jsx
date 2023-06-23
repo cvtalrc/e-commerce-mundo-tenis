@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
 const initialForm = {
+    _id: "",
     title: "",
     brand: "",
     price: "",
@@ -84,7 +85,8 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
         console.log(form);
         console.log(form._id);
 
-        if (form._id === undefined) {
+        if (form._id === '') {
+            delete formData._id;
             createData(form);
         } else {
             updateData(form);

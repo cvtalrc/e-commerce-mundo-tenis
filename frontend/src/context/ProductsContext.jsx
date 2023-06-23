@@ -70,6 +70,7 @@ const ProductsProvider = ({ children }) => {
 
     const data = {
         products,
+        setProducts,
         productsSale,
         productsSearch,
         search,

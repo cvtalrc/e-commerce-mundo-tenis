@@ -16,6 +16,7 @@ import { ProductsProvider } from './context/ProductsContext';
 import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
+import { CrudProvider } from './context/CrudContext';
 
 const navArrayLinks = [
     {
@@ -61,7 +62,7 @@ function App() {
     //     }
     // }, []);
 
-    
+
 
     // const handleLogout = async () => {
     //     const result = await Modal(
@@ -82,23 +83,25 @@ function App() {
     return (
         <React.Fragment>
             <UserProvider>
-            <ProductsProvider>
-                <CartProvider>
-                <Navbar navArrayLinks={navArrayLinks} />
-                <Routes>
-                    <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<NewAccount />} />
-                    <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
-                    <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
-                    <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
-                    <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
-                    <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
-                    <Route path="/search" element={<Search/>} />
-                </Routes>
-                <Footer />
-                </CartProvider>
-            </ProductsProvider>
+                <ProductsProvider>
+                    <CartProvider>
+                        <CrudProvider>
+                            <Navbar navArrayLinks={navArrayLinks} />
+                            <Routes>
+                                <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/register" element={<NewAccount />} />
+                                <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
+                                <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
+                                <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
+                                <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
+                                <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
+                                <Route path="/search" element={<Search />} />
+                            </Routes>
+                            <Footer />
+                        </CrudProvider>
+                    </CartProvider>
+                </ProductsProvider>
             </UserProvider>
         </React.Fragment>
     );

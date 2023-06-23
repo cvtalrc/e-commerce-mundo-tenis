@@ -46,6 +46,7 @@ import { Button, Container, Typography } from '@mui/material';
 
 
 const CrudTable = ({ data, setDataToEdit, deleteData }) => {
+  const pageSizeOptions = [5, 10, 20];
 
   const columns = [
     { field: '_id', headerName: 'ID', width: 70 },
@@ -97,6 +98,7 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
             getRowId={(row) => row._id}
             rows={rows.length > 0 ? rows : "Sin productos"}
             columns={columns}
+            pageSizeOptions={pageSizeOptions}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 10 },
