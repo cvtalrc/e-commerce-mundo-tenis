@@ -26,7 +26,7 @@ function getSteps() {
 }
 
 function getStepContent(step) {
-  const { cartProducts } = useContext(CartContext);
+  const { cartProducts, totalPrice } = useContext(CartContext);
   let skipCase = false
 
   switch (step) {
@@ -35,13 +35,18 @@ function getStepContent(step) {
         skipCase = true
       }  
       return (
-        <Grid container >
+        <Grid container sx={{ borderBottom: "thin solid gray", margin: '20px', pt: 2}}>
           <Grid item sx={{ width: '100%', height: '30%' }}>
               {
                 cartProducts && cartProducts.map((item, index) => (
                   <CartItem key={index} data={item} id={false}/>
                 ))
               }
+          </Grid>
+          <Grid item sx={{ width: '100%', height: '30%' }}>
+              <Typography variant="h5" sx={{ fontWeight: 800, mb: 3, fontSize: 20, pl: 'auto', pt: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
+                Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+              </Typography>
           </Grid>
         </Grid>
       );

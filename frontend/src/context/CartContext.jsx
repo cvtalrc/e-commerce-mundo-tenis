@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { helpHttp } from "../helpers/helpHttp";
-import { useNavigate } from 'react-router-dom';
 import UserContext from "./UserContext";
+import { Toast } from "../components/Alerts/Toast";
 
 const CartContext = createContext();
 
@@ -11,6 +11,7 @@ const CartProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { user, token } = useContext(UserContext);
+    let totalCartPrice = 0
 
     const initialForm = {
         User: "",
@@ -58,8 +59,11 @@ const CartProvider = ({ children }) => {
 
     useEffect(() => {
 
-
     }, [cartProducts])
+
+    useEffect(() => {
+
+    }, [totalCartPrice])
 
     const addToCart = (_id, title, size, quantity) => {
         const urlAdd = `http://localhost:3000/API/cart/add`
@@ -68,16 +72,12 @@ const CartProvider = ({ children }) => {
         form.Size = size
         form.Quantity = quantity
 
-        console.log({ ...form })
-        console.log("token ls", localStorage.getItem('user'))
-
         let options = {
             body: form,
             headers: {
                 "content-type": "application/json",
                 Authorization: `Bearer ${token}`
             },
-
         };
 
         api
@@ -86,6 +86,7 @@ const CartProvider = ({ children }) => {
                 if (!res.err) {
                     console.log(res);
                     setCartProducts(res.items);
+                    setTotalPrice(res.total);
                 }
             })
             .catch((e) => {
@@ -111,12 +112,22 @@ const CartProvider = ({ children }) => {
         };
 
         api
-            .post(urlDel, options)
+            .del(urlDel, options)
             .then((res) => {
                 if (!res.err) {
                     console.log(res);
                     let newData = cartProducts.filter((el) => el.TitleProduct !== title);
                     setCartProducts(newData);
+                    console.log("newData", newData)
+                    Toast (
+                        'bottom-right',
+                        'success',
+                        'Se eliminó el producto'
+                    )
+                    setTotalPrice(newData.forEach(el => {
+                        totalCartPrice += el.price;
+                    }));
+                    setTotalPrice(totalCartPrice)
                 }
             })
             .catch((e) => {

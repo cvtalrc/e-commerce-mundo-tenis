@@ -5,7 +5,7 @@ export const Toast = (position, icon, title) => {
     toast: true,
     position: position,
     showConfirmButton: false,
-    timer: 2000,
+    timer: 2200,
     timerProgressBar: true,
     confirmButtonColor: 'secondary.main',
     cancelButtonColor: '#d33',

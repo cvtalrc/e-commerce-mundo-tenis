@@ -1,15 +1,13 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import { helpHttp } from "../../helpers/helpHttp";
+import { Button, Container, Grid, Typography, Box} from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import ProductsContext from "../../context/ProductsContext";
 import CartContext from "../../context/CartContext";
-import ClearIcon from '@mui/icons-material/Clear';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 
 const CartItem = ({ data, id }) => {
   let { _id, TitleProduct, price, Quantity, Size } = data;
   const { products } = useContext(ProductsContext);
-  const { delFromCart, isClicked } = useContext(CartContext);
+  const { delFromCart, totalPrice } = useContext(CartContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -23,8 +21,7 @@ const CartItem = ({ data, id }) => {
     <>
       {products != null && product != null &&
         <div style={{ borderBottom: "thin solid gray", margin: '20px', pt: 2}}>
-          <Container sx={{ pt: 3, pb: 5, display: 'flex', justifyContent: 'centr', flexDirection: 'row' }}>
-
+          <Container sx={{ pt: 3, pb: 5, display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
             {
               id ? //shoppingCart
                 (
@@ -34,7 +31,13 @@ const CartItem = ({ data, id }) => {
                     </Grid>
                     <Grid item md={6} sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                       <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, fontSize: 17, pl: 'auto', pt: 'auto' }}>{TitleProduct}</Typography>
+                      {product[0].sale ? 
+                        <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 14, pl: 'auto', pt: 'auto' }}>${parseFloat((product[0].price - (product[0].price * (product[0].percentageSale / 100))).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${parseFloat((product[0].price - (product[0].price * (product[0].percentageSale / 100))) * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                      :
                       <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 14, pl: 'auto', pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+
+                      }
+                      
                       {Size && (
                         <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 14, pl: 'auto', pt: 'auto' }}>Talla: {Size}</Typography>
                       )}
@@ -65,10 +68,15 @@ const CartItem = ({ data, id }) => {
                       <RemoveCircleOutlineRoundedIcon color="error.main" fontSize="large"/>
                     </Button>
                   </Grid>
-                </Grid>)
-
+                </Grid>
+                )
             }
-
+            <Grid sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', top: 10, width: '100%', height: 'auto' }}>
+                  { totalPrice != null && (
+                        <Typography variant="h6" sx={{ fontWeight: 600, pl: 40, fontSize: 15, flexGrow: 1 }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                      )
+                  }
+            </Grid>
           </Container>
         </div>
       }
