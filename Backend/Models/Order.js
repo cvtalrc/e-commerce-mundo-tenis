@@ -1,25 +1,35 @@
 const mongoose = require("mongoose");
 const orderschema = mongoose.Schema({
-  user: {
-    type: String,
+  User: {
+    type: Object,
+    ref: "Order",
     required: true,
   },
-  cart: {
+  Cart: {
     type: Array,
     required: true,
   },
-  address: {
-    type: String,
+  Delivery: { 
+    // name
+    // lastName
+    // address
+    // addressNumber
+    // region
+    // comuna
+    // cellNumber
+    // email
+    // instructions                               
+    type: Object,
     required: true,
   },
-  deliveryType: {
+  Status: { //pendiente, en curso, entregado
     type: String,
     required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
+  },  
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  }
 });
 
 module.exports = mongoose.model("Order", orderschema);

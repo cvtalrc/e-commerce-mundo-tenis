@@ -22,15 +22,15 @@ api.post("/comment/", func_auth.authenticateToken, func_comment.createComment);
 
 //API GET
 api.get("/user/", func_user.getAll);
-api.get("/user/:User", func_auth.authenticateToken, func_user.getUser);
+api.get("/user/:id", func_auth.authenticateToken, func_user.getUser);
 api.get("/product/", func_product.getAll);
 api.get("/product/:id", func_product.getId);
-api.get("/cart/:User", func_auth.authenticateToken, func_shoppingCart.getCart);
+api.get("/cart/:user", func_auth.authenticateToken, func_shoppingCart.getCart);
 api.get("/order/:id", func_auth.authenticateToken, func_order.getOrder);
 api.get("/comment/", func_comment.getAllComments);
 
 //API DELETE
-api.delete("/user/remove/:email", func_auth.authenticateToken, func_user.removeUser)
+api.delete("/user/remove/:id", func_auth.authenticateToken, func_user.removeUser)
 api.delete("/user/removeAll", func_user.removeAll);
 api.delete("/product/:id", func_product.remove);
 api.delete("/product/removeAll", func_product.removeAll);
@@ -39,8 +39,10 @@ api.delete("/cart/remove", func_auth.authenticateToken, func_shoppingCart.remove
 api.delete("/comment/:id", func_auth.authenticateToken, func_comment.deleteComment);
 
 //API PUT
-api.put("/product/update/:id", func_product.update);
-api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateComment);
 api.put("/user/update/:id", func_auth.authenticateToken, func_user.updateUser);
+api.put("/product/update/:id", func_product.update);
+api.put("/order/update/:id", func_auth.authenticateToken, func_order.updateOrderStatus)
+api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateComment);
+
 
 module.exports = api;
