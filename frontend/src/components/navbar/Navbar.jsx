@@ -35,7 +35,6 @@ export default function Navbar() {
 
   return (
     <>
-      {cartProducts != null && (
         <AppBar position="sticky" sx={{ paddingBottom: 0, paddingTop: 0 }}>
           <Toolbar>
             <Container
@@ -134,8 +133,9 @@ export default function Navbar() {
                   onClick={() => SetOpenShoppingCart(true)}
                   color="inherit"
                 >
+                    
                   <Badge
-                    badgeContent={cartProducts.length}
+                    badgeContent={cartProducts != null ? cartProducts.length : 0}
                     color="error"
                     showZero
                   >
@@ -144,6 +144,7 @@ export default function Navbar() {
                       size="large"
                     ></ShoppingCartIcon>
                   </Badge>
+                    
                 </Button>
 
                 <IconButton
@@ -191,7 +192,6 @@ export default function Navbar() {
             </Button>
           </Box>
         </AppBar>
-      )}
     </>
   );
 }
