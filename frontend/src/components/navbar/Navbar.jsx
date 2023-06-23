@@ -8,7 +8,6 @@ import Search from "../search/Search";
 import SearchIconWrapper from "../search/SearchIconWrapper";
 import StyledInputBase from "../search/StyledInputBase";
 import { NavLink } from "react-router-dom";
-import ShoppingCartDrawer from "../shoppingCartDrawer/ShoppingCartDrawer";
 import logo from '../../assets/logo.svg';
 import ButtonMenu from "../ButtonMenu/ButtonMenu"
 import { CloudDownloadSharp } from "@mui/icons-material";
@@ -16,8 +15,8 @@ import ShoppingCart from "../shoppingCart/ShoppingCart";
 import ProductsContext from "../../context/ProductsContext";
 import UserContext from "../../context/UserContext";
 
-export default function Navbar({ userName, handleLogout }) {
-    const { user } = useContext(UserContext);
+export default function Navbar() {
+    const { user, logOut } = useContext(UserContext);
     const { handleChangeSearch, handleSubmitSearch } = useContext(ProductsContext)
     const [openMenu, SetOpenMenu] = useState(false);
     const [openShoppingCart, SetOpenShoppingCart] = useState(false);
@@ -73,7 +72,7 @@ export default function Navbar({ userName, handleLogout }) {
 
                                         <Button
                                             color="inherit"
-                                            onClick={handleLogout}
+                                            onClick={logOut}
                                         >
                                             Cerrar sesión
                                         </Button>
@@ -88,8 +87,8 @@ export default function Navbar({ userName, handleLogout }) {
                                     </Button>
                                 )}
                             </Box>
-                            <Button color="inherit">
-                                <Badge badgeContent={0} color="error" onClick={() => SetOpenShoppingCart(true)} showZero >
+                            <Button onClick={() => SetOpenShoppingCart(true)} color="inherit">
+                                <Badge badgeContent={0} color="error" showZero >
                                     <ShoppingCartIcon
                                         color="inherit"
                                         size="large"
@@ -97,7 +96,6 @@ export default function Navbar({ userName, handleLogout }) {
                                     </ShoppingCartIcon>
                                 </Badge>
                             </Button>
-
 
                             <IconButton
                                 color="inherit"

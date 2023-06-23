@@ -77,7 +77,8 @@ async function sign_in(req, res) {
     accessToken: accessToken,
     status: "success",
     name: findUser.name,
-    email: findUser.email
+    email: findUser.email,
+    type: findUser.type
   });
 }
 

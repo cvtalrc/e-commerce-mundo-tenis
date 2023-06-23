@@ -68,9 +68,13 @@ async function addtoCart(req,res){
     } else {
       cart.total = 0;
     }
-
-    await cart.save();
-    res.status(200).send({msj:"Producto agregado con exito", status: "success"});
+    await cart.save((error, cartUpdate) => {
+      if (error) {
+        return res.status(400).send({ msj: "Error al crear el producto, intentar nuevamente" });
+      } else {
+        res.status(200).send(cartUpdate);
+      }
+    });
 
   }catch(error){
     console.log(error);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Typography,
   TextField,
@@ -6,31 +6,45 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Box
+  Box,
+  Grid
 } from "@mui/material";
 
 import LoginForm from "../LoginForm/LoginForm";
 import ShoppingCart from "../shoppingCart/ShoppingCart";
+import CartContext from "../../context/CartContext";
+import CartItem from "../CartItem/CartItem";
 
 function getSteps() {
   return [
     "Resumen",
     "Iniciar Sesión",
     "Dirección",
-    "Transporte",
+    "Entrega",
     "Pago",
   ];
 }
 
 function getStepContent(step) {
+  const { cartProducts } = useContext(CartContext);
   let skipCase = false
 
   switch (step) {
     case 0:
-      if(localStorage.getItem('userName')) {
+      if(localStorage.getItem('user')) {
         skipCase = true
       }  
-      return < ShoppingCart />;
+      return (
+        <Grid container >
+          <Grid item sx={{ width: '100%', height: '30%' }}>
+              {
+                cartProducts && cartProducts.map((item, index) => (
+                  <CartItem key={index} data={item} id={false}/>
+                ))
+              }
+          </Grid>
+        </Grid>
+      );
     case 1:
       if (skipCase) {
         skipCase = false

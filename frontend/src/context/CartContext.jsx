@@ -10,7 +10,7 @@ const CartProvider = ({ children }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { user } = useContext(UserContext);
+    const { user, token } = useContext(UserContext);
 
     const initialForm = {
         User: "",
@@ -25,6 +25,7 @@ const CartProvider = ({ children }) => {
     if (user != null) {
         console.log("usuario dentro del contexto del carro ", user.email)
     }
+
     let api = helpHttp();
     let url = `http://localhost:3000/api/cart/${email}`;
 
@@ -33,8 +34,7 @@ const CartProvider = ({ children }) => {
         let options = {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem('user')}`
-                // "cookies": `${localStorage.getItem('user')}`
+                Authorization: `Bearer ${token}`
             }
         }
 
@@ -51,14 +51,18 @@ const CartProvider = ({ children }) => {
                         setCartProducts(null);
                         setError(res);
                     }
-                    //setLoading(false);
                 });
         }
 
     }, [url]);
 
+    useEffect(() => {
+
+
+    }, [cartProducts])
+
     const addToCart = (_id, title, size, quantity) => {
-        url = `http://localhost:3000/API/cart/add`
+        const urlAdd = `http://localhost:3000/API/cart/add`
         form.User = email
         form.TitleProduct = title
         form.Size = size
@@ -71,18 +75,17 @@ const CartProvider = ({ children }) => {
             body: form,
             headers: {
                 "content-type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem('user')}`
+                Authorization: `Bearer ${token}`
             },
 
         };
 
         api
-            .post(url, options)
+            .post(urlAdd, options)
             .then((res) => {
                 if (!res.err) {
                     console.log(res);
-                    setCartProducts([...cartProducts, res]);
-                    //setAddToCartTrigger(true); // Actualiza el estado para disparar el efecto
+                    setCartProducts(res.items);
                 }
             })
             .catch((e) => {
@@ -92,44 +95,34 @@ const CartProvider = ({ children }) => {
         setForm(initialForm);
     };
 
-    //     const delFromCart = (title, size, quantity) => { //eliminando de a uno
-    //         url = "http://localhost:3000/API/cart/remove"
-    //         form.User = email
-    //         form.TitleProduct = title
-    //         form.Size = size
-    //         form.Quantity = quantity
+    const delFromCart = (title, size, quantity) => { //eliminando de a uno
+        const urlDel = "http://localhost:3000/API/cart/remove"
+        form.User = email
+        form.TitleProduct = title
+        form.Size = size
+        form.Quantity = quantity
 
-    //         console.log({... form})
+        let options = {
+            body: form,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "content-type": "application/json"
+            },
+        };
 
-    //         let options = {
-    //             body: form,
-    //             headers: { "content-type": "application/json" },
-    //         };
-
-    //         api
-    //         .post(url, options)
-    //         .then((res) => {
-    //             if (!res.err) {
-    //             console.log(res);
-    //             setDelFromCartTrigger(true); // Actualiza el estado para disparar el efecto
-    //             }
-    //         })
-    //         .catch((e) => {
-    //             console.error(e);
-    //         });
-
-    //         handleReset()
-    //     //     const clearCart = () => {
-    //     //  dispatch({ type: TYPES.CLEAR_CART });
-    //    };
-
-    // useEffect(() => {
-    //     if (addToCartTrigger) {
-    //         setAddToCartTrigger(false); // Reinicia el estado para futuras llamadas
-    //     } else if (delFromCartTrigger) {
-    //         setDelFromCartTrigger(false);
-    //     }
-    // }, [addToCartTrigger, delFromCartTrigger]);
+        api
+            .post(urlDel, options)
+            .then((res) => {
+                if (!res.err) {
+                    console.log(res);
+                    let newData = cartProducts.filter((el) => el.TitleProduct !== title);
+                    setCartProducts(newData);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    };
 
 
     const data = {
@@ -138,7 +131,7 @@ const CartProvider = ({ children }) => {
         addToCart,
         form,
         setForm,
-        //delFromCart,
+        delFromCart,
         error,
         loading
     };
