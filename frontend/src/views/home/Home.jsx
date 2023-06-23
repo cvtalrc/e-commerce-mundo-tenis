@@ -14,7 +14,8 @@ import vcore7 from "../../img/vcore7.webp"
 
 export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
-
+    console.log(products)
+  
     const slides = [
         { url: vcore, title: "vcore" },
         { url: vcore7, title: "vcore7" },
@@ -41,8 +42,8 @@ export default function Home() {
                 <Typography variant="h4">Error</Typography>
             )}
             {
-                products &&
-                <Box sx={{ mb: 1 }}>
+                products != null &&
+                (<Box sx={{ mb: 1 }}>
                     <Container maxWidth="xl" sx={{ bgcolor: 'white', mt: 2,borderRadius: 1 }}>
                         <Box sx={containerStyles} >
                             <ImageSlider slides={slides} />
@@ -60,7 +61,7 @@ export default function Home() {
                         <PaginationCard key={`normal`} products={products} type={`normal`} />
                     </Container>
 
-                </Box>
+                </Box>)
             }
         </>
     )
