@@ -2,22 +2,15 @@ const Order = require("../Models/Order");
 const User = require("../Models/User");
 const Product = require("../Models/Product");
 const shoppingCart = require("../Models/shoppingCart");
+const cron = require("node-cron");
+const moment = require('moment');
 
 async function createOrder(req, res) {
-  const { email, Delivery, Address } = req.body;
+  const { userID, Delivery } = req.body;
   try {
     // Crear una instancia del modelo Order con los datos de la orden de compra
-    const user = await User.findOne({ email: email });
-    console.log(user.address);
-    const cart = await shoppingCart.findOne({ User: email });
-    console.log(cart);
-
-    let type = "delivery";
-    let address = user.address;
-    if (!Delivery) {
-      type = "retiro";
-      address = Address;
-    }
+    const user = await User.findOne({ _id: userID });
+    const cart = await shoppingCart.findOne({ User: user.email });
 
     //validar carrito
     for (const item of cart.items) {
@@ -48,11 +41,10 @@ async function createOrder(req, res) {
     }
 
     const order = new Order({
-      user: email,
-      cart: cart.items,
-      address: address,
-      deliveryType: type,
-      status: "pendingPayment",
+      User: user,
+      Cart: [cart.items, cart.total],
+      Delivery: Delivery,
+      Status: "pendingPayment",
     });
 
     // Guardar la orden de compra en la base de datos
@@ -72,16 +64,10 @@ async function createOrder(req, res) {
 
 async function updateOrderStatus(req, res) {
   try {
-    // Obtener el ID de la orden de compra desde req.params
-    const { orderId } = req.params;
-
-    // Obtener los detalles del pago desde req.body
-    const { paymentDetails } = req.body;
-
-    // Actualizar el estado de la orden de compra en la base de datos con los detalles del pago
+    const { id } = req.params;
     const updatedOrder = await Order.findByIdAndUpdate(
-      orderId,
-      { paymentDetails },
+      id,
+      { Status: "en curso" },
       { new: true }
     );
 
@@ -107,6 +93,26 @@ async function getOrder(req, res) {
     }
   });
 }
+
+cron.schedule('0 */12 * * *', async () => {
+  try {
+    const expirationDate = moment().subtract(12, 'hours').toDate();
+
+    const expiredOrders = await Order.find({
+      status: 'pendingPayment',
+      createdAt: { $lte: expirationDate }
+    }).exec();
+
+    for (const order of expiredOrders) {
+      // Elimina la orden
+      await order.remove();
+    }
+
+    console.log('Órdenes eliminadas:', expiredOrders.length);
+  } catch (error) {
+    console.error('Error al eliminar las órdenes:', error);
+  }
+});
 
 module.exports = {
   createOrder,
