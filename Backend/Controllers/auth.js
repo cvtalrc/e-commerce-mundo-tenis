@@ -61,7 +61,7 @@ async function sign_up(req, res) {
   return res.status(200).send({
     create: insertUser,
     message: "Usuario creado exitosamente",
-    status: "success",
+    status: "success"
   });
 }
 

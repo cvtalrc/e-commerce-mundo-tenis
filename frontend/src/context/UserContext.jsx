@@ -122,6 +122,10 @@ const UserProvider = ({ children }) => {
 
     }
 
+    const register = () => {
+        
+    }
+
     const data = {
         users,
         user,
