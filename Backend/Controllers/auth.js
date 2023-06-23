@@ -62,6 +62,7 @@ async function sign_up(req, res) {
     create: insertUser,
     message: "Usuario creado exitosamente",
     status: "success",
+    accessToken: accessToken
   });
 }
 
