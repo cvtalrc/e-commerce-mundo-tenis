@@ -14,6 +14,7 @@
     "mongoose": "^6.6.1",
     "node-cron": "^3.0.2",
     "nodemon": "^2.0.22",
+    "transbank-sdk": "^4.0.0",
     "uuid": "^9.0.0"
   }
 }

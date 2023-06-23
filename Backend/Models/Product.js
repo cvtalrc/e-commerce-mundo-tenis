@@ -4,13 +4,12 @@ const Productschema = mongoose.Schema({
   brand: String,
   price: Number,
   description: String,
-  stock: Array,            // stock[size][quantity]
+  stock: Array, // stock[size][quantity]
   sport: String,
   category: String,
   imgUrl: String,
   sale: Boolean,
-  percentageSale: Number
-
+  percentageSale: Number,
 });
 
 module.exports = mongoose.model("Product", Productschema);
