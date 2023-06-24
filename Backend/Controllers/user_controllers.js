@@ -3,8 +3,8 @@ const shoppingCart = require("../Models/shoppingCart");
 const auth = require("../Controllers/auth");
 
 async function getUser(req, res) {
-  const email = req.params.User;
-  const user = await User.findOne({ email: email });
+  const id = req.params.id;
+  const user = await User.findOne({ _id: id }).select("-pass");
   if (!user)
     return res
       .status(200)
@@ -23,11 +23,14 @@ function getAll(req, res) {
 }
 
 async function removeUser(req, res) {
-  const user = req.params.email;
+  const id = req.params.id;
   try {
     // Buscar y eliminar el usuario por su ID
-    const removedUser = await User.findOneAndRemove({ email : user });
-    const removedCartUser = await shoppingCart.findOneAndRemove({ User: user });
+    const user = await User.findOne({ _id: id });
+    const email = user.email;
+    const removedUser = await User.findOneAndRemove({ _id : id });
+
+    const removedCartUser = await shoppingCart.findOneAndRemove({ User: email });
     if (!removedUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
@@ -51,13 +54,20 @@ function removeAll(req, res) {
 async function updateUser(req, res) {
   const { id } = req.params;
   const { name, lastname, email, address } = req.body;
-  const findUser = await User.find({email: req.body.email});
-  console.log(findUser);
-  if(findUser.length > 0) return res.status(200).send({
-    msj: "El email ya está asociado a un usuario",
-    status: "warning",
-  });
+
   try {
+    const user = await User.find({_id : id});
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    const findUser = await User.find({email: req.body.email});
+    console.log(findUser);
+    if(findUser.length > 0) return res.status(200).send({
+      msj: "El email ya está asociado a un usuario",
+      status: "warning",
+    });
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
       {
@@ -68,10 +78,6 @@ async function updateUser(req, res) {
       },
       { new: true }
     );
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
 
     res.status(200).json(updatedUser);
   } catch (error) {

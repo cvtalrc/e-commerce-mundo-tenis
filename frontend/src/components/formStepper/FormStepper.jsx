@@ -13,6 +13,7 @@ import {
 import CartContext from "../../context/CartContext";
 import CartItem from "../CartItem/CartItem";
 import UserContext from "../../context/UserContext";
+import FormDelivery from "./FormDelivery";
 
 function getSteps() {
   return [
@@ -26,7 +27,7 @@ function getSteps() {
 
 function getStepContent(step) {
   const { cartProducts, totalPrice } = useContext(CartContext);
-
+  const { user } = useContext(UserContext)
   switch (step) {
     case 0:
       return (
@@ -47,7 +48,11 @@ function getStepContent(step) {
       );
     case 1:
       return (
-        <Typography>Entrega</Typography>
+        <>
+          {user != null &&
+            <FormDelivery user={user} />
+          }
+        </>
       )
 
     case 2:
@@ -62,7 +67,6 @@ function getStepContent(step) {
 const FormStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
-  const { user } = useContext(UserContext)
 
 
   const handleNext = (data) => {

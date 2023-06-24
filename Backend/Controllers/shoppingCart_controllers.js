@@ -3,14 +3,14 @@ const shoppingCart = require("../Models/shoppingCart");
 const cron = require("node-cron");
 
 //CREAR CARRO VACIO
-async function createEmpty_shoppingCart(req, res, userID) {
+async function createEmpty_shoppingCart(req, res, user) {
   const Cart = new shoppingCart({
-    User: userID,
+    User: user,
     items: [],
     total: 0,
   });
   try {
-    const find_cart = await shoppingCart.findOne({ User: req.body.User });
+    const find_cart = await shoppingCart.findOne({ User: user });
     if (find_cart)
       return res
         .status(200)
@@ -180,9 +180,9 @@ async function removeFromCart(req, res) {
 
 //OBTENER EL CONTENIDO DEL CARRO
 async function getCart(req, res) {
-  const User = req.params.User; //0|| req.sessionID;
+  const user = req.params.user; //0|| req.sessionID;
   try {
-    const cart = await shoppingCart.findOne({ User: User });
+    const cart = await shoppingCart.findOne({ User: user });
     if (!cart)
       return res
         .status(400)

@@ -32,7 +32,7 @@ async function sign_up(req, res) {
   if (findUser)
     return res
       .status(200)
-      .send({ message: "El usuario ya existe", status: "warning" });
+      .send({ message: "El correo ingresado ya posee una cuenta", status: "warning" });
   const usuario = {
     name: body.name,
     lastname: body.lastname,
@@ -86,10 +86,11 @@ async function sign_in(req, res) {
       .status(200)
       .send({ message: "La contraseña no es correcta", status: "error" });
 
-  delete findUser.pass;
+  const userWithoutPass = { ...findUser.toObject() };
+  delete userWithoutPass.pass;
 
   const accessToken = jwt.sign(
-    { userId: findUser.id, ...findUser.toJSON() },
+    { userId: findUser.id, ...userWithoutPass },
     SECRET_KEY
   );
 
@@ -104,14 +105,14 @@ async function sign_in(req, res) {
   });
 
   return res.status(200).send({
-    access: findUser,
+    access: userWithoutPass,
     message: "Ingreso de usuario exitoso",
     refreshToken: accessToken,
     accessToken: accessToken,
     status: "success",
-    name: findUser.name,
-    email: findUser.email,
-    type: findUser.type
+    name: userWithoutPass.name,
+    email: userWithoutPass.email,
+    type: userWithoutPass.type
   });
 }
 
@@ -126,8 +127,8 @@ function sign_out(req, res) {
 }
 
 function authenticateToken(req, res, next) {
-  //const token = req.cookies.accessToken;
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.cookies.accessToken;
+ // const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res
