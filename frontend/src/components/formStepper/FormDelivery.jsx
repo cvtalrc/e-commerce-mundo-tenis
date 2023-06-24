@@ -25,9 +25,9 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        form.type = deliveryMethod
+        form.delivery = deliveryMethod
       
-        if (!form.type || !form.name || !form.lastname || !form.address || !form.addressNumber || !form.region || !form.comuna || !form.cellNumber ) {
+        if (!form.delivery || !form.name || !form.lastname || !form.address || !form.addressNumber || !form.region || !form.comuna || !form.cellNumber ) {
             console.log(form);
             alert("Datos incompletos");
             return;
@@ -46,8 +46,8 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
             <FormControl sx={{mt: 2}} component="fieldset">
                 <FormLabel sx={{ fontWeight: 700, color: 'black' }} component="legend">Método de entrega</FormLabel>
                 <RadioGroup
-                    aria-label="type"
-                    name="type"
+                    aria-label="delivery"
+                    name="delivery"
                     value={deliveryMethod}
                     onChange={handleDeliveryMethodChange}
                 >
@@ -63,9 +63,11 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                     <Typography variant="h5" sx={{ mb: 2, mt: 4, fontWeight: 700 }}>Datos personales</Typography>
                     <Typography>Nombre: {user.name}</Typography>
                     <Typography>Apellido: {user.lastname}</Typography>
+                    <Typography>Email: {user.email}</Typography>
+                    <Typography>Celular: {user.cellNumber}</Typography>
                     <Typography>Dirección: {user.address}</Typography>
-                    <Typography>Región: blahblah</Typography>
-                    <Typography>Comuna: blahlbbah</Typography>
+                    <Typography>Región: {user.region}</Typography>
+                    <Typography>Comuna: {user.comuna}</Typography>
 
                 </Grid>
                 <Grid sm={6} item>
@@ -85,7 +87,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                         <TextField
                                             size="small"
                                             color="secondary"
-                                            type="text"
+                                            delivery="text"
                                             name="name"
                                             placeholder="Nombre"
                                             label="Nombre"
@@ -97,7 +99,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                         <TextField
                                             size="small"
                                             color="secondary"
-                                            type="text"
+                                            delivery="text"
                                             name="lastname"
                                             placeholder="Apellido"
                                             label="Apellido"
@@ -109,7 +111,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                         <TextField
                                             size="small"
                                             color="secondary"
-                                            type="number"
+                                            delivery="number"
                                             name="cellNumber"
                                             placeholder="Celular"
                                             label="Celular"
@@ -118,12 +120,12 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                         />
                                     </Grid>
 
-                                    <Grid sm={6} item>
+                                    <Grid sm={12} item>
                                         <TextField
                                             fullWidth
                                             size="small"
                                             color="secondary"
-                                            type="text"
+                                            delivery="text"
                                             name="address"
                                             placeholder="Direccion"
                                             label="Direccion"
@@ -136,35 +138,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                             fullWidth
                                             size="small"
                                             color="secondary"
-                                            type="number"
-                                            name="addressNumber"
-                                            placeholder="Número"
-                                            label="Numero"
-                                            onChange={handleChange}
-                                            value={form.addressNumber}
-                                        />
-                                    </Grid>
-
-                                    <Grid sm={6} item>
-                                        <TextField
-                                            fullWidth
-                                            size="small"
-                                            color="secondary"
-                                            type="text"
-                                            name="region"
-                                            placeholder="Region"
-                                            label="Region"
-                                            onChange={handleChange}
-                                            value={form.region}
-                                        />
-                                    </Grid>
-
-                                    <Grid sm={6} item>
-                                        <TextField
-                                            fullWidth
-                                            size="small"
-                                            color="secondary"
-                                            type="text"
+                                            delivery="text"
                                             name="comuna"
                                             placeholder="Comuna"
                                             label="Comuna"
@@ -173,12 +147,40 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                         />
                                     </Grid>
 
+                                    <Grid sm={6} item>
+                                        <TextField
+                                            fullWidth
+                                            size="small"
+                                            color="secondary"
+                                            delivery="text"
+                                            name="region"
+                                            placeholder="Región"
+                                            label="Región"
+                                            onChange={handleChange}
+                                            value={form.region}
+                                        />
+                                    </Grid>
+
                                     <Grid sm={12} item>
                                         <TextField
                                             fullWidth
                                             size="small"
                                             color="secondary"
-                                            type="text"
+                                            delivery="text"
+                                            name="email"
+                                            placeholder="Correo electrónico"
+                                            label="Correo electrónico"
+                                            onChange={handleChange}
+                                            value={form.instructions}
+                                        />
+                                    </Grid>
+
+                                    <Grid sm={12} item>
+                                        <TextField
+                                            fullWidth
+                                            size="small"
+                                            color="secondary"
+                                            delivery="text"
                                             name="instructions"
                                             placeholder="Intrucciones de entrega"
                                             label="Intrucciones de entrega"
