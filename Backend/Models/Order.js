@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const orderschema = mongoose.Schema({
   User: {
     type: Object,
-    ref: "Order",
+    ref: "User",
     required: true,
   },
   Cart: {
@@ -22,7 +22,7 @@ const orderschema = mongoose.Schema({
     type: Object,
     required: true,
   },
-  Status: { //pendiente, en curso, entregado
+  Status: { //pendientPayment, Paid, Entregado
     type: String,
     required: true,
   },  

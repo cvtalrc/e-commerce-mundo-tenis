@@ -13,6 +13,7 @@ import {
 import CartContext from "../../context/CartContext";
 import CartItem from "../CartItem/CartItem";
 import UserContext from "../../context/UserContext";
+import { helpHttp } from "../../helpers/helpHttp";
 
 function getSteps() {
   return [
@@ -63,17 +64,59 @@ const FormStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const { user } = useContext(UserContext)
+  const { token } = useContext(UserContext)
+  let api = helpHttp();
 
+  const paymentApi = async () => {
+    const url = "http://localhost:3000/api/payment"
 
-  const handleNext = (data) => {
-    console.log(data);
+    const options = {
+      body: { 
+              "userID" : user._id,
+              "Delivery" : form 
+            },
+      headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+      }
+
+    }
+
+    const response  = await api
+      .post(url, options)
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        console.log('Error fatal: ', err);
+      })
+      
+      const form = document.createElement('form');
+      form.action = response.url;
+      form.method = 'POST';
+
+      const tokenInput = document.createElement('input');
+      tokenInput.type = 'hidden';
+      tokenInput.name = 'token_ws';
+      tokenInput.value = response.token;
+
+      form.appendChild(tokenInput);
+      document.body.appendChild(form);
+      form.submit();
+  }
+  const handleNext = async (data) => {
+    // console.log(data.target);
+    if(steps.length === activeStep + 1){
+
+      console.log('Vamos a ir a pagar')
+      await paymentApi();
+
+      return ;
+    }
     if (activeStep == steps.length - 1) {
-
       setActiveStep(activeStep + 1);
-
     } else {
       setActiveStep(activeStep + 1);
-
     }
   };
 
@@ -95,8 +138,29 @@ const FormStepper = () => {
           );
         })}
       </Stepper>
+      <>
+          {getStepContent(activeStep)}
+          <Box sx={{ display: "flex", justifyContent: "right" }} >
+            <Button
+              sx={{ mr: 1 }}
+              disabled={activeStep === 0}
+              onClick={handleBack}
+            >
+              Atrás
+            </Button>
+            <Button
+              // className={classes.button}
+              variant="contained"
+              color="secondary"
+              onClick={handleNext}
+              type="submit"
+            >
+              {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
+            </Button>
+          </Box>
+        </>
 
-      {activeStep === steps.length ? (
+      {/* {activeStep === steps.length ? (
         <Typography variant="h3" align="center">
           Thank You
         </Typography>
@@ -122,7 +186,7 @@ const FormStepper = () => {
             </Button>
           </Box>
         </>
-      )}
+      )} */}
     </div>
   )
 };

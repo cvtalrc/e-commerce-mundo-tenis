@@ -6,6 +6,7 @@ const func_order = require("../Controllers/order_controllers");
 const func_auth = require("../Controllers/auth");
 const func_comment = require("../Controllers/comment_controllers");
 const func_user = require("../Controllers/user_controllers");
+const func_payment = require("../Controllers/payment_controllers");
 
 const api = express.Router();
 api.use(cookieParser());
@@ -44,5 +45,16 @@ api.put("/product/update/:id", func_product.update);
 api.put("/order/update/:id", func_auth.authenticateToken, func_order.updateOrderStatus)
 api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateComment);
 
+api.post("/payment", func_auth.authenticateToken, func_payment.generateTransaction)
+
+api.get("/verify-payment", async (req, res) => {
+    const { token_ws } = req.query
+    const verification = await func_payment.processPaymentWebpay(token_ws);
+    console.log(verification);
+    res.send({
+        message: 'funciona',
+        verification_result: verification
+    })
+})
 
 module.exports = api;

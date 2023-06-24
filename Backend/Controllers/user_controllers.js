@@ -1,6 +1,5 @@
 const User = require("../Models/User");
 const shoppingCart = require("../Models/shoppingCart");
-const auth = require("../Controllers/auth");
 
 async function getUser(req, res) {
   const id = req.params.id;
@@ -53,7 +52,7 @@ function removeAll(req, res) {
 
 async function updateUser(req, res) {
   const { id } = req.params;
-  const { name, lastname, email, address } = req.body;
+  const { name, lastname, email, address, region, commune, cellNumber } = req.body;
 
   try {
     const user = await User.find({_id : id});
@@ -75,6 +74,9 @@ async function updateUser(req, res) {
         lastname,
         email,
         address,
+        region,
+        commune,
+        cellNumber
       },
       { new: true }
     );
