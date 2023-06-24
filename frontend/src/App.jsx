@@ -17,7 +17,7 @@ import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
-import { Payment } from './views/payment/Payment';
+import  Payment from './views/payment/Payment';
 
 import { OrderProvider } from './context/OrderContext';
 
