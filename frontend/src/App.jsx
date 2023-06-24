@@ -17,6 +17,7 @@ import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
+import { OrderProvider } from './context/OrderContext';
 
 const navArrayLinks = [
     {
@@ -58,6 +59,7 @@ function App() {
                 <ProductsProvider>
                     <CartProvider>
                         <CrudProvider>
+                            <OrderProvider>
                             <Navbar navArrayLinks={navArrayLinks} />
                             <Routes>
                                 <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
@@ -71,6 +73,7 @@ function App() {
                                 <Route path="/search" element={<Search />} />
                             </Routes>
                             <Footer />
+                            </OrderProvider>
                         </CrudProvider>
                     </CartProvider>
                 </ProductsProvider>
