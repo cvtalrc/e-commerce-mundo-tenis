@@ -51,34 +51,6 @@ const navArrayLinks = [
 ]
 
 function App() {
-    // const [userName, setUserName] = useState(null);
-    // const [email, setEmail] = useState(null)
-    // const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     const storedUserName = localStorage.getItem("userName");
-    //     if (storedUserName) {
-    //         setUserName(storedUserName);
-    //     }
-    // }, []);
-
-
-
-    // const handleLogout = async () => {
-    //     const result = await Modal(
-    //         'Confirmar cierre de sesión',
-    //         '¿Estás seguro/a que quieres cerrar sesión?',
-    //         'warning',
-    //     )
-    //     if (result.confirmed) {
-    //         setUserName(null)
-    //         setEmail(null)
-    //         localStorage.removeItem("userName");
-    //         localStorage.removeItem("userEmail");
-    //         navigate('/')
-    //     }
-
-    // }
 
     return (
         <React.Fragment>
