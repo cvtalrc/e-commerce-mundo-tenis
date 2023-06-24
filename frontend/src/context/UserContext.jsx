@@ -28,7 +28,7 @@ const UserProvider = ({ children }) => {
 
     const navigate = useNavigate();
 
-    let api = helpHttp();
+    const api = helpHttp();
     
     // let url = "http://localhost:3000/api/user/";
     // useEffect(() => { //creo que no es necesario tener a todos los usuarios guardados
@@ -50,7 +50,6 @@ const UserProvider = ({ children }) => {
     // }, [url]);
 
     const logIn = (form) => {
-        let api = helpHttp();
         let url = 'http://localhost:3000/api/sign-in';
         
         let options = {
@@ -91,7 +90,6 @@ const UserProvider = ({ children }) => {
     }
 
     const logOut = () => {
-        let api = helpHttp();
         let url = 'http://localhost:3000/api/sign-out';
         let options = {
             headers: {
