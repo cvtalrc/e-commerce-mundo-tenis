@@ -71,6 +71,7 @@ const CartProvider = ({ children }) => {
         form.TitleProduct = title
         form.Size = size
         form.Quantity = quantity
+        console.log("token carro", token)
 
         let options = {
             body: form,

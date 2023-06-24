@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Typography,
   TextField,
@@ -14,19 +14,41 @@ import CartContext from "../../context/CartContext";
 import CartItem from "../CartItem/CartItem";
 import UserContext from "../../context/UserContext";
 import { helpHttp } from "../../helpers/helpHttp";
+import FormDelivery from "./FormDelivery";
 
 function getSteps() {
   return [
     "Resumen",
     // "Iniciar Sesión",
     "Entrega",
-    "Medio de Pago",
     "Revisar y Pagar",
   ];
 }
 
+
 function getStepContent(step) {
   const { cartProducts, totalPrice } = useContext(CartContext);
+  const { user } = useContext(UserContext)
+  const [deliveryMethod, setDeliveryMethod] = useState('store-pickup');
+  const [form, setForm] = useState(null)
+
+  useEffect(() => {
+    if (user != null) {
+      const initialForm = { //datos de envío
+        type: deliveryMethod, //delivery, retiro
+        name: user.name,
+        lastname: user.lastname,
+        address: user.address,
+        addressNumber: "",
+        region: "",
+        comuna: "",
+        cellNumber: "",
+        instructions: ""
+      };
+      setForm(initialForm)
+    }
+
+  }, [user]);
 
   switch (step) {
     case 0:
@@ -48,15 +70,46 @@ function getStepContent(step) {
       );
     case 1:
       return (
-        <Typography>Entrega</Typography>
+        <>
+          {user != null &&
+            <FormDelivery user={user} form={form} setForm={setForm} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
+          }
+        </>
       )
 
     case 2:
-      return (<Typography>Medio de pago</Typography>)
-    case 3:
-      return <Typography>Revisar y pagar</Typography>
+      return (<>
+        <Typography>Revisar y pagar</Typography>
+
+        <Typography>Productos: </Typography>
+        <Typography>Total: </Typography>
+
+        <Typography>Tipo de Entrega: {form.type}</Typography>
+        {form.type === 'store-pickup' ?
+          <>
+            <Typography>Datos de retiro: </Typography>
+            <Typography>Dirección: blahalbha </Typography>
+            <Typography>Contacto: blahblah </Typography>
+          </>
+          :
+          <>
+            <Typography>Datos de entrega: </Typography>
+            <Typography>Nombre: {form.name}</Typography>
+            <Typography>Apellido: {form.lastname}</Typography>
+            <Typography>Celular: {form.cellNumber}</Typography>
+            <Typography>Dirección: {form.address} {form.addressNumber}</Typography>
+            <Typography>Región: {form.region}</Typography>
+            <Typography>Comuna: {form.comuna}</Typography>
+            {form.instructions ? <Typography>Instrucciones de entrega: {form.instructions}</Typography> : ''
+            }
+          </>
+
+        }
+
+      </>)
     default:
       return "unknown step";
+
   }
 }
 

@@ -46,7 +46,7 @@ async function sign_up(req, res) {
     return res
       .status(200)
       .send({ message: "El correo ingresado ya posee una cuenta", status: "warning" });
-      
+
   const usuario = {
     name: body.name,
     lastName: body.lastname,

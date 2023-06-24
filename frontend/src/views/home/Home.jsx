@@ -14,7 +14,6 @@ import vcore7 from "../../img/vcore7.webp"
 
 export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
-    console.log(products)
   
     const slides = [
         { url: vcore, title: "vcore" },

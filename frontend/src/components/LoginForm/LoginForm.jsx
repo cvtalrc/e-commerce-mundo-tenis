@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { useState, useContext } from 'react';
 import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import UserContext from '../../context/UserContext';
 
 function Copyright(props) {
@@ -27,9 +27,21 @@ function Copyright(props) {
   );
 }
 
+function isValidEmail(email) {
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  return regex.test(email);
+}
+
+function isValidPassword(password) {
+  const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  return regex.test(password);  
+}
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 export default function SignIn() {
+  const [validationErrors, setValidationErrors] = useState({});
+
   const initialForm = {
     email: "",
     pass: ""
@@ -39,22 +51,37 @@ export default function SignIn() {
   const [errorMsg, setErrorMessage] = useState('');
   const { logIn } = useContext(UserContext);
 
-  const navigate = useNavigate();
+  const validateField = (fieldName, value) => {
+    let isValid = true;
+
+    if (fieldName === 'email') {
+      isValid = isValidEmail(value)
+    } else if (fieldName === 'pass') {
+      isValid = isValidPassword(value)
+    }
+
+    setValidationErrors((prevState) => ({
+      ...prevState,
+      [fieldName]: isValid ? undefined : 'Campo inválido'
+    }))
+  }
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    
     setForm({
       ...form,
       [e.target.name]: e.target.value,
-  });
+    });
+
+    validateField(name, value);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(form)
 
-    if(!EmailValidator.validate(form.email)) {
-      setErrorMessage("Formato de email inválido")
-
+    if(Object.keys(validationErrors).length > 0) {
       // Desaparecer el mensaje de error después de 3 segundos
       setTimeout(() => {
         setErrorMessage('');
@@ -64,8 +91,6 @@ export default function SignIn() {
     } else {
       logIn(form);
     }
-
-    
   };
 
   return (
@@ -101,12 +126,15 @@ export default function SignIn() {
               fullWidth
               label="Correo electrónico"
               onChange={handleChange}
+              id='email'
               name="email"
               value={form.email}
               autoComplete="email"
               autoFocus
               type="email"
               placeholder='ejemplo@gmail.com'
+              error={validationErrors.email !== undefined}
+              helperText={validationErrors.email || ' '}
             />
             <TextField
               color="secondary"
@@ -120,6 +148,8 @@ export default function SignIn() {
               type="password"
               autoComplete="current-password"
               placeholder='**********'
+              error={validationErrors.pass !== undefined}
+              helperText={validationErrors.pass || ' '}
             />
             <Button
               type="submit"

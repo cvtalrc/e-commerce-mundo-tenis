@@ -17,8 +17,9 @@ import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
-import Payment from './views/payment/Payment';
+import { Payment } from './views/payment/Payment';
 
+import { OrderProvider } from './context/OrderContext';
 
 const navArrayLinks = [
     {
@@ -53,34 +54,6 @@ const navArrayLinks = [
 ]
 
 function App() {
-    // const [userName, setUserName] = useState(null);
-    // const [email, setEmail] = useState(null)
-    // const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     const storedUserName = localStorage.getItem("userName");
-    //     if (storedUserName) {
-    //         setUserName(storedUserName);
-    //     }
-    // }, []);
-
-
-
-    // const handleLogout = async () => {
-    //     const result = await Modal(
-    //         'Confirmar cierre de sesión',
-    //         '¿Estás seguro/a que quieres cerrar sesión?',
-    //         'warning',
-    //     )
-    //     if (result.confirmed) {
-    //         setUserName(null)
-    //         setEmail(null)
-    //         localStorage.removeItem("userName");
-    //         localStorage.removeItem("userEmail");
-    //         navigate('/')
-    //     }
-
-    // }
 
     return (
         <React.Fragment>
@@ -88,6 +61,7 @@ function App() {
                 <ProductsProvider>
                     <CartProvider>
                         <CrudProvider>
+                            <OrderProvider>
                             <Navbar navArrayLinks={navArrayLinks} />
                             <Routes>
                                 <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
@@ -102,6 +76,7 @@ function App() {
                                 <Route path="/payment" element={<Payment />} />
                             </Routes>
                             <Footer />
+                            </OrderProvider>
                         </CrudProvider>
                     </CartProvider>
                 </ProductsProvider>
