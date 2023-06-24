@@ -42,7 +42,7 @@ function isValidPassword(password) {
 }
 
 function isValidPhoneNumber(cellNumber) {
-  const regex = /^\d+$/;
+  const regex = /^\+569\d{8}$/;
   return regex.test(cellNumber);
 }
 
@@ -180,6 +180,7 @@ export default function SignUp() {
       });
 
     setForm(initialForm);
+    console.log(form);
   };
 
   return (
@@ -280,11 +281,12 @@ export default function SignUp() {
                 fullWidth
                 id="comuna"
                 label="Comuna"
+                name='comuna'
                 select
                 placeholder='Comuna'
                 value={form.comuna}
               >
-                {comunas[region.indexOf(form.region)]?.map((comunaName, index) => (
+                {(comunas[region.indexOf(form.region)] || []).map((comunaName, index) => (
                     <MenuItem key={index} value={comunaName}>
                       {comunaName}
                     </MenuItem>
