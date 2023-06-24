@@ -5,8 +5,7 @@ const shoppingCart = require("../Models/shoppingCart");
 const cron = require("node-cron");
 const moment = require('moment');
 
-async function createOrder(req, res) {
-  const { userID, Delivery } = req.body;
+async function createOrder(userID, Delivery) {
   try {
     // Crear una instancia del modelo Order con los datos de la orden de compra
     const user = await User.findOne({ _id: userID });
@@ -42,18 +41,14 @@ async function createOrder(req, res) {
 
     const order = new Order({
       User: user,
-      Cart: [cart.items, cart.total],
+      Cart: [{"Products" : cart.items}, {"Total": cart.total}],
       Delivery: Delivery,
       Status: "pendingPayment",
     });
 
     // Guardar la orden de compra en la base de datos
     const newOrder = await order.save();
-
-    res.status(200).send({
-      message: "Orden de compra creada exitosamente",
-      order: newOrder,
-    });
+    return newOrder;
   } catch (error) {
     // Error al crear la orden de compra
     res

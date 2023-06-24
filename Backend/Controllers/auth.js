@@ -22,24 +22,40 @@ async function sign_up(req, res) {
     return res
       .status(200)
       .send({ message: "Contraseña obligatoria", status: "warning" });
-  if (!body.rut)
+  if (!body.address)
     return res
       .status(200)
-      .send({ message: "Rut obligatorio", status: "warning" });
+      .send({ message: "Direccion obligatoria", status: "warning" });
+  if (!body.region)
+      return res
+        .status(200)
+        .send({ message: "Region obligatoria", status: "warning" });
+  if (!body.comuna)
+      return res
+        .status(200)
+        .send({ message: "Comuna obligatoria", status: "warning" });
+  if (!body.cellNumber)
+      return res
+        .status(200)
+        .send({ message: "Numero de telefono obligatorio", status: "warning" });
 
 
   const findUser = await User.findOne({ email: body.email });
+
   if (findUser)
     return res
       .status(200)
       .send({ message: "El correo ingresado ya posee una cuenta", status: "warning" });
+
   const usuario = {
     name: body.name,
-    lastname: body.lastname,
+    lastName: body.lastname,
     email: body.email,
     pass: body.pass,
-    rut: body.rut,
     address: body.address,
+    region: body.region,
+    commune: body.comuna,
+    cellNumber: body.cellNumber,
     type: body.type,
   };
   const insertUser = await User.create(usuario);
@@ -128,7 +144,7 @@ function sign_out(req, res) {
 
 function authenticateToken(req, res, next) {
   //const token = req.cookies.accessToken;
- const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res

@@ -1,0 +1,42 @@
+import React, { useState, useCallback, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { helpHttp } from '../../helpers/helpHttp'
+
+const Payment = () => {
+    const param = useLocation()
+    // const { token_ws } = param
+    // console.log(param.search);
+
+    const [response, setResponse] = useState({})
+    const api = helpHttp()
+    // console.log(`http://localhost:3000/api/verify-payment${param.search}`);
+    // console.log(param.search);
+
+    useEffect(() => {
+        if(param.search){
+            api.get(`http://localhost:3000/api/verify-payment${param.search}`)
+            .then((res) => {
+                console.log(res);
+                setResponse(res)
+            })
+            .catch((err) => {
+                console.err('Error Fatal: ', err)
+            })
+        }
+    }, [param.search])
+
+    console.log(response);
+
+    if(!param.search){
+        return (
+            <h3>Lo sentimos, el token de compra no es válido o no se ha proporcionado</h3>
+        )
+    }
+    return (
+        <div>
+            <h3>Todo Bien</h3>
+        </div>
+    )
+}
+
+export default Payment

@@ -4,6 +4,10 @@ const commentschema = mongoose.Schema({
     type: String,
     required: true
   },
+  Star: {
+    type: Number,
+    required: true
+  },
   Content: {
     type: String,
     required: true
