@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { helpHttp } from '../../helpers/helpHttp'
 
-const Payment = () => {
+export default function Payment() {
     const param = useLocation()
     // const { token_ws } = param
     // console.log(param.search);
@@ -38,5 +38,3 @@ const Payment = () => {
         </div>
     )
 }
-
-export default Payment

@@ -43,7 +43,7 @@ const ShoppingCart = (SetOpenShoppingCart) => {
             variant="contained"
             component={NavLink}
             to="/order"
-            sx={{ display: "flex", alignItems: "center", margin: 1.5, justifyContent: "center", width: '90%' }}
+            sx={{ display: "flex", alignItems: "center", margin: 1.5, justifyContent: "center", width: '80%' }}
             onClick={() => SetOpenShoppingCart(false)}
           >
             Comprar

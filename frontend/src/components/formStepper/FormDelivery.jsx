@@ -27,7 +27,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
         e.preventDefault();
         form.delivery = deliveryMethod
       
-        if (!form.delivery || !form.name || !form.lastname || !form.address || !form.addressNumber || !form.region || !form.comuna || !form.cellNumber ) {
+        if (!form.delivery || !form.name || !form.lastName || !form.address || !form.addressNumber || !form.region || !form.comuna || !form.cellNumber ) {
             console.log(form);
             alert("Datos incompletos");
             return;
@@ -62,7 +62,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                 <Grid sm={6} item>
                     <Typography variant="h5" sx={{ mb: 2, mt: 4, fontWeight: 700 }}>Datos personales</Typography>
                     <Typography>Nombre: {user.name}</Typography>
-                    <Typography>Apellido: {user.lastname}</Typography>
+                    <Typography>Apellido: {user.lastName}</Typography>
                     <Typography>Email: {user.email}</Typography>
                     <Typography>Celular: {user.cellNumber}</Typography>
                     <Typography>Dirección: {user.address}</Typography>
@@ -100,11 +100,11 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                             size="small"
                                             color="secondary"
                                             delivery="text"
-                                            name="lastname"
+                                            name="lastName"
                                             placeholder="Apellido"
                                             label="Apellido"
                                             onChange={handleChange}
-                                            value={form.lastname}
+                                            value={form.lastName}
                                         />
                                     </Grid>
                                     <Grid sm={4} item>
@@ -200,7 +200,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod}
                                 (<Grid container>
                                     <Grid sm={10} item>
                                         <Typography>Nombre: {form.name}</Typography>
-                                        <Typography>Apellido: {form.lastname}</Typography>
+                                        <Typography>Apellido: {form.lastName}</Typography>
                                         <Typography>Celular: {form.cellNumber}</Typography>
                                         <Typography>Dirección: {form.address} {form.addressNumber}</Typography>
                                         <Typography>Región: {form.region}</Typography>
