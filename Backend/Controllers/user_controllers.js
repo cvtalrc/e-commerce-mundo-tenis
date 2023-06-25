@@ -65,8 +65,7 @@ async function updateUser(req, res) {
       status: "warning",
     });
 
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
+    const updatedUser = await User.findByIdAndUpdate(id,
       {
         name,
         lastname,
