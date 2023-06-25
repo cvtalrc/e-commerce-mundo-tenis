@@ -8,11 +8,11 @@ import jwtDecode from 'jwt-decode';
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [users, setUsers] = useState(null); //usuarios
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('user'))
+    const api = helpHttp();
 
     useEffect(() => {
         if(localStorage.getItem('user')){
@@ -27,27 +27,6 @@ const UserProvider = ({ children }) => {
     }, [token]);
 
     const navigate = useNavigate();
-
-    const api = helpHttp();
-    
-    // let url = "http://localhost:3000/api/user/";
-    // useEffect(() => { //creo que no es necesario tener a todos los usuarios guardados
-    //     //setLoading(true);
-    //     api
-    //         .get(url)
-    //         .then((res) => {
-    //             //console.log(res);
-    //             if (!res.err) {
-    //                 console.log(res)
-    //                 setUsers(res);
-    //                 setError(null);
-    //             } else {
-    //                 setUsers(null);
-    //                 setError(res);
-    //             }
-    //             //setLoading(false);
-    //         });
-    // }, [url]);
 
     const logIn = (form) => {
         let url = 'http://localhost:3000/api/sign-in';
@@ -117,7 +96,6 @@ const UserProvider = ({ children }) => {
                     }
                 }
             })
-
     }
 
     const register = () => {
@@ -125,7 +103,6 @@ const UserProvider = ({ children }) => {
     }
 
     const data = {
-        users,
         user,
         logIn,
         logOut,

@@ -9,7 +9,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useState, useContext } from 'react';
-import * as EmailValidator from 'react-email-validator';
 import Fade from '@mui/material/Fade';
 import { NavLink } from 'react-router-dom'
 import UserContext from '../../context/UserContext';
@@ -81,17 +80,8 @@ export default function SignIn() {
     event.preventDefault();
     console.log(form)
 
-    if(Object.keys(validationErrors).length > 0) {
-      // Desaparecer el mensaje de error después de 3 segundos
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 3000);
-
-      return
-    } else {
-      logIn(form);
-    }
-  };
+    logIn(form);
+  }
 
   return (
       <Container component="main" maxWidth="sm">
