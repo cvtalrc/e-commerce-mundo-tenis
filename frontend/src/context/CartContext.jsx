@@ -22,16 +22,20 @@ const CartProvider = ({ children }) => {
 
     const [form, setForm] = useState(initialForm);
 
-    const email = user != null ? user.email : '';
-    if (user != null) {
-        console.log("usuario dentro del contexto del carro ", user.email)
-    }
+    const email = user != null ? user.email : ''
+
+    useEffect(() => {
+        if (user === null) {
+            setCartProducts(null)
+        }
+    }, [user]);
 
     let api = helpHttp();
     let url = `http://localhost:3000/api/cart/${email}`;
 
+    console.log('email: ', email)
+
     useEffect(() => {
-        //setLoading(true);
         let options = {
             headers: {
                 "Content-Type": "application/json",
@@ -45,6 +49,7 @@ const CartProvider = ({ children }) => {
                 .then((res) => {
                     console.log(res);
                     if (!res.err) {
+                        console.log("productos en el carro", email + '' + res.data.items)
                         setCartProducts(res.data.items);
                         setTotalPrice(res.data.total);
                         setError(null);
@@ -56,14 +61,6 @@ const CartProvider = ({ children }) => {
         }
 
     }, [url]);
-
-    useEffect(() => {
-
-    }, [cartProducts])
-
-    useEffect(() => {
-
-    }, [totalCartPrice])
 
     const addToCart = (_id, title, size, quantity) => {
         const urlAdd = `http://localhost:3000/API/cart/add`
@@ -139,6 +136,7 @@ const CartProvider = ({ children }) => {
 
     const data = {
         cartProducts,
+        setCartProducts,
         totalPrice,
         addToCart,
         form,

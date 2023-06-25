@@ -1,10 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import { useNavigate } from 'react-router-dom';
 import { Toast } from '../components/Alerts/Toast';
 import { Modal }from '../components/Alerts/Modal';
 import jwtDecode from 'jwt-decode';
 import Swal from 'sweetalert2'
+import CartContext from "./CartContext";
 
 const UserContext = createContext();
 
@@ -20,10 +21,6 @@ const UserProvider = ({ children }) => {
             setToken(localStorage.getItem('user'))
             let decodedUser = jwtDecode(token);
             setUser(decodedUser)
-            console.log(decodedUser)
-            console.log("con token",token)
-        } else {
-            console.log("sin token",token)
         }
     }, [token]);
 

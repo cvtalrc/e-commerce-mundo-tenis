@@ -15,6 +15,7 @@ import CartItem from "../CartItem/CartItem";
 import UserContext from "../../context/UserContext";
 import { helpHttp } from "../../helpers/helpHttp";
 import FormDelivery from "./FormDelivery";
+import FormCheck from "./FormCheck";
 
 function getSteps() {
   return [
@@ -25,12 +26,17 @@ function getSteps() {
   ];
 }
 
+let editForm = ''
+let formGlobal = ''
 
 function getStepContent(step) {
   const { cartProducts, totalPrice } = useContext(CartContext);
   const { user } = useContext(UserContext)
-  const [deliveryMethod, setDeliveryMethod] = useState('store-pickup');
   const [form, setForm] = useState(null)
+  const [edit, setEdit] = useState(false)
+  const [deliveryMethod, setDeliveryMethod] = useState('store-pickup');
+  editForm = edit
+  formGlobal = form 
 
   useEffect(() => {
     if (user != null) {
@@ -38,6 +44,7 @@ function getStepContent(step) {
         delivery: deliveryMethod, //delivery, retiro
         name: user.name,
         lastName: user.lastName,
+        email: user.email,
         address: user.address,
         region: user.region,
         comuna: user.comuna,
@@ -71,41 +78,19 @@ function getStepContent(step) {
       return (
         <>
           {user != null &&
-            <FormDelivery user={user} form={form} setForm={setForm} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
+            <FormDelivery user={user} form={form} setForm={setForm} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} edit={edit} setEdit={setEdit} />
           }
         </>
       )
 
     case 2:
-      return (<>
-        <Typography>Revisar y pagar</Typography>
-
-        <Typography>Productos: </Typography>
-        <Typography>Total: </Typography>
-
-        <Typography>Tipo de Entrega: {form.delivery}</Typography>
-        {form.delivery === 'store-pickup' ?
-          <>
-            <Typography>Datos de retiro: </Typography>
-            <Typography>Dirección: blahalbha </Typography>
-            <Typography>Contacto: blahblah </Typography>
-          </>
-          :
-          <>
-            <Typography>Datos de entrega: </Typography>
-            <Typography>Nombre: {form.name}</Typography>
-            <Typography>Apellido: {form.lastName}</Typography>
-            <Typography>Celular: {form.cellNumber}</Typography>
-            <Typography>Dirección: {form.address} {form.addressNumber}</Typography>
-            <Typography>Región: {form.region}</Typography>
-            <Typography>Comuna: {form.comuna}</Typography>
-            {form.instructions ? <Typography>Instrucciones de entrega: {form.instructions}</Typography> : ''
-            }
-          </>
-
-        }
-
-      </>)
+      return (
+        <>
+          {cartProducts != null &&
+            <FormCheck cartProducts={cartProducts} totalPrice={totalPrice} form={form} />
+          }
+        </>
+      )
     default:
       return "unknown step";
 
@@ -123,18 +108,17 @@ const FormStepper = () => {
     const url = "http://localhost:3000/api/payment"
 
     const options = {
-      body: { 
-              "userID" : user._id,
-              "Delivery" : form 
-            },
+      body: {
+        "userID": user._id,
+        "Delivery": formGlobal
+      },
       headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       }
-
     }
 
-    const response  = await api
+    const response = await api
       .post(url, options)
       .then((res) => {
         return res
@@ -142,33 +126,35 @@ const FormStepper = () => {
       .catch((err) => {
         console.log('Error fatal: ', err);
       })
-      
-      const form = document.createElement('form');
-      form.action = response.url;
-      form.method = 'POST';
 
-      const tokenInput = document.createElement('input');
-      tokenInput.type = 'hidden';
-      tokenInput.name = 'token_ws';
-      tokenInput.value = response.token;
+    const form = document.createElement('form');
+    form.action = response.url;
+    form.method = 'POST';
 
-      form.appendChild(tokenInput);
-      document.body.appendChild(form);
-      form.submit();
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = 'token_ws';
+    tokenInput.value = response.token;
+
+    form.appendChild(tokenInput);
+    document.body.appendChild(form);
+    form.submit();
   }
+
   const handleNext = async (data) => {
     // console.log(data.target);
-    if(steps.length === activeStep + 1){
-
+    if (steps.length === activeStep + 1) {
       console.log('Vamos a ir a pagar')
       await paymentApi();
-
-      return ;
+      return;
     }
+
     if (activeStep == steps.length - 1) {
       setActiveStep(activeStep + 1);
+
     } else {
       setActiveStep(activeStep + 1);
+
     }
   };
 
@@ -191,54 +177,27 @@ const FormStepper = () => {
         })}
       </Stepper>
       <>
-          {getStepContent(activeStep)}
-          <Box sx={{ display: "flex", justifyContent: "right" }} >
-            <Button
-              sx={{ mr: 1 }}
-              disabled={activeStep === 0}
-              onClick={handleBack}
-            >
-              Atrás
-            </Button>
-            <Button
-              // className={classes.button}
-              variant="contained"
-              color="secondary"
-              onClick={handleNext}
-              type="submit"
-            >
-              {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
-            </Button>
-          </Box>
-        </>
-
-      {/* {activeStep === steps.length ? (
-        <Typography variant="h3" align="center">
-          Thank You
-        </Typography>
-      ) : (
-        <>
-          {getStepContent(activeStep)}
-          <Box sx={{ display: "flex", justifyContent: "right" }} >
-            <Button
-              sx={{ mr: 1 }}
-              disabled={activeStep === 0}
-              onClick={handleBack}
-            >
-              Atrás
-            </Button>
-            <Button
-              // className={classes.button}
-              variant="contained"
-              color="secondary"
-              onClick={handleNext}
-              type="submit"
-            >
-              {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
-            </Button>
-          </Box>
-        </>
-      )} */}
+        {getStepContent(activeStep)}
+        <Box sx={{ display: "flex", justifyContent: "right" }} >
+          <Button
+            sx={{ mr: 1 }}
+            disabled={activeStep === 0}
+            onClick={handleBack}
+          >
+            Atrás
+          </Button>
+          <Button
+            // className={classes.button}
+            variant="contained"
+            color="secondary"
+            onClick={handleNext}
+            type="submit"
+            disabled={editForm}
+          >
+            {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
+          </Button>
+        </Box>
+      </>
     </div>
   )
 };

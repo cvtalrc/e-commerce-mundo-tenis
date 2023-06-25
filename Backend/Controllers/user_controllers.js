@@ -6,7 +6,7 @@ async function getUser(req, res) {
   const user = await User.findOne({ _id: id }).select("-pass");
   if (!user)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "El usuario no existe", status: "error" });
   return res.status(200).send({ user });
 }
@@ -52,7 +52,7 @@ function removeAll(req, res) {
 
 async function updateUser(req, res) {
   const { id } = req.params;
-  const { name, lastname, email, address, region, commune, cellNumber } = req.body;
+  const { name, lastname, email, address, region, comuna, cellNumber } = req.body;
 
   try {
     const user = await User.find({_id : id});
@@ -75,7 +75,7 @@ async function updateUser(req, res) {
         email,
         address,
         region,
-        commune,
+        comuna,
         cellNumber
       },
       { new: true }

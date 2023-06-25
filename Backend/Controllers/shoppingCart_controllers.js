@@ -14,7 +14,7 @@ async function createEmpty_shoppingCart(req, res, user) {
     const find_cart = await shoppingCart.findOne({ User: user });
     if (find_cart)
       return res
-        .status(200)
+        .status(400)
         .send({
           msj: "El carro asociado a este usuario ya existe",
           status: "warning",

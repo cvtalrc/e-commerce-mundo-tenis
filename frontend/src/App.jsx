@@ -8,7 +8,7 @@ import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
 import React, { useContext, useEffect } from 'react';
 import Login from './views/login/Login';
-import Admin from './views/admin/Admin';
+import AdminProducts from './views/admin/AdminProducts';
 import NewAccount from './views/register/Register';
 import { useState } from 'react'
 import { Modal } from './components/Alerts/Modal';
@@ -17,8 +17,10 @@ import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
-import  Payment from './views/payment/Payment';
+import Payment from './views/payment/Payment';
 import { OrderProvider } from './context/OrderContext';
+import AdminOrders from './views/admin/AdminOrders';
+import User from './views/user/User';
 
 const navArrayLinks = [
     {
@@ -57,28 +59,31 @@ function App() {
     return (
         <React.Fragment>
             <UserProvider>
-                <ProductsProvider>
-                    <CartProvider>
+                <CartProvider>
+                    <ProductsProvider>
                         <CrudProvider>
                             <OrderProvider>
-                            <Navbar navArrayLinks={navArrayLinks} />
-                            <Routes>
-                                <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/register" element={<NewAccount />} />
-                                <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
-                                <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
-                                <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
-                                <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
-                                <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
-                                <Route path="/search" element={<Search />} />
-                                {/* <Route path="/payment" element={<Payment />} /> */}
-                            </Routes>
-                            <Footer />
+                                <Navbar navArrayLinks={navArrayLinks} />
+                                <Routes>
+                                    <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/register" element={<NewAccount />} />
+                                    <Route path="/:sport" element={<Sports />} /> {/*pagina por deporte (tenis, padel) */}
+                                    <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
+                                    <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
+                                    <Route path="/order" element={<Order />} /> 
+                                    <Route path="/admin/products" element={<AdminProducts />} /> 
+                                    <Route path="/admin/orders" element={<AdminOrders />} />
+                                    <Route path="/search" element={<Search />} />
+                                    <Route path="/user/:user" element={<User/>} />
+                                    <Route path="/payment" element={<Payment />} />
+                                    
+                                </Routes>
+                                <Footer />
                             </OrderProvider>
                         </CrudProvider>
-                    </CartProvider>
-                </ProductsProvider>
+                    </ProductsProvider>
+                </CartProvider>
             </UserProvider>
         </React.Fragment>
     );

@@ -8,53 +8,51 @@ async function sign_up(req, res) {
 
   if (!body.name)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Nombre de usuario obligatorio", status: "warning" });
-  if (!body.lastname)
+  if (!body.lastName)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Apellido obligatorio", status: "warning" });
   if (!body.email)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Email obligatorio", status: "warning" });
   if (!body.pass)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Contraseña obligatoria", status: "warning" });
   if (!body.address)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Direccion obligatoria", status: "warning" });
   if (!body.region)
       return res
-        .status(200)
+        .status(400)
         .send({ message: "Region obligatoria", status: "warning" });
   if (!body.comuna)
       return res
-        .status(200)
+        .status(400)
         .send({ message: "Comuna obligatoria", status: "warning" });
   if (!body.cellNumber)
       return res
-        .status(200)
+        .status(400)
         .send({ message: "Numero de telefono obligatorio", status: "warning" });
 
 
   const findUser = await User.findOne({ email: body.email });
 
   if (findUser)
-    return res
-      .status(200)
-      .send({ message: "El correo ingresado ya posee una cuenta", status: "warning" });
+    return res.status(400).send({ message: "El correo ingresado ya posee una cuenta", status: "warning" });
 
   const usuario = {
     name: body.name,
-    lastName: body.lastname,
+    lastName: body.lastName,
     email: body.email,
     pass: body.pass,
     address: body.address,
     region: body.region,
-    comun: body.comuna,
+    comuna: body.comuna,
     cellNumber: body.cellNumber,
     type: body.type,
   };
@@ -143,8 +141,8 @@ function sign_out(req, res) {
 }
 
 function authenticateToken(req, res, next) {
-  const token = req.cookies.accessToken;
-  //const token = req.headers.authorization?.split(' ')[1];
+  //const token = req.cookies.accessToken;
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res
