@@ -15,12 +15,15 @@ const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('user'))
     const api = helpHttp();
+    const localStorageData = { ...localStorage };
 
     useEffect(() => {
-        if(localStorage.getItem('user')){
-            setToken(localStorage.getItem('user'))
-            let decodedUser = jwtDecode(token);
-            setUser(decodedUser)
+        if(localStorageData != undefined){ //evita el error n
+            if(localStorage.getItem('user')){
+                setToken(localStorage.getItem('user'))
+                let decodedUser = jwtDecode(token);
+                setUser(decodedUser)
+            }
         }
     }, [token]);
 
