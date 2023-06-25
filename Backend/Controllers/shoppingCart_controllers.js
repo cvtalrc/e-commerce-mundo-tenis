@@ -12,7 +12,7 @@ async function createEmpty_shoppingCart(user) {
       total: 0,
     });
     const find_cart = await shoppingCart.findOne({ User: user });
-    if (find_cart)throw new Error("Ya existe un carro asociado al usuario");
+    if (find_cart) throw new Error("Ya existe un carro asociado al usuario");
 
     await shoppingCart.create(Cart);
   } catch (error) {
@@ -245,12 +245,7 @@ async function reduceStock(orderID){
           const newQuantity = stockItem.quantity - item.Quantity; 
           const index = await isProduct.stock.findIndex(stock => stock.size === item.Size);
           console.log(index);
-          // if (index == ""){
-          //   await isProduct.updateOne({$set: { [`stock[0].quantity`]: newQuantity }});
-          // }else{
-            await isProduct.updateOne({$set: { [`stock.${index}.quantity`]: newQuantity }});
-          //}
-          
+          await isProduct.updateOne({$set: { [`stock.${index}.quantity`]: newQuantity }});
         }else{
           throw new Error("Carrito no encontrado");
         }

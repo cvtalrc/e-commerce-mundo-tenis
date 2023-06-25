@@ -53,7 +53,7 @@ async function updateOrderStatus(orderID) {
       { Status: "En curso" },
       { new: true }
     );
-    return updatedOrder
+    return updatedOrder;
     //res.status(200).json(updatedOrder);
   } catch (error) {
     throw error;
