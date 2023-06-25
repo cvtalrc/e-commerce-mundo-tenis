@@ -4,25 +4,19 @@ const Order = require("../Models/Order")
 const cron = require("node-cron");
 
 //CREAR CARRO VACIO
-async function createEmpty_shoppingCart(req, res, user) {
-  const Cart = new shoppingCart({
-    User: user,
-    items: [],
-    total: 0,
-  });
+async function createEmpty_shoppingCart(user) {
   try {
+    const Cart = new shoppingCart({
+      User: user,
+      items: [],
+      total: 0,
+    });
     const find_cart = await shoppingCart.findOne({ User: user });
-    if (find_cart)
-      return res
-        .status(400)
-        .send({
-          msj: "El carro asociado a este usuario ya existe",
-          status: "warning",
-        });
+    if (find_cart)throw new Error("Ya existe un carro asociado al usuario");
 
     await shoppingCart.create(Cart);
   } catch (error) {
-    return res.status(400).send({ message: error.message });
+    throw error;
   }
 }
 
@@ -42,14 +36,8 @@ async function addtoCart(req, res) {
     //revisa que exista stock
 
     const stockItem = isProduct.stock.find((item) => item.size === Size);
-    if (stockItem == null)
-      return res
-        .status(400)
-        .send({ msj: "No existe esa talla", status: "error" });
-    if (stockItem.quantity < Quantity)
-      return res
-        .status(400)
-        .send({ msj: "No hay stock suficiente", status: "error" });
+    if (stockItem == null) return res.status(400).send({ msj: "No existe esa talla", status: "error" });
+    if (stockItem.quantity < Quantity) return res.status(400).send({ msj: "No hay stock suficiente", status: "error" });
 
     //Buscar el carro asociado al usuario
     let cart = await shoppingCart.findOne({ User: User });
@@ -185,10 +173,8 @@ async function getCart(req, res) {
   const user = req.params.user; //0|| req.sessionID;
   try {
     const cart = await shoppingCart.findOne({ User: user });
-    if (!cart)
-      return res
-        .status(400)
-        .send({ msj: "Carrito no encontrado", status: "error" });
+    if (!cart) return res.status(400).send({ msj: "Carrito no encontrado", status: "error" });
+    //revisar stock
     res.status(200).send({ data: cart, status: "success" });
   } catch (error) {
     console.log(error);

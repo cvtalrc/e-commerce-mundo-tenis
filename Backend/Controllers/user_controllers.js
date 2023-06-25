@@ -5,9 +5,7 @@ async function getUser(req, res) {
   const id = req.params.id;
   const user = await User.findOne({ _id: id }).select("-pass");
   if (!user)
-    return res
-      .status(400)
-      .send({ message: "El usuario no existe", status: "error" });
+    return res.status(404).send({ message: "El usuario no existe", status: "error" });
   return res.status(200).send({ user });
 }
 
@@ -62,7 +60,7 @@ async function updateUser(req, res) {
 
     const findUser = await User.find({email: req.body.email});
     console.log(findUser);
-    if(findUser.length > 0) return res.status(200).send({
+    if(findUser.length > 0) return res.status(400).send({
       msj: "El email ya está asociado a un usuario",
       status: "warning",
     });

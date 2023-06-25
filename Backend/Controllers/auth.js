@@ -7,38 +7,21 @@ async function sign_up(req, res) {
   const { body } = req;
 
   if (!body.name)
-    return res
-      .status(400)
-      .send({ message: "Nombre de usuario obligatorio", status: "warning" });
-  if (!body.lastName)
-    return res
-      .status(400)
-      .send({ message: "Apellido obligatorio", status: "warning" });
+    return res.status(400).send({ message: "Nombre de usuario obligatorio", status: "warning" });
+  if (!body.lastname)
+    return res.status(400).send({ message: "Apellido obligatorio", status: "warning" });
   if (!body.email)
-    return res
-      .status(400)
-      .send({ message: "Email obligatorio", status: "warning" });
+    return res.status(400).send({ message: "Email obligatorio", status: "warning" });
   if (!body.pass)
-    return res
-      .status(400)
-      .send({ message: "Contraseña obligatoria", status: "warning" });
+    return res.status(400).send({ message: "Contraseña obligatoria", status: "warning" });
   if (!body.address)
-    return res
-      .status(400)
-      .send({ message: "Direccion obligatoria", status: "warning" });
+    return res.status(400).send({ message: "Direccion obligatoria", status: "warning" });
   if (!body.region)
-      return res
-        .status(400)
-        .send({ message: "Region obligatoria", status: "warning" });
+      return res.status(400).send({ message: "Region obligatoria", status: "warning" });
   if (!body.comuna)
-      return res
-        .status(400)
-        .send({ message: "Comuna obligatoria", status: "warning" });
+      return res.status(400).send({ message: "Comuna obligatoria", status: "warning" });
   if (!body.cellNumber)
-      return res
-        .status(400)
-        .send({ message: "Numero de telefono obligatorio", status: "warning" });
-
+      return res.status(400).send({ message: "Numero de telefono obligatorio", status: "warning" });
 
   const findUser = await User.findOne({ email: body.email });
 
@@ -58,19 +41,7 @@ async function sign_up(req, res) {
   };
   const insertUser = await User.create(usuario);
   // Crear el carrito asociado al usuario
-  await shoppingCart.createEmpty_shoppingCart(req, res, body.email);
-
-  const accessToken = jwt.sign({ userId: insertUser.id }, SECRET_KEY);
-
-  res.cookie("refreshToken", accessToken, {
-    httpOnly: true,
-    secure: true,
-  });
-
-  res.cookie("accessToken", accessToken, {
-    httpOnly: true,
-    secure: true,
-  });
+  await shoppingCart.createEmpty_shoppingCart(body.email);
 
   return res.status(200).send({
     create: insertUser,
@@ -82,36 +53,20 @@ async function sign_up(req, res) {
 async function sign_in(req, res) {
   const { body } = req;
   if (!body.email)
-    return res
-      .status(400)
-      .send({ message: "Email obligatorio", status: "warning" });
+    return res.status(400).send({ message: "Email obligatorio", status: "warning" });
   if (!body.pass)
-    return res
-      .status(400)
-      .send({ message: "Contraseña obligatoria", status: "warning" });
+    return res.status(400).send({ message: "Contraseña obligatoria", status: "warning" });
 
   const findUser = await User.findOne({ email: body.email });
   if (!findUser)
-    return res
-      .status(400)
-      .send({ message: "El usuario no existe", status: "error" });
+    return res.status(400).send({ message: "El usuario no existe", status: "error" });
   if (findUser.pass != body.pass)
-    return res
-      .status(400)
-      .send({ message: "La contraseña no es correcta", status: "error" });
+    return res.status(400).send({ message: "La contraseña no es correcta", status: "error" });
 
   const userWithoutPass = { ...findUser.toObject() };
   delete userWithoutPass.pass;
 
-  const accessToken = jwt.sign(
-    { userId: findUser.id, ...userWithoutPass },
-    SECRET_KEY
-  );
-
-  res.cookie("refreshToken", accessToken, {
-    httpOnly: true,
-    secure: true,
-  });
+  const accessToken = jwt.sign({ userId: findUser.id, ...userWithoutPass }, SECRET_KEY);
 
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
@@ -121,7 +76,6 @@ async function sign_in(req, res) {
   return res.status(200).send({
     access: userWithoutPass,
     message: "Ingreso de usuario exitoso",
-    refreshToken: accessToken,
     accessToken: accessToken,
     status: "success",
     name: userWithoutPass.name,
