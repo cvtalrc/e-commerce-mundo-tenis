@@ -35,7 +35,7 @@ function getStepContent(step) {
   useEffect(() => {
     if (user != null) {
       const initialForm = { //datos de envío
-        type: deliveryMethod, //delivery, retiro
+        delivery: deliveryMethod, //delivery, retiro
         name: user.name,
         lastName: user.lastName,
         address: user.address,
@@ -83,8 +83,8 @@ function getStepContent(step) {
         <Typography>Productos: </Typography>
         <Typography>Total: </Typography>
 
-        <Typography>Tipo de Entrega: {form.type}</Typography>
-        {form.type === 'store-pickup' ?
+        <Typography>Tipo de Entrega: {form.delivery}</Typography>
+        {form.delivery === 'store-pickup' ?
           <>
             <Typography>Datos de retiro: </Typography>
             <Typography>Dirección: blahalbha </Typography>
