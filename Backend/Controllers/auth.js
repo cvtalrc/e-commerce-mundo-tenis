@@ -1,6 +1,8 @@
 const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "mundotenisCGA_SECRETKEY"; // Reemplaza con tu clave secreta
+const bcrypt = require('bcrypt');
+const SALT_ROUNDS = 10;
 const shoppingCart = require("../Controllers/shoppingCart_controllers");
 
 async function sign_up(req, res) {
@@ -8,7 +10,7 @@ async function sign_up(req, res) {
 
   if (!body.name)
     return res.status(400).send({ message: "Nombre de usuario obligatorio", status: "warning" });
-  if (!body.lastname)
+  if (!body.lastName)
     return res.status(400).send({ message: "Apellido obligatorio", status: "warning" });
   if (!body.email)
     return res.status(400).send({ message: "Email obligatorio", status: "warning" });
@@ -27,27 +29,36 @@ async function sign_up(req, res) {
 
   if (findUser)
     return res.status(400).send({ message: "El correo ingresado ya posee una cuenta", status: "warning" });
+  try{
 
-  const usuario = {
-    name: body.name,
-    lastName: body.lastName,
-    email: body.email,
-    pass: body.pass,
-    address: body.address,
-    region: body.region,
-    comuna: body.comuna,
-    cellNumber: body.cellNumber,
-    type: body.type,
-  };
-  const insertUser = await User.create(usuario);
-  // Crear el carrito asociado al usuario
-  await shoppingCart.createEmpty_shoppingCart(body.email);
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+    const hash = await bcrypt.hash(body.pass, salt);
 
-  return res.status(200).send({
-    create: insertUser,
-    message: "Usuario creado exitosamente",
-    status: "success"
-  });
+    const usuario = {
+      name: body.name,
+      lastName: body.lastName,
+      email: body.email,
+      pass: hash,
+      address: body.address,
+      region: body.region,
+      comuna: body.comuna,
+      cellNumber: body.cellNumber,
+      type: body.type,
+    };
+    const insertUser = await User.create(usuario);
+    // Crear el carrito asociado al usuario
+    await shoppingCart.createEmpty_shoppingCart(body.email);
+  
+    return res.status(200).send({
+      create: insertUser,
+      message: "Usuario creado exitosamente",
+      status: "success"
+    });
+  }catch(error){
+
+    return res.status(500).send({ message: "Error al crear el usuario", error:error, status: "error" });
+  }
+  
 }
 
 async function sign_in(req, res) {
@@ -60,8 +71,11 @@ async function sign_in(req, res) {
   const findUser = await User.findOne({ email: body.email });
   if (!findUser)
     return res.status(400).send({ message: "El usuario no existe", status: "error" });
-  if (findUser.pass != body.pass)
-    return res.status(400).send({ message: "La contraseña no es correcta", status: "error" });
+
+  const isPasswordCorrect = await bcrypt.compare(body.pass, findUser.pass);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: "La contraseña actual no es correcta" , status: "error"});
+  }
 
   const userWithoutPass = { ...findUser.toObject() };
   delete userWithoutPass.pass;
@@ -95,8 +109,8 @@ function sign_out(req, res) {
 }
 
 function authenticateToken(req, res, next) {
-  //const token = req.cookies.accessToken;
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.cookies.accessToken;
+  //const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res
