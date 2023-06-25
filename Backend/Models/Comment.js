@@ -4,7 +4,7 @@ const commentschema = mongoose.Schema({
     type: String,
     required: true
   },
-  Star: {
+  Stars: {
     type: Number,
     required: true
   },
