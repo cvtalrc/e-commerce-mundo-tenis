@@ -23,25 +23,15 @@ async function createOrder(userID, Delivery) {
         //carro
         const amount = item.Quantity;
         if (available < amount)
-          return res
-            .status(400)
-            .send({
-              msj: "No hay suficiente stock del producto",
-              status: "error",
-            });
+          throw new Error("No hay suficiente stock del producto");
       } else {
-        return res
-          .status(400)
-          .send({
-            msj: "Error al encontrar el producto el inventario",
-            status: "error",
-          });
+          throw new Error("Error al encontrar el producto en el inventario");
       }
     }
 
     const order = new Order({
       User: user,
-      Cart: [{"Products" : cart.items}, {"Total": cart.total}],
+      Cart: [{"cartID": cart._id}, {"Products" : cart.items}, {"Total": cart.total}],
       Delivery: Delivery,
       Status: "pendingPayment",
     });
@@ -51,31 +41,33 @@ async function createOrder(userID, Delivery) {
     return newOrder;
   } catch (error) {
     // Error al crear la orden de compra
-    res
-      .status(500)
-      .send({ message: "Error al crear la orden de compra", error });
+    throw error;
   }
 }
 
-async function updateOrderStatus(req, res) {
+async function updateOrderStatus(orderID) {
   try {
-    const { id } = req.params;
+    //const { id } = req.params;
     const updatedOrder = await Order.findByIdAndUpdate(
-      id,
-      { Status: "en curso" },
+      orderID,
+      { Status: "En curso" },
       { new: true }
     );
-
-    res.status(200).json(updatedOrder);
+    return updatedOrder
+    //res.status(200).json(updatedOrder);
   } catch (error) {
-    console.error(
-      "Error al actualizar el estado de la orden de compra:",
-      error
-    );
-    res
-      .status(500)
-      .json({ error: "Error al actualizar el estado de la orden de compra" });
+    throw error;
   }
+}
+
+function removeAll(req, res) {
+  Order.deleteMany({}, (error) => {
+    if (error) {
+      return res.status(400).send({ msj: "Error al remover ordenes" });
+    } else {
+      res.status(200).send({ msj: "Se eliminaron todas las ordenes" });
+    }
+  });
 }
 
 async function getOrder(req, res) {
@@ -88,6 +80,8 @@ async function getOrder(req, res) {
     }
   });
 }
+
+
 
 cron.schedule('0 */12 * * *', async () => {
   try {
@@ -113,4 +107,5 @@ module.exports = {
   createOrder,
   updateOrderStatus,
   getOrder,
+  removeAll
 };

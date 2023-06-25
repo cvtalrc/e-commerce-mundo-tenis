@@ -54,7 +54,7 @@ async function sign_up(req, res) {
     pass: body.pass,
     address: body.address,
     region: body.region,
-    commune: body.comuna,
+    comun: body.comuna,
     cellNumber: body.cellNumber,
     type: body.type,
   };
@@ -143,8 +143,8 @@ function sign_out(req, res) {
 }
 
 function authenticateToken(req, res, next) {
-  //const token = req.cookies.accessToken;
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.cookies.accessToken;
+  //const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res
