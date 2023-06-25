@@ -16,9 +16,9 @@ export default function PaginationOrder({ orders }) {
     };
 
     return (
-        < >
+        <Box sx={{m:5, p:5}}>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={6}>
                 {
                     (_DATA.currentData().map(order =>
                         <Grid key={order._id} item md={4} sm={4} xs={6}> <OrderItem key={order._id} order={order} /> </Grid>))
@@ -38,6 +38,6 @@ export default function PaginationOrder({ orders }) {
                 />
             </Box>
 
-        </ >
+        </Box>
     )
 }
