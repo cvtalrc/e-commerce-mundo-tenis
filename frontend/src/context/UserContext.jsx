@@ -9,11 +9,11 @@ import Swal from 'sweetalert2'
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [users, setUsers] = useState(null); //usuarios
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('user'))
+    const api = helpHttp();
 
     useEffect(() => {
         if(localStorage.getItem('user')){
@@ -28,8 +28,6 @@ const UserProvider = ({ children }) => {
     }, [token]);
 
     const navigate = useNavigate();
-
-    const api = helpHttp();
 
     const logIn = (form) => {
         let url = 'http://localhost:3000/api/sign-in';
@@ -108,7 +106,6 @@ const UserProvider = ({ children }) => {
                     }
                 }
             })
-
     }
 
     const register = () => {
@@ -116,7 +113,6 @@ const UserProvider = ({ children }) => {
     }
 
     const data = {
-        users,
         user,
         logIn,
         logOut,

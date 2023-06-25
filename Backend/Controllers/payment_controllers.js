@@ -1,5 +1,7 @@
 const WebpayPlus = require("transbank-sdk").WebpayPlus;
 const Order = require("../Controllers/order_controllers");
+const shoppingCart = require("../Controllers/shoppingCart_controllers");
+const Payment = require("../Models/Payment");
 
 const { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } = require("transbank-sdk"); // CommonJS
 
@@ -10,19 +12,23 @@ const commerceCode = "597055555532";
 const returnUrl = "http://localhost:5173/payment";
 
 async function generateTransaction(req, res) {
-  const sessionID = req.headers.authorization?.split(' ')[1]; //token usuario
-  const { userID, delivery } = req.body
+  const userToken = req.headers.authorization?.split(' ')[1]; //token usuario
+  //const userToken = req.cookies.accessToken;
+  const sessionID = userToken.substring(0, 10); // Obtener los primeros 10 caracteres
+  const { userID, Delivery } = req.body
+  console.log(sessionID);
+  const order = await Order.createOrder(userID, Delivery);
+  console.log(order._id.toString());
+  console.log(order.Cart[2]["Total"]);
 
-  const order = Order.createOrder(userID, delivery);
-  console.log(order);
   try {
 
     const tx = new WebpayPlus.Transaction(new Options(commerceCode, apiKey, Environment.Integration));
-    const response = await tx.create(order._id, sessionID, order.Cart[1].Total, returnUrl);
+    const response = await tx.create(order._id.toString(), sessionID, order.Cart[2].Total, returnUrl);
 
     return res.status(200).send({
         url: response.url,
-        token : response.url
+        token : response.token
     });
 
   } catch (error) {
@@ -31,10 +37,16 @@ async function generateTransaction(req, res) {
 }
 
 // Procesar la respuesta de Webpay después de que el usuario haya completado el pago
-async function processPaymentWebpay(token) {
+async function processPaymentWebpay(req, res) {
   try {
+    //let token = req.body.token_ws;
+    //let tbkToken = req.body.TBK_TOKEN;
+     let token = req.params.token_ws;
+     let tbkToken = req.params.TBK_TOKEN;
+    // let tbkOrdenCompra = params.TBK_ORDEN_COMPRA;
+    // let tbkIdSesion = params.TBK_ID_SESION;
+  
     console.log(token)
-    const commitResponse = await (new WebpayPlus.Transaction()).commit(token);
 
     if (token && !tbkToken) {//Flujo 1
       const commitResponse = await (new WebpayPlus.Transaction()).commit(token);
@@ -42,28 +54,50 @@ async function processPaymentWebpay(token) {
         token,
         commitResponse,
       };
-      return commitResponse
-      response.render("webpay_plus/commit", {
-        step,
-        stepDescription,
-        viewData,
+      
+      //aquí descontar stock, guardar pago y actualizar estado de la orden
+      const reduceStock = await shoppingCart.reduceStock(commitResponse.buy_order ,(error, response) =>{
+        if(error){
+          throw error;
+        }
       });
-      return;
+
+      const updateOrder = await Order.updateOrder(commitResponse.buy_order, (error, response) =>{
+        if(error){
+          throw error;
+        }
+      });
+
+      const payment = new Payment({
+        Details: commitResponse
+      });
+
+      return res.status(200).send({
+        message: "Pago realizado con éxito",
+        order: updateOrder,
+        detailsPayment: payment
+      })
     }
     else if (!token && !tbkToken) {//Flujo 2
-      step = "El pago fue anulado por tiempo de espera.";
-      stepDescription = "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
+      return res.status(200).send("Pago anulado por tiempo de espera")
+      // step = "El pago fue anulado por tiempo de espera.";
+      // stepDescription = "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
     }
     else if (!token && tbkToken) {//Flujo 3
-      step = "El pago fue anulado por el usuario.";
-      stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+      return res.status(200).send("Pago anulado por el usuario")
+      // step = "El pago fue anulado por el usuario.";
+      // stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
     }
     else if (token && tbkToken) {//Flujo 4
-      step = "El pago es inválido.";
-      stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+      return res.status(200).send("Pago inválido")
+      // step = "El pago es inválido.";
+      // stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
     }
   } catch (error) {
-    console.error("Error al procesar la respuesta de Webpay:", error);
+    return res.status(400).send({
+        msj: "Error al procesar la respuesta de Webpay:",
+        error: error
+      });
   }
 }
 

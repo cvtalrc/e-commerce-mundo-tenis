@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  commune: {
+  comuna: {
     type: String,
     required: true,
   },

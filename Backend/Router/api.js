@@ -37,24 +37,17 @@ api.delete("/product/:id", func_product.remove);
 api.delete("/product/removeAll", func_product.removeAll);
 api.delete("/cart/removeAll", func_shoppingCart.emptyCart);
 api.delete("/cart/remove", func_auth.authenticateToken, func_shoppingCart.removeFromCart);
+api.delete("/order/", func_order.removeAll);
 api.delete("/comment/:id", func_auth.authenticateToken, func_comment.deleteComment);
 
 //API PUT
 api.put("/user/update/:id", func_auth.authenticateToken, func_user.updateUser);
 api.put("/product/update/:id", func_product.update);
+api.put("/cart/update/:orderID", func_shoppingCart.reduceStock);
 api.put("/order/update/:id", func_auth.authenticateToken, func_order.updateOrderStatus)
 api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateComment);
 
 api.post("/payment", func_auth.authenticateToken, func_payment.generateTransaction)
-
-api.get("/verify-payment", async (req, res) => {
-    const { token_ws } = req.query
-    const verification = await func_payment.processPaymentWebpay(token_ws);
-    console.log(verification);
-    res.send({
-        message: 'funciona',
-        verification_result: verification
-    })
-})
+api.get("/verify-payment", func_auth.authenticateToken, func_payment.processPaymentWebpay)
 
 module.exports = api;

@@ -340,7 +340,7 @@ export default function SignUp() {
                 placeholder='********'
                 value={form.pass}
                 error={validationErrors.pass !== undefined}
-                helperText={validationErrors.pass || ' '}
+                helperText={validationErrors.pass || 'Mín. 8 carácteres (Debe contener al menos 1 mayúscula, 1 minúscula)'}
               />
             </Grid>
             

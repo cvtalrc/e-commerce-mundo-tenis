@@ -1,5 +1,6 @@
 const Product = require("../Models/Product");
 const shoppingCart = require("../Models/shoppingCart");
+const Order = require("../Models/Order")
 const cron = require("node-cron");
 
 //CREAR CARRO VACIO
@@ -39,6 +40,7 @@ async function addtoCart(req, res) {
         .status(400)
         .send({ msj: "Producto no encontrado", status: "error" });
     //revisa que exista stock
+
     const stockItem = isProduct.stock.find((item) => item.size === Size);
     if (stockItem == null)
       return res
@@ -199,11 +201,7 @@ async function emptyCart(req, res) {
   const User = req.body.User;
   try {
     const cart = await shoppingCart.findOne({ User: User });
-    if (!cart)
-      return res
-        .status(400)
-        .send({ msj: "Carrito no encontrado", status: "error" });
-
+    if (!cart) return res.status(400).send({ msj: "Carrito no encontrado", status: "error" });
     cart.items = [];
     cart.total = 0;
     await cart.save();
@@ -245,10 +243,56 @@ async function emptyAll(req, res) {
 //   emptyAll();
 // });
 
+async function reduceStock(orderID){
+  //const orderID = req.params.orderID
+  const order = await Order.findOne({_id : orderID})
+  console.log(order.Cart[1].Products)
+  //console.log(order.Cart);
+  try{
+    //reducir stock
+    for (const item of order.Cart[1].Products) {
+      const isProduct = await Product.findOne({ title: item.TitleProduct }); //identifico el producto
+      if (isProduct) {
+        const stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el stock actual del producto
+    
+        if (stockItem) {
+          const newQuantity = stockItem.quantity - item.Quantity; 
+          const index = await isProduct.stock.findIndex(stock => stock.size === item.Size);
+          console.log(index);
+          // if (index == ""){
+          //   await isProduct.updateOne({$set: { [`stock[0].quantity`]: newQuantity }});
+          // }else{
+            await isProduct.updateOne({$set: { [`stock.${index}.quantity`]: newQuantity }});
+          //}
+          
+        }else{
+          throw new Error("Carrito no encontrado");
+        }
+        await isProduct.save();
+      }else{
+        throw new Error("Error al encontrar el producto en inventario");
+      }
+    }
+    //vaciar carro
+    const cart = await shoppingCart.findOne({_id: order.Cart[0].cartID});
+    if (!cart) throw new Error("Carrito no encontrado");
+    cart.items = [];
+    cart.total = 0;
+    await cart.save();
+
+    // return res.status(200).send({
+    //   message: "Stock actualizado y carro vaciado",
+    // });
+  }catch(error){
+    throw error;
+  }
+}
+
 module.exports = {
   createEmpty_shoppingCart,
   addtoCart,
   removeFromCart,
   getCart,
   emptyCart,
+  reduceStock
 };

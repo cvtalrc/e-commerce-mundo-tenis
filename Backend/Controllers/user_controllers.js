@@ -12,7 +12,7 @@ async function getUser(req, res) {
 }
 
 function getAll(req, res) {
-  User.find({}, (error, users) => {
+  User.find({},  "-pass", (error, users) => {
     if (error) {
       return res.status(400).send({ msj: "No existen usuarios" });
     } else {
@@ -79,7 +79,7 @@ async function updateUser(req, res) {
         cellNumber
       },
       { new: true }
-    );
+    ).select("-pass");;
 
     res.status(200).json(updatedUser);
   } catch (error) {
