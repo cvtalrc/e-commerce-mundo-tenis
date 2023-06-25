@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { helpHttp } from '../../helpers/helpHttp';
 import { MenuItem, Select } from '@mui/material';
-
+import { Modal } from '../Alerts/Modal';
 /*
 *******************************************************************************
 *******************************************************************************
@@ -20,6 +20,10 @@ import { MenuItem, Select } from '@mui/material';
 *******************************************************************************
 *******************************************************************************
 */
+
+
+/* name, lastName, cellNumber, address, comuna, region */
+/* region y comuna con arreglos */
 
 function isValidName(name) {
   const regex = /^[A-Za-zÁ-ÿ\s]+$/;
@@ -75,7 +79,7 @@ export default function SignUp() {
 
   const initialForm = {
     name: '',
-    lastname: '',
+    lastName: '',
     email: '',
     pass: '',
     address: '',
@@ -92,7 +96,7 @@ export default function SignUp() {
 
     if (fieldName === 'name') {
       isValid = isValidName(value);
-    } else if (fieldName === 'lastname') {
+    } else if (fieldName === 'lastName') {
       isValid = isValidLastName(value);
     } else if (fieldName === 'email') {
       isValid = isValidEmail(value);
@@ -134,13 +138,6 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setTimeout(() => {
-        setValidationErrors({});
-      }, 5000);
-      return;
-    }
-
     const api = helpHttp();
     const url = 'http://localhost:3000/api/sign-up';
     const options = {
@@ -148,34 +145,44 @@ export default function SignUp() {
       headers: { 'content-type': 'application/json' }
     };
 
+    if(!form.name || !form.lastName || !form.email || !form.address || !form.cellNumber || !form.region || !form.comuna || !form.pass ){
+      Modal(
+        'Registro de usuario',
+        '¡Te faltan campos por llenar!',
+        'error',
+        ''
+      )
+      return
+    }
+
     api
       .post(url, options)
       .then((res) => {
         if (!res.err) {
           console.log('usuario registrado', res);
           if (res.status === 'success') {
-            const cartUrl = 'http://localhost:3000/api/cart';
-            const cartOptions = {
-              body: form.email,
-              headers: {
-                'content-type': 'application/json',
-                Authorization: res.accessToken
-              }
-            };
-
-            api
-              .post(cartUrl, cartOptions)
-              .then((res) => {
-                if (!res.err) {
-                  console.log('carro creado', cartOptions.body);
-                }
-              });
-
             navigate('/login');
+          } else {
+            Modal (
+              'Registro de usuario',
+              'Ha ocurrido un error en el registro.',
+              'error',
+              ''
+            )
+            return
           }
+        } else {
+          Modal (
+            'Registro de usuario',
+            'Ha ocurrido un error en el registro.',
+            'error',
+            ''
+          )
+          return
         }
       })
       .catch(e => {
+        console.log('error en el catch')
         console.error(e);
       });
 
@@ -230,12 +237,12 @@ export default function SignUp() {
                 fullWidth
                 id="lastName"
                 label="Apellido"
-                name="lastname"
+                name="lastName"
                 autoComplete="family-name"
                 placeholder='González'
-                value={form.lastname}
-                error={validationErrors.lastname !== undefined}
-                helperText={validationErrors.lastname || ' '}
+                value={form.lastName}
+                error={validationErrors.lastName !== undefined}
+                helperText={validationErrors.lastName || ' '}
               />
             </Grid>
             <Grid item xs={12} sm={12}>

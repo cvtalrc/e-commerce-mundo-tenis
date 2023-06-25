@@ -4,34 +4,12 @@ import UserContext from "./UserContext";
 const OrderContext = createContext();
 
 const OrderProvider = ({ children }) => {
-    const { user } = useContext(UserContext)
-    const [form, setForm] = useState(null)
+    const [orders, setOrders] = useState(null)
 
-    useEffect(() => {
-        if (user != null) {
-            const initialForm = { //datos de envío
-                type: "", //delivery, retiro
-                name: user.name,
-                lastname: user.lastname,
-                address: user.address,
-                addressNumber: "",
-                region: "",
-                comuna: "",
-                cellNumber: user.cellnumber,
-                instructions: ""
-            };
-            setForm(initialForm)
-        }
-
-    }, [user]);
-    // let api = helpHttp();
-    // let url = `http://localhost:3000/api/cart/${email}`;
-
-
+    //consulta a la api x todas las ordenes de compra
 
     const data = {
-        form,
-        setForm
+        orders
     };
 
     return <OrderContext.Provider value={data}>{children}</OrderContext.Provider>;

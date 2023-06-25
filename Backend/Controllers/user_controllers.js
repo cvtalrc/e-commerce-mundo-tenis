@@ -50,7 +50,7 @@ function removeAll(req, res) {
 
 async function updateUser(req, res) {
   const { id } = req.params;
-  const { name, lastname, email, address, region, commune, cellNumber } = req.body;
+  const { name, lastname, email, address, region, comuna, cellNumber } = req.body;
 
   try {
     const user = await User.find({_id : id});
@@ -73,7 +73,7 @@ async function updateUser(req, res) {
         email,
         address,
         region,
-        commune,
+        comuna,
         cellNumber
       },
       { new: true }

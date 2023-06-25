@@ -30,7 +30,7 @@ async function sign_up(req, res) {
 
   const usuario = {
     name: body.name,
-    lastName: body.lastname,
+    lastName: body.lastName,
     email: body.email,
     pass: body.pass,
     address: body.address,
