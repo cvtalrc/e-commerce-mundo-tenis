@@ -1,10 +1,10 @@
-import { TextField, Box, Typography, Grid, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button, MenuItem } from "@mui/material";
+import { TextField, Box, Typography, Grid, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button, MenuItem, List, ListItem, ListItemAvatar } from "@mui/material";
 import React, { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import { Modal } from "../Alerts/Modal";
 
-function isValidName (name) {
+function isValidName(name) {
     const regex = /^[A-Za-zÁ-ÿ\s]+$/;
     return regex.test(name);
 }
@@ -24,26 +24,26 @@ function isValidAddress(address) {
     return regex.test(address)
 }
 
-const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod, edit, setEdit}) => {
+const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, edit, setEdit }) => {
     const [validationErrors, setValidationErrors] = useState({});
     const region = ['Valparaíso', "Libertador General Bernardo O'Higgins", 'Metropolitana'];
     const comunas = [
         ['Valparaíso', 'Viña del Mar', 'Quilpué', 'Villa Alemana', 'Concón',
-        'Quillota', 'La Calera', 'Los Andes', 'San Felipe', 'Limache', 'Olmué',
-        'Lllay Llay', 'Casablanca', 'San Antonio', 'Cartagena', 'El Tabo',
-        'El Quisco', 'Algarrobo', 'Papudo', 'La Ligua', 'Petorca',
-        'Zapallar', 'Puchuncaví', 'Quintero', 'Nogales', 'Hijuelas', 'Santa María'],
-        ['Rancagua', 'Machalí', 'Graneros', 'San Fernando', 
-        'San Vicente de Tagua Tagua', 'Requínoa', 'Coltauco', 'Doñihue',
-        'Olivar', 'Coinco', 'Quilta de Tilcoco', 'Las Cabras', 'Peumo',
-        'Pichidegua', 'Malloa', 'Placilla', 'Nancagua', 'Chépica', 'Santa Cruz',
-        'Lolol', 'Litueche', 'Pumanque', 'Palmilla', 'Peralillo', 'Navidad'],
+            'Quillota', 'La Calera', 'Los Andes', 'San Felipe', 'Limache', 'Olmué',
+            'Lllay Llay', 'Casablanca', 'San Antonio', 'Cartagena', 'El Tabo',
+            'El Quisco', 'Algarrobo', 'Papudo', 'La Ligua', 'Petorca',
+            'Zapallar', 'Puchuncaví', 'Quintero', 'Nogales', 'Hijuelas', 'Santa María'],
+        ['Rancagua', 'Machalí', 'Graneros', 'San Fernando',
+            'San Vicente de Tagua Tagua', 'Requínoa', 'Coltauco', 'Doñihue',
+            'Olivar', 'Coinco', 'Quilta de Tilcoco', 'Las Cabras', 'Peumo',
+            'Pichidegua', 'Malloa', 'Placilla', 'Nancagua', 'Chépica', 'Santa Cruz',
+            'Lolol', 'Litueche', 'Pumanque', 'Palmilla', 'Peralillo', 'Navidad'],
         ['Cerrillos', 'Cerro Navia', 'Conchalí', 'El Bosque', 'Estación Central',
-        'Huechuraba', 'Independencia', 'La Cisterna', 'La Florida', 'La Granja',
-        'La Pintana', 'La Reina', 'Las Condes', 'Lo Barnechea', 'Lo Espejo', 'Lo Prado',
-        'Macul', 'Maipú', 'Ñuñoa', 'Pedro Aguirre Cerda', 'Peñalolén', 'Providencia',
-        'Pudahuel', 'Quilicura', 'Quinta Normal', 'Recoleta', 'Renca', 'San Joaquín',
-        'San Miguel', 'San Ramón', 'Santiago', 'Vitacura']
+            'Huechuraba', 'Independencia', 'La Cisterna', 'La Florida', 'La Granja',
+            'La Pintana', 'La Reina', 'Las Condes', 'Lo Barnechea', 'Lo Espejo', 'Lo Prado',
+            'Macul', 'Maipú', 'Ñuñoa', 'Pedro Aguirre Cerda', 'Peñalolén', 'Providencia',
+            'Pudahuel', 'Quilicura', 'Quinta Normal', 'Recoleta', 'Renca', 'San Joaquín',
+            'San Miguel', 'San Ramón', 'Santiago', 'Vitacura']
     ];
 
     comunas.forEach((el) => {
@@ -72,16 +72,16 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
 
             if (isValid) {
                 setValidationErrors((prevState) => {
-                  const updatedErrors = { ...prevState };
-                  delete updatedErrors[fieldName];
-                  return updatedErrors;
+                    const updatedErrors = { ...prevState };
+                    delete updatedErrors[fieldName];
+                    return updatedErrors;
                 });
-              } else {
+            } else {
                 setValidationErrors((prevState) => ({
-                  ...prevState,
-                  [fieldName]: 'Campo inválido',
+                    ...prevState,
+                    [fieldName]: 'Campo inválido',
                 }));
-              }
+            }
         }
     };
 
@@ -102,11 +102,11 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
         const { value } = e.target;
         const index = region.indexOf(value);
         const comunasChosen = index >= 0 ? comunas[index] : [];
-    
+
         setForm((prevForm) => ({
-          ...prevForm,
-          region: value,
-          comuna: comunasChosen[0] || ""
+            ...prevForm,
+            region: value,
+            comuna: comunasChosen[0] || ""
         }))
     };
 
@@ -116,7 +116,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
             ...form,
             [e.target.name]: e.target.value,
         });
-        
+
     };
 
     const handleSubmit = (e) => {
@@ -124,7 +124,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
         form.delivery = deliveryMethod
 
         console.log(validationErrors)
-      
+
         if ((!form.delivery || !form.name || !form.lastName || !form.address || !form.region || !form.comuna || !form.cellNumber) || Object.keys(validationErrors).length > 0) {
             Modal(
                 'Datos de entrega',
@@ -137,14 +137,14 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
 
         setEdit(false)
         console.log(form);
-      
+
         //handleReset();
-      };
+    };
 
     return (
-        <Box sx={{ m: 4, mb: 10 }}>
+        <Box sx={{ mt: 4, mb:4, border: '1px solid #bebebe', borderRadius: 1, p:5 }}>
 
-            <FormControl sx={{mt: 2}} component="fieldset">
+            <FormControl component="fieldset">
                 <FormLabel sx={{ fontWeight: 700, color: 'black' }} component="legend">Método de entrega</FormLabel>
                 <RadioGroup
                     aria-label="delivery"
@@ -152,7 +152,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
                     value={deliveryMethod}
                     onChange={handleDeliveryMethodChange}
                 >
-                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', mt:2 }}>
                         <FormControlLabel value="store-pickup" control={<Radio color="secondary" />} label="Retiro en tienda" />
                         <FormControlLabel value="delivery" control={<Radio color="secondary" />} label="Delivery" />
                     </Box>
@@ -161,29 +161,31 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
 
             <Grid spacing={2} justifyContent={"space-between"} container>
                 <Grid sm={6} item>
-                    <Typography variant="h5" sx={{ mb: 2, mt: 4, fontWeight: 700 }}>Datos personales</Typography>
-                    <Typography>Nombre: {user.name}</Typography>
-                    <Typography>Apellido: {user.lastName}</Typography>
-                    <Typography>Email: {user.email}</Typography>
-                    <Typography>Celular: {user.cellNumber}</Typography>
-                    <Typography>Dirección: {user.address}</Typography>
-                    <Typography>Región: {user.region}</Typography>
-                    <Typography>Comuna: {user.comuna}</Typography>
+                    <List>
+                    <ListItem variant="h5" component={Typography} sx={{ mt: 4, fontWeight: 700 }}>Datos personales</ListItem>
+                        <ListItem>Nombre: {user.name}</ListItem>
+                        <ListItem>Apellido: {user.lastName}</ListItem>
+                        <ListItem>Correo electrónico: {user.email}</ListItem>
+                        <ListItem>Celular: {user.cellNumber}</ListItem>
+                        <ListItem>Dirección: {user.address}</ListItem>
+                        <ListItem>Región: {user.region}</ListItem>
+                        <ListItem>Comuna: {user.comuna}</ListItem>
+                    </List>
 
                 </Grid>
                 <Grid sm={6} item>
                     {deliveryMethod === 'store-pickup' ?
-                        (<>
-                            <Typography variant="h5" sx={{ mb: 2, mt: 4, fontWeight: 700 }}>Datos de retiro</Typography>
-                            <Typography>Dirección: blahblah</Typography>
-                            <Typography>Contacto: +569939333</Typography>
-                        </>)
+                        (<List>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 4, fontWeight: 700 }}>Datos de retiro</ListItem>
+                            <ListItem>Dirección: blahblah</ListItem>
+                            <ListItem>Contacto: +569939333</ListItem>
+                        </List>)
 
                         :
                         (<>
-                            <Typography variant="h5" sx={{ mb: 2, mt: 4, fontWeight: 700 }}>Datos de entrega</Typography>
-                            { edit ? (<form >
-                                <Grid spacing={1} rowSpacing={2} container>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 4, fontWeight: 700 }}>Datos de entrega</ListItem>
+                            {edit ? (<form >
+                                <Grid spacing={1} rowSpacing={2} sx={{mt:1}} container>
                                     <Grid sm={4} item>
                                         <TextField
                                             size="small"
@@ -226,7 +228,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
                                             onChange={handleChange}
                                             value={form.cellNumber}
                                             error={validationErrors.cellNumber !== undefined}
-                                            helperText={validationErrors.cellNumber || ''} 
+                                            helperText={validationErrors.cellNumber || ''}
                                         />
                                     </Grid>
                                     <Grid sm={12} item>
@@ -279,7 +281,7 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
                                                 <MenuItem key={index} value={regionName}>
                                                     {regionName}
                                                 </MenuItem>
-                                            ))}      
+                                            ))}
                                         </TextField>
                                     </Grid>
                                     <Grid sm={6} item>
@@ -319,27 +321,29 @@ const FormDelivery = ({ user, form, setForm , deliveryMethod, setDeliveryMethod,
                                     </Grid>
 
                                 </Grid>
-                                <Box sx={{display:'flex', justifyContent:'right', pt: 1}}>
-                                <Button onClick={handleSubmit}>
-                                    <CheckIcon color="secondary"/>
-                                </Button>
+                                <Box sx={{ display: 'flex', justifyContent: 'right', pt: 1 }}>
+                                    <Button onClick={handleSubmit}>
+                                        <CheckIcon color="secondary" />
+                                    </Button>
                                 </Box>
 
                             </form>) :
                                 (<Grid container>
                                     <Grid sm={10} item>
-                                        <Typography>Nombre: {form.name}</Typography>
-                                        <Typography>Apellido: {form.lastName}</Typography>
-                                        <Typography>Email: {form.email}</Typography>
-                                        <Typography>Celular: {form.cellNumber}</Typography>
-                                        <Typography>Dirección: {form.address} {form.addressNumber}</Typography>
-                                        <Typography>Región: {form.region}</Typography>
-                                        <Typography>Comuna: {form.comuna}</Typography>
-                                        {form.instructions ? <Typography>Instrucciones de entrega: {form.instructions}</Typography> : ''}
+                                        <List>
+                                        <ListItem>Nombre: {form.name}</ListItem>
+                                        <ListItem>Apellido: {form.lastName}</ListItem>
+                                        <ListItem>Correo electrónico: {form.email}</ListItem>
+                                        <ListItem>Celular: {form.cellNumber}</ListItem>
+                                        <ListItem>Dirección: {form.address} {form.addressNumber}</ListItem>
+                                        <ListItem>Región: {form.region}</ListItem>
+                                        <ListItem>Comuna: {form.comuna}</ListItem>
+                                        {form.instructions ? <ListItem>Instrucciones de entrega: {form.instructions}</ListItem> : ''}
+                                        </List>
                                     </Grid>
                                     <Grid sm={2} item>
                                         <Button onClick={() => { setEdit(true) }}>
-                                            <EditIcon variant="contained" color="secondary"/>
+                                            <EditIcon variant="contained" color="secondary" />
                                         </Button>
                                     </Grid>
                                 </Grid>
