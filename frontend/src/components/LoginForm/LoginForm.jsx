@@ -81,16 +81,10 @@ export default function SignIn() {
     event.preventDefault();
     console.log(form)
 
-    if(Object.keys(validationErrors).length > 0) {
-      // Desaparecer el mensaje de error después de 3 segundos
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 3000);
-
-      return
-    } else {
+  
+      console.log("va a ingresar")
       logIn(form);
-    }
+    
   };
 
   return (

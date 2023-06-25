@@ -37,12 +37,11 @@ function getStepContent(step) {
       const initialForm = { //datos de envío
         type: deliveryMethod, //delivery, retiro
         name: user.name,
-        lastname: user.lastname,
+        lastName: user.lastName,
         address: user.address,
-        addressNumber: "",
-        region: "",
-        comuna: "",
-        cellNumber: "",
+        region: user.region,
+        comuna: user.comuna,
+        cellNumber: user.cellNumber,
         instructions: ""
       };
       setForm(initialForm)
@@ -95,7 +94,7 @@ function getStepContent(step) {
           <>
             <Typography>Datos de entrega: </Typography>
             <Typography>Nombre: {form.name}</Typography>
-            <Typography>Apellido: {form.lastname}</Typography>
+            <Typography>Apellido: {form.lastName}</Typography>
             <Typography>Celular: {form.cellNumber}</Typography>
             <Typography>Dirección: {form.address} {form.addressNumber}</Typography>
             <Typography>Región: {form.region}</Typography>
