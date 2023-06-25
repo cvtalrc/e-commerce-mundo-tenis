@@ -95,7 +95,9 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
             [e.target.name]: e.target.value,
         });
 
-        validateField(name, value);
+        if (name !== 'instructions'){
+            validateField(name, value);
+        }
     };
 
     const handleRegionChange = (e) => {
@@ -142,7 +144,8 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
     };
 
     return (
-        <Box sx={{ mt: 4, mb:4, border: '1px solid #bebebe', borderRadius: 1, p:5 }}>
+        // #1989F3
+        <Box sx={{ mt: 4, mb:4, border: '1px solid #bebebe', borderRadius: 1, p:5 }}> 
 
             <FormControl component="fieldset">
                 <FormLabel sx={{ fontWeight: 700, color: 'black' }} component="legend">Método de entrega</FormLabel>
@@ -162,7 +165,7 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
             <Grid spacing={2} justifyContent={"space-between"} container>
                 <Grid sm={6} item>
                     <List>
-                    <ListItem variant="h5" component={Typography} sx={{ mt: 4, fontWeight: 700 }}>Datos personales</ListItem>
+                    <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos personales</ListItem>
                         <ListItem>Nombre: {user.name}</ListItem>
                         <ListItem>Apellido: {user.lastName}</ListItem>
                         <ListItem>Correo electrónico: {user.email}</ListItem>
@@ -176,14 +179,14 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
                 <Grid sm={6} item>
                     {deliveryMethod === 'store-pickup' ?
                         (<List>
-                            <ListItem variant="h5" component={Typography} sx={{ mt: 4, fontWeight: 700 }}>Datos de retiro</ListItem>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos de retiro</ListItem>
                             <ListItem>Dirección: blahblah</ListItem>
                             <ListItem>Contacto: +569939333</ListItem>
                         </List>)
 
                         :
                         (<>
-                            <ListItem variant="h5" component={Typography} sx={{ mt: 4, fontWeight: 700 }}>Datos de entrega</ListItem>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 2, fontWeight: 700 }}>Datos de entrega</ListItem>
                             {edit ? (<form >
                                 <Grid spacing={1} rowSpacing={2} sx={{mt:1}} container>
                                     <Grid sm={4} item>
