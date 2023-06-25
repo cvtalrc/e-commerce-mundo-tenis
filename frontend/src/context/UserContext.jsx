@@ -22,8 +22,11 @@ const UserProvider = ({ children }) => {
             if(localStorage.getItem('user')){
                 setToken(localStorage.getItem('user'))
                 let decodedUser = jwtDecode(token);
-                setUser(decodedUser)
+                setUser(decodedUser) 
+                console.log("con token", token)     
             }
+        }else{
+            console.log("sin token", token)
         }
     }, [token]);
 
@@ -108,14 +111,37 @@ const UserProvider = ({ children }) => {
             })
     }
 
-    const register = () => {
-        
+    const updateUserData = (form) => {
+        let url = `http://localhost:3000/api/user/update/${user._id}`;
+        let options = {
+            body: form,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'content-type': 'application/json'
+            }
+        }
+
+        api
+            .put(url, options)
+            .then((res) => {
+                if (!res.err) {
+                    localStorage.setItem('user', res.accessToken);
+                    setToken(res.accessToken);
+                    let decodedUser = jwtDecode(res.accessToken);
+                    setUser(decodedUser);
+                }
+            })
+            .catch((err) => {
+                console.error("error del catch", err)
+            })
     }
 
     const data = {
         user,
+        setUser,
         logIn,
         logOut,
+        updateUserData,
         token,
         error,
         loading

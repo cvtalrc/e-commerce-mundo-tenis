@@ -1,5 +1,7 @@
 const User = require("../Models/User");
 const shoppingCart = require("../Models/shoppingCart");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "mundotenisCGA_SECRETKEY";
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
@@ -97,7 +99,14 @@ async function updateUser(req, res) {
       { new: true }
     ).select("-pass");
 
-    res.status(200).json(updatedUser);
+    res.clearCookie("accessToken");
+    const accessToken = jwt.sign({ userId: findUser.id, ...updateUser }, SECRET_KEY);
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+    });
+    res.status(200).json({"updateUser":updateUser});
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
     res.status(500).json({ error: "Error al actualizar el usuario" });

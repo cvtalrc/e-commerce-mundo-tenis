@@ -139,8 +139,6 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
 
         setEdit(false)
         console.log(form);
-
-        //handleReset();
     };
 
     return (

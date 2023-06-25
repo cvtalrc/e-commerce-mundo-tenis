@@ -5,13 +5,13 @@ export const Modal = async (title, text, icon, content) => {
       title: title,
       text: text,
       icon: icon,
-      showCancelButton: icon === 'error' ? false : true,
-      showConfirmButton: icon === 'error' ? false : true,
+      showCancelButton: icon === 'error' || 'success' ? false : true,
+      showConfirmButton: icon === 'error' || 'success' ? false : true,
       confirmButtonText: 'Sí',
       cancelButtonText: 'No',
       confirmButtonColor: '#008f39',
       cancelButtonColor: '#bebebe',
-      timer: icon === 'error' ? 2000 : false
+      timer: icon === 'error' || 'success' ? 2000 : false
     });
 
     if (result.isConfirmed) {

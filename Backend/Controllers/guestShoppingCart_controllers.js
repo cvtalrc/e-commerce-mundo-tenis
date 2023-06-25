@@ -1,20 +1,18 @@
 const Product = require("../Models/Product");
-const shoppingCart = require("../Models/shoppingCart");
-const Order = require("../Models/Order")
-const cron = require("node-cron");
+const guestShoppingCart = require("../Models/guestShoppingCart");
 
 //CREAR CARRO VACIO
 async function createEmpty_shoppingCart(user) {
   try {
-    const Cart = new shoppingCart({
+    const Cart = new guestShoppingCart({
       User: user,
       items: [],
       total: 0,
     });
-    const find_cart = await shoppingCart.findOne({ User: user });
-    if (find_cart) throw new Error("Ya existe un carro asociado al usuario");
+    // const find_cart = await guestShoppingCart.findOne({ User: user });
+    // if (find_cart) throw new Error("Ya existe un carro asociado al usuario");
 
-    await shoppingCart.create(Cart);
+    await guestShoppingCart.create(Cart);
   } catch (error) {
     throw error;
   }
@@ -22,7 +20,7 @@ async function createEmpty_shoppingCart(user) {
 
 //AGREGAR PRODUCTO AL CARRO
 async function addtoCart(req, res) {
-  const User = req.body.User;
+  const sessionID = req.sessionID;
   const TitleProduct = req.body.TitleProduct;
   const Size = req.body.Size;
   const Quantity = req.body.Quantity;
@@ -40,11 +38,11 @@ async function addtoCart(req, res) {
     if (stockItem.quantity < Quantity) return res.status(400).send({ msj: "No hay stock suficiente", status: "error" });
 
     //Buscar el carro asociado al usuario
-    let cart = await shoppingCart.findOne({ User: User });
+    let cart = await guestShoppingCart.findOne({ sessionID: sessionID });
     //Si no existe el carro, se crea asociado al usuario
     if (!cart) {
-      cart = new shoppingCart({
-        User: User,
+      cart = new guestShoppingCart({
+        sessionID: sessionID,
         items: [],
         total: 0,
       });
@@ -114,7 +112,7 @@ async function removeFromCart(req, res) {
   const Quantity = req.body.Quantity;
   try {
     //Buscar el carro asociado al usuario
-    const cart = await shoppingCart.findOne({ User: User });
+    const cart = await guestShoppingCart.findOne({ sessionID: sessionID });
     if (!cart)
       return res
         .status(400)
@@ -170,9 +168,9 @@ async function removeFromCart(req, res) {
 
 //OBTENER EL CONTENIDO DEL CARRO
 async function getCart(req, res) {
-  const user = req.params.user; //0|| req.sessionID;
+  const sessionID = req.sessionID; //0|| req.sessionID;
   try {
-    const cart = await shoppingCart.findOne({ User: user });
+    const cart = await guestShoppingCart.findOne({ sessionID: sessionID });
     if (!cart) return res.status(400).send({ msj: "Carrito no encontrado", status: "error" });
     //revisar stock
     res.status(200).send({ data: cart, status: "success" });
@@ -184,9 +182,9 @@ async function getCart(req, res) {
 
 //VACIAR EL CARRITO
 async function emptyCart(req, res) {
-  const User = req.body.User;
+  const sessionID = req.sessionID;
   try {
-    const cart = await shoppingCart.findOne({ User: User });
+    const cart = await guestShoppingCart.findOne({ sessionID: sessionID });
     if (!cart) return res.status(400).send({ msj: "Carrito no encontrado", status: "error" });
     cart.items = [];
     cart.total = 0;
@@ -200,7 +198,7 @@ async function emptyCart(req, res) {
 
 async function emptyAll(req, res) {
   try {
-    const carts = await shoppingCart.find(); // Obtener todos los carritos
+    const carts = await guestShoppingCart.find(); // Obtener todos los carritos
     if (carts.length === 0) {
       return res
         .status(400)
@@ -229,51 +227,11 @@ async function emptyAll(req, res) {
 //   emptyAll();
 // });
 
-async function reduceStock(orderID){
-  //const orderID = req.params.orderID
-  const order = await Order.findOne({_id : orderID})
-  console.log(order.Cart[1].Products)
-  //console.log(order.Cart);
-  try{
-    //reducir stock
-    for (const item of order.Cart[1].Products) {
-      const isProduct = await Product.findOne({ title: item.TitleProduct }); //identifico el producto
-      if (isProduct) {
-        const stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el stock actual del producto
-    
-        if (stockItem) {
-          const newQuantity = stockItem.quantity - item.Quantity; 
-          const index = await isProduct.stock.findIndex(stock => stock.size === item.Size);
-          console.log(index);
-          await isProduct.updateOne({$set: { [`stock.${index}.quantity`]: newQuantity }});
-        }else{
-          throw new Error("Carrito no encontrado");
-        }
-        await isProduct.save();
-      }else{
-        throw new Error("Error al encontrar el producto en inventario");
-      }
-    }
-    //vaciar carro
-    const cart = await shoppingCart.findOne({_id: order.Cart[0].cartID});
-    if (!cart) throw new Error("Carrito no encontrado");
-    cart.items = [];
-    cart.total = 0;
-    await cart.save();
-
-    // return res.status(200).send({
-    //   message: "Stock actualizado y carro vaciado",
-    // });
-  }catch(error){
-    throw error;
-  }
-}
-
 module.exports = {
   createEmpty_shoppingCart,
   addtoCart,
   removeFromCart,
   getCart,
   emptyCart,
-  reduceStock
+  emptyAll
 };
