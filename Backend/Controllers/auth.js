@@ -85,21 +85,21 @@ async function sign_in(req, res) {
   const { body } = req;
   if (!body.email)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Email obligatorio", status: "warning" });
   if (!body.pass)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "Contraseña obligatoria", status: "warning" });
 
   const findUser = await User.findOne({ email: body.email });
   if (!findUser)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "El usuario no existe", status: "error" });
   if (findUser.pass != body.pass)
     return res
-      .status(200)
+      .status(400)
       .send({ message: "La contraseña no es correcta", status: "error" });
 
   const userWithoutPass = { ...findUser.toObject() };

@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { Toast } from '../components/Alerts/Toast';
 import { Modal }from '../components/Alerts/Modal';
 import jwtDecode from 'jwt-decode';
+import Swal from 'sweetalert2'
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [users, setUsers] = useState(null); //usuarios
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('user'))
+    const api = helpHttp();
 
     useEffect(() => {
         if(localStorage.getItem('user')){
@@ -28,27 +29,6 @@ const UserProvider = ({ children }) => {
 
     const navigate = useNavigate();
 
-    const api = helpHttp();
-    
-    // let url = "http://localhost:3000/api/user/";
-    // useEffect(() => { //creo que no es necesario tener a todos los usuarios guardados
-    //     //setLoading(true);
-    //     api
-    //         .get(url)
-    //         .then((res) => {
-    //             //console.log(res);
-    //             if (!res.err) {
-    //                 console.log(res)
-    //                 setUsers(res);
-    //                 setError(null);
-    //             } else {
-    //                 setUsers(null);
-    //                 setError(res);
-    //             }
-    //             //setLoading(false);
-    //         });
-    // }, [url]);
-
     const logIn = (form) => {
         let url = 'http://localhost:3000/api/sign-in';
         
@@ -60,12 +40,14 @@ const UserProvider = ({ children }) => {
         api
             .post(url, options)
             .then((res) => {
+                console.log("la bdd responde..")
                 if (!res.err) {
                     localStorage.setItem('user', res.accessToken);
                     setToken(res.accessToken);
                     let decodedUser = jwtDecode(res.accessToken);
                     setUser(decodedUser);
                     if (decodedUser.type === 'admin'){
+                        console.log("if decoder")
                         Toast(
                             'bottom-end',
                             'success',
@@ -81,11 +63,18 @@ const UserProvider = ({ children }) => {
                         navigate('/');
                     }
                 } else {
+                    console.log("hay errores")
                     console.log(res.err)
+                    Modal(
+                        'Error al iniciar sesión',
+                        'Los datos ingresados son incorrectos',
+                        'error',
+                        ''
+                    )
                 } 
             })
             .catch(e => {
-                prompt(e);
+                console.error(e)
             })  
     }
 
@@ -104,10 +93,10 @@ const UserProvider = ({ children }) => {
                 if(res.err){
                     console.error(res.err)
                 } else {
-                    const modalResult = await Modal (
+                    const modalResult = await Modal(
                         'Cierre de sesión',
-                        'Se cerrará tu sesión actual.',
-                        'warning',
+                        '¿Deseas cerrar tu sesión?',
+                        'question',
                         '¡Hasta la próxima!'
                     )
                     if(modalResult.confirmed){
@@ -117,7 +106,6 @@ const UserProvider = ({ children }) => {
                     }
                 }
             })
-
     }
 
     const register = () => {
@@ -125,7 +113,6 @@ const UserProvider = ({ children }) => {
     }
 
     const data = {
-        users,
         user,
         logIn,
         logOut,

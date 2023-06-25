@@ -18,7 +18,6 @@ import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
 import  Payment from './views/payment/Payment';
-
 import { OrderProvider } from './context/OrderContext';
 
 const navArrayLinks = [
@@ -73,7 +72,7 @@ function App() {
                                 <Route path="/order" element={<Order />} /> {/*pedido (carrito de compras) */}
                                 <Route path="/admin" element={<Admin />} /> {/*pedido (carrito de compras) */}
                                 <Route path="/search" element={<Search />} />
-                                <Route path="/payment" element={<Payment />} />
+                                {/* <Route path="/payment" element={<Payment />} /> */}
                             </Routes>
                             <Footer />
                             </OrderProvider>
