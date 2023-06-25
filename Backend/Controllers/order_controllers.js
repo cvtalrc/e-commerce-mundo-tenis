@@ -53,7 +53,7 @@ async function updateOrderStatus(orderID) {
       { Status: "En curso" },
       { new: true }
     );
-    return updatedOrder
+    return updatedOrder;
     //res.status(200).json(updatedOrder);
   } catch (error) {
     throw error;
@@ -81,6 +81,15 @@ async function getOrder(req, res) {
   });
 }
 
+async function getAll(req, res){
+  Order.find({}, (error, orders) => {
+    if (error) {
+      return res.status(400).send({ msj: "Error al encontrar las ordenes" });
+    } else {
+      res.status(200).send(orders); // El producto encontrado
+    }
+  });
+}
 
 
 cron.schedule('0 */12 * * *', async () => {
@@ -107,5 +116,6 @@ module.exports = {
   createOrder,
   updateOrderStatus,
   getOrder,
+  getAll,
   removeAll
 };

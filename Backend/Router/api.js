@@ -28,6 +28,7 @@ api.get("/product/", func_product.getAll);
 api.get("/product/:id", func_product.getId);
 api.get("/cart/:user", func_auth.authenticateToken, func_shoppingCart.getCart);
 api.get("/order/:id", func_auth.authenticateToken, func_order.getOrder);
+api.get("/order/", func_order.getAll);
 api.get("/comment/", func_comment.getAllComments);
 
 //API DELETE
