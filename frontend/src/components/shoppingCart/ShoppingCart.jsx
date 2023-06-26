@@ -36,7 +36,7 @@ const ShoppingCart = (SetOpenShoppingCart) => {
           </Grid>
         </List>
         <Box sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', bottom: 0, width: '100%', paddingBottom: 1, pt: 2, borderTop: "thin solid gray", margin: '20px' }}>
-          {totalPrice != null && cartProducts.length >0 ? (
+          {totalPrice != null && cartProducts.length > 0 ? (
             <>
               <Typography variant="h6" sx={{ fontWeight: 600, pl: 'auto', fontSize: 15, flexGrow: 1, justifyContent: 'flex-end', display: 'flex' }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
 
@@ -61,5 +61,4 @@ const ShoppingCart = (SetOpenShoppingCart) => {
   </>
   )
 };
-
 export default ShoppingCart;

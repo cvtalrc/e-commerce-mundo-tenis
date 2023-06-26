@@ -11,8 +11,6 @@ export default function Payment() {
 
     const [response, setResponse] = useState({})
     const api = helpHttp()
-    // console.log(`http://localhost:3000/api/verify-payment${param.search}`);
-    // console.log(param.search);
 
     useEffect(() => {
         if(param.search){
