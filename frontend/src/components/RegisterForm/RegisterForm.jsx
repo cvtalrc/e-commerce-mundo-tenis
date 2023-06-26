@@ -11,19 +11,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { helpHttp } from '../../helpers/helpHttp';
 import { MenuItem, Select } from '@mui/material';
 import { Modal } from '../Alerts/Modal';
-/*
-*******************************************************************************
-*******************************************************************************
-*******************************************************************************
-***************** AGREGAR NUMERO DE TELEFONO EN EL FORMULARIO *****************
-*******************************************************************************
-*******************************************************************************
-*******************************************************************************
-*/
-
-
-/* name, lastName, cellNumber, address, comuna, region */
-/* region y comuna con arreglos */
 
 function isValidName(name) {
   const regex = /^[A-Za-zÁ-ÿ\s]+$/;

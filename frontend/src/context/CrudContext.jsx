@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import ProductsContext from "./ProductsContext";
+import { Modal } from "../components/Alerts/Modal";
 
 const CrudContext = createContext();
 
@@ -25,6 +26,12 @@ const CrudProvider = ({ children }) => {
             console.log(res);
             if (!res.err) {
                 setProducts([...products, res]);
+                Modal(
+                    'Agregación de producto',
+                    'El producto ha sido creado correctamente.',
+                    'success',
+                    ''
+                )
             } else {
                 setError(res);
             }
@@ -72,6 +79,12 @@ const CrudProvider = ({ children }) => {
                 console.log(data)
                 let newData = products.map((el) => (el._id === data._id ? data : el));
                 setProducts(newData);
+                Modal(
+                    'Actualización de producto.',
+                    'El producto ha sido actualizado correctamente.',
+                    'success',
+                    ''
+                )
             } else {
                 setError(res);
             }
@@ -95,6 +108,12 @@ const CrudProvider = ({ children }) => {
                 if (!res.err) {
                     let newData = products.filter((el) => el._id !== _id);
                     setProducts(newData);
+                    Modal(
+                        'Eliminación de producto.',
+                        'El producto ha sido eliminado correctamente.',
+                        'success',
+                        ''
+                    )
                 } else {
                     setError(res);
                 }

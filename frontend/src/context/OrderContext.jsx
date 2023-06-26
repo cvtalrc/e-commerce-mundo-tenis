@@ -6,6 +6,8 @@ const OrderContext = createContext();
 
 const OrderProvider = ({ children }) => {
     const [orders, setOrders] = useState(null)
+    const { user } = useContext(UserContext);
+    const [userOrders, setUserOrders] = useState([]);
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(null)
 
@@ -15,17 +17,15 @@ const OrderProvider = ({ children }) => {
     let url = "http://localhost:3000/api/order";
 
     useEffect(() => {
-        //setLoading(true);
         api
             .get(url)
             .then((res) => {
                 //console.log(res);
                 if (!res.err) {
                     setOrders(res);
-                    const userID = res.User 
-                    url = "http://localhost:3000/api/order"
-
+                    console.log('bdd responde' + res[0].User[0])
                     setError(null);
+                    console.log('pedidos' + orders)
                 } else {
                     setOrders(null);
                     setError(res);
@@ -34,10 +34,19 @@ const OrderProvider = ({ children }) => {
             });
     }, [url]);
 
+    // function orderByUser(userId){
+        
+    //     const userOrders = orders.filter((el) => {
+    //         el.User._id === userId
+    //     })
+
+    //     console.log('pedidos del usuario ' + userId + ':' + userOrders)
+    // }
+
     const data = {
         orders
     };
-
+    
     return <OrderContext.Provider value={data}>{children}</OrderContext.Provider>;
 };
 

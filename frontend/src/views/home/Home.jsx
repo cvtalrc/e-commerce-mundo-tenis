@@ -1,4 +1,4 @@
-import { Typography, Container, Box, Grid, Pagination } from "@mui/material";
+import { Typography, Container, Box, Grid, Pagination, List } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { helpHttp } from "../../helpers/helpHttp";
@@ -14,6 +14,24 @@ import vcore7 from "../../img/vcore7.webp"
 
 export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
+    const [comments, setComments] = useState(null)
+
+    let api = helpHttp()
+    let url = "http://localhost:3000/api/comment/" 
+
+    useEffect(() => {
+        api
+            .get(url)
+            .then((res) => {
+                if (!res.err) {
+                    setComments(res)
+                    console.log(res)
+                }
+            })
+            .catch(e => {
+                console.error(e)
+            })
+    }, [])
   
     const slides = [
         { url: vcore, title: "vcore" },
@@ -41,7 +59,7 @@ export default function Home() {
                 <Typography variant="h4">Error</Typography>
             )}
             {
-                products != null &&
+                products != null && comments != null &&
                 (<Box sx={{ mb: 1 }}>
                     <Container maxWidth="xl" sx={{ bgcolor: 'white', mt: 2,borderRadius: 1 }}>
                         <Box sx={containerStyles} >
@@ -58,6 +76,16 @@ export default function Home() {
                         </Box>
 
                         <PaginationCard key={`normal`} products={products} type={`normal`} />
+
+                        <Box>
+                            <Typography>Comentarios: </Typography>
+                            {comments.map((comment) => (
+                                <Typography key={comment._id}> {comment.Content}</Typography>
+                            ))}
+
+                        </Box>
+
+
                     </Container>
 
                 </Box>)
