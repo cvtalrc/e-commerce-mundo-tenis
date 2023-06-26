@@ -8,12 +8,12 @@ const moment = require('moment');
 async function createOrder(userID, Delivery) {
   try {
     // Crear una instancia del modelo Order con los datos de la orden de compra
-    const user = await User.findOne({ _id: userID });
-    const cart = await shoppingCart.findOne({ User: user.email });
+    const user = await User.findById(userID).select('-pass');;
+    const cart = await shoppingCart.findOne({ User: user });
 
     //validar carrito
     for (const item of cart.items) {
-      const isProduct = await Product.findOne({ title: item.TitleProduct }); //identifico el producto
+      const isProduct = await Product.findOne({ idProduct: item.idProduct }); //identifico el producto
       if (isProduct) {
         //producto
         const stockItem = isProduct.stock.find(
@@ -45,7 +45,7 @@ async function createOrder(userID, Delivery) {
   }
 }
 
-async function updateOrderStatus(orderID) {
+async function updateOrderStatusWebpay(orderID) {
   try {
     //const { id } = req.params;
     const updatedOrder = await Order.findByIdAndUpdate(
@@ -57,6 +57,23 @@ async function updateOrderStatus(orderID) {
     //res.status(200).json(updatedOrder);
   } catch (error) {
     throw error;
+  }
+}
+
+async function updateOrderStatusAmdmin(req, res) {
+  const orderID = req.body.orderID
+  const status = req.body.status
+  try {
+    //const { id } = req.params;
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderID,
+      { Status: status },
+      { new: true }
+    );
+    return res.status(200).json(updatedOrder);
+    //res.status(200).json(updatedOrder);
+  } catch (error) {
+    return res.status(400).send({message: "Error al actualizar el estado de la orden"});
   }
 }
 
@@ -114,7 +131,8 @@ cron.schedule('0 */12 * * *', async () => {
 
 module.exports = {
   createOrder,
-  updateOrderStatus,
+  updateOrderStatusWebpay,
+  updateOrderStatusAmdmin,
   getOrder,
   getAll,
   removeAll

@@ -47,7 +47,7 @@ async function sign_up(req, res) {
     };
     const insertUser = await User.create(usuario);
     // Crear el carrito asociado al usuario
-    await shoppingCart.createEmpty_shoppingCart(body.email);
+    await shoppingCart.createEmpty_shoppingCart(insertUser._id);
   
     return res.status(200).send({
       create: insertUser,

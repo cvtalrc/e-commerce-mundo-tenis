@@ -27,11 +27,10 @@ async function removeUser(req, res) {
   const id = req.params.id;
   try {
     // Buscar y eliminar el usuario por su ID
-    const user = await User.findOne({ _id: id });
-    const email = user.email;
+    const user = await User.findById(id);
     const removedUser = await User.findOneAndRemove({ _id : id });
 
-    const removedCartUser = await shoppingCart.findOneAndRemove({ User: email });
+    const removedCartUser = await shoppingCart.findOneAndRemove({ User: user });
     if (!removedUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }

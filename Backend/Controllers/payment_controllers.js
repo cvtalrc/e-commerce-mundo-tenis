@@ -14,8 +14,8 @@ const commerceCode = "597055555532";
 const returnUrl = "http://localhost:5173/payment";
 
 async function generateTransaction(req, res) {
-  const userToken = req.headers.authorization?.split(' ')[1]; //token usuario
-  //const userToken = req.cookies.accessToken;
+  //const userToken = req.headers.authorization?.split(' ')[1]; //token usuario
+  const userToken = req.cookies.accessToken;
   const sessionID = userToken.substring(0, 10); // Obtener los primeros 10 caracteres
   const { userID, Delivery } = req.body
   //console.log(sessionID);
@@ -64,7 +64,7 @@ async function processPaymentWebpay(req, res) {
           }
         });
 
-        const updateOrder = await Order.updateOrderStatus(commitResponse.buy_order, (error, response) =>{
+        const updateOrder = await Order.updateOrderStatusWebpay(commitResponse.buy_order, (error, response) =>{
           if(error){
             throw error;
           }
