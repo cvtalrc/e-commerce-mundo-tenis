@@ -35,6 +35,7 @@ async function generateTransaction(req, res) {
 
   } catch (error) {
     console.error("Error al generar la transacción:", error);
+    return res.status(400).send({message: "Error al generar transaccion", status: "Error"})
   }
 }
 
@@ -112,7 +113,7 @@ async function processPaymentWebpay(req, res) {
     }
   } catch (error) {
     return res.status(400).send({
-        msj: "Error al procesar la respuesta de Webpay:",
+        message :"Error al procesar la respuesta de Webpay:",
         error: error
       });
   }

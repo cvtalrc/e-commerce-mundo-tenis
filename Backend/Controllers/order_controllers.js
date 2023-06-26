@@ -70,7 +70,7 @@ async function updateOrderStatusAmdmin(req, res) {
       { Status: status },
       { new: true }
     );
-    return res.status(200).json(updatedOrder);
+    return res.status(200).send({updateOrder: updatedOrder, status: "success"});
     //res.status(200).json(updatedOrder);
   } catch (error) {
     return res.status(400).send({message: "Error al actualizar el estado de la orden"});
@@ -101,9 +101,9 @@ async function getOrder(req, res) {
 async function getAll(req, res){
   Order.find({}, (error, orders) => {
     if (error) {
-      return res.status(400).send({ msj: "Error al encontrar las ordenes" });
+      return res.status(400).send({ message: "Error al encontrar las ordenes" , status: "Error"});
     } else {
-      res.status(200).send(orders); // El producto encontrado
+      res.status(200).send({oreders: orders, status: "success"}); // El producto encontrado
     }
   });
 }

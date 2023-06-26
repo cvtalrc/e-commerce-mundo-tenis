@@ -31,12 +31,12 @@ async function addtoCart(req, res) {
     //Buscar si el producto esta en la bdd
     const isProduct = await Product.findById(idProduct);
     if (!isProduct)
-      return res.status(404).send({ msj: "Producto no encontrado", status: "error" });
+      return res.status(404).send({ message: "Producto no encontrado", status: "error" });
    
     //revisa que exista stock
     const stockItem = isProduct.stock.find((item) => item.size === Size);
-    if (stockItem == null) return res.status(404).send({ msj: "No existe esa talla", status: "error" });
-    if (stockItem.quantity < Quantity) return res.status(400).send({ msj: "No hay stock suficiente", status: "error" });
+    if (stockItem == null) return res.status(404).send({ message: "No existe esa talla", status: "error" });
+    if (stockItem.quantity < Quantity) return res.status(400).send({ message: "No hay stock suficiente", status: "error" });
     const user = await User.findById(userID);
     //Buscar el carro asociado al usuario
     let cart = await shoppingCart.findOne({User: user});
@@ -77,10 +77,10 @@ async function addtoCart(req, res) {
     }
 
     await cart.save();
-    res.status(200).send(cart);
+    res.status(200).send({cart: cart, status: "success"});
   } catch (error) {
     console.log(error);
-    res.status(400).send({msj: "Ha ocurrido un error al agregar el producto al carro", status: "error",});
+    res.status(400).send({message: "Ha ocurrido un error al agregar el producto al carro", status: "error",});
   }
 }
 
@@ -100,11 +100,11 @@ async function removeFromCart(req, res) {
   try {
     //Buscar el carro asociado al usuario
     const cart = await shoppingCart.findOne({ User: userID });
-    if (!cart) return res.status(404).send({ msj: "El carro no existe", status: "error" });
+    if (!cart) return res.status(404).send({ message: "El carro no existe", status: "error" });
 
     //Buscar el producto en el carro
     const ItemIndex = cart.items.findIndex((item) => item.idProduct.toString() === idProduct && item.Size === Size);
-    if (ItemIndex == -1) return res.status(404).send({ msj: "El producto no existe en el carro", status: "error" });
+    if (ItemIndex == -1) return res.status(404).send({ message: "El producto no existe en el carro", status: "error" });
 
     //Item actual
     const currenItem = cart.items[ItemIndex];
@@ -115,7 +115,7 @@ async function removeFromCart(req, res) {
         cart.items.splice(ItemIndex, 1);
       }
     } else {
-      return res.status(400).send({msj: "La cantidad a eliminar es mayor a la que este en el carro", status: "error",});
+      return res.status(400).send({message: "La cantidad a eliminar es mayor a la que este en el carro", status: "error",});
     }
 
     //Calcular total actualizado
@@ -126,10 +126,10 @@ async function removeFromCart(req, res) {
     }
     //Guardar el carro actualizado
     await cart.save();
-    res.status(200).send({ msj: "Producto eliminado del carrito con exito", status: "success",});
+    res.status(200).send({ message: "Producto eliminado del carrito con exito", status: "success",});
   } catch (error) {
     console.log(error);
-    res.status(400).send({ msj: "Error al eliminar el producto", status: "error" });
+    res.status(400).send({ message: "Error al eliminar el producto", status: "error" });
   }
 }
 
@@ -138,12 +138,12 @@ async function getCart(req, res) {
   const userID = req.params.userID; //0|| req.sessionID;
   try {
     const cart = await shoppingCart.findOne({ User: userID });
-    if (!cart) return res.status(404).send({ msj: "Carrito no encontrado", status: "error" });
+    if (!cart) return res.status(404).send({ message: "Carrito no encontrado", status: "error" });
     //revisar stock
-    res.status(200).send({ data: cart, status: "success" });
+    res.status(200).send({ cart: cart, status: "success" });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ msj: "Error al obtener el carro", status: "error" });
+    res.status(400).send({ message: "Error al obtener el carro", status: "error" });
   }
 }
 
@@ -152,14 +152,14 @@ async function emptyCart(req, res) {
   const userID = req.body.userID;
   try {
     const cart = await shoppingCart.findOne({ User: userID });
-    if (!cart) return res.status(404).send({ msj: "Carrito no encontrado", status: "error" });
+    if (!cart) return res.status(404).send({ message: "Carrito no encontrado", status: "error" });
     cart.items = [];
     cart.total = 0;
     await cart.save();
-    res.status(200).send({ msj: "Carrito vaciado", status: "success" });
+    res.status(200).send({ message: "Carrito vaciado", status: "success" });
   } catch (error) {
     console.log(error);
-    res.status(400).send({ msj: "Error al vaciar el carro", status: "error" });
+    res.status(400).send({ message: "Error al vaciar el carro", status: "error" });
   }
 }
 
@@ -167,7 +167,7 @@ async function emptyAll(req, res) {
   try {
     const carts = await shoppingCart.find(); // Obtener todos los carritos
     if (carts.length === 0) {
-      return res.status(404).send({ msj: "No se encontraron carritos", status: "error" });
+      return res.status(404).send({ message: "No se encontraron carritos", status: "error" });
     }
 
     for (let i = 0; i < carts.length; i++) {
@@ -177,10 +177,10 @@ async function emptyAll(req, res) {
       await cart.save();
     }
 
-    return res.status(200).send({ msj: "Todos los carritos han sido vaciados", status: "success" });
+    return res.status(200).send({ message: "Todos los carritos han sido vaciados", status: "success" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send({ msj: "Error al vaciar los carritos", status: "error" });
+    return res.status(400).send({ message: "Error al vaciar los carritos", status: "error" });
   }
 }
 // Tarea programada para vaciar el carrito cada 24 horas
