@@ -7,7 +7,6 @@ import PaginationOrder from "../../components/OrderItem/PaginationOrder";
 
 export default function AdminOrders() {
     const {orders} = useContext(OrderContext)
-
     
     return (
         <>
@@ -16,7 +15,7 @@ export default function AdminOrders() {
             <Box sx={{mt: 5, mb:5}}>
             <Typography variant="h4" sx={{fontWeight: 700, mb:4}}>Panel de Administración de Órdenes</Typography>
             
-                <PaginationOrder orders={orders}/>
+                <PaginationOrder orders={orders} type={'admin'}/>
             
             </Box>
             

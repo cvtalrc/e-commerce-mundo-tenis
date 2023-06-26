@@ -10,7 +10,7 @@ const ProductsProvider = ({ children }) => {
     const [productsSearch, setProductsSearch] = useState(null);
     const [search, setSearch] = useState(null);
     const [categoriesTenis, setCategoriesTenis] = useState(["Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"])
-    const [categoriesPadel, setCategoriesPadel] = useState(["Raquetas", "Cuerdas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"])
+    const [categoriesPadel, setCategoriesPadel] = useState(["Palas", "Pelotas", "Bolsos", "Zapatillas", "Textiles", "Accesorios"])
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();

@@ -36,7 +36,7 @@ function getStepContent(step) {
   const [edit, setEdit] = useState(false)
   const [deliveryMethod, setDeliveryMethod] = useState('store-pickup');
   editForm = edit
-  formGlobal = form 
+  formGlobal = form
 
   useEffect(() => {
     if (user != null) {
@@ -62,15 +62,21 @@ function getStepContent(step) {
         <Grid container sx={{ borderBottom: "thin solid gray", margin: '20px', pt: 2 }}>
           <Grid item sx={{ width: '100%', height: '30%' }}>
             {
-              cartProducts && cartProducts.map((item, index) => (
-                <CartItem key={index} data={item} id={false} />
-              ))
+              cartProducts && cartProducts.length > 0 ?
+                cartProducts.map((item, index) => (
+                  <CartItem key={index} data={item} id={false} />
+                ))
+                :
+                <Typography>Tu carrito está vacío</Typography>
             }
           </Grid>
           <Grid item sx={{ width: '100%', height: '30%' }}>
-            <Typography variant="h5" sx={{ fontWeight: 800, mb: 3, fontSize: 20, pl: 'auto', pt: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
-              Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-            </Typography>
+            {cartProducts && cartProducts.length > 0 ?
+              <Typography variant="h5" sx={{ fontWeight: 800, mb: 3, fontSize: 20, pl: 'auto', pt: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
+                Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+              </Typography>
+              : ''
+            }
           </Grid>
         </Grid>
       );
@@ -102,6 +108,7 @@ const FormStepper = () => {
   const steps = getSteps();
   const { user } = useContext(UserContext)
   const { token } = useContext(UserContext)
+  const { cartProducts, totalPrice } = useContext(CartContext);
   let api = helpHttp();
 
   const paymentApi = async () => {
@@ -163,42 +170,42 @@ const FormStepper = () => {
   };
 
   return (
-    <div>
-      <Stepper activeStep={activeStep}>
-        {steps.map((step, index) => {
-          const labelProps = {};
-          const stepProps = {};
+        <div>
+          <Stepper activeStep={activeStep}>
+            {steps.map((step, index) => {
+              const labelProps = {};
+              const stepProps = {};
 
-          return (
-            <Step {...stepProps} key={index}>
-              <StepLabel {...labelProps}>{step}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <>
-        {getStepContent(activeStep)}
-        <Box sx={{ display: "flex", justifyContent: "right" }} >
-          <Button
-            sx={{ mr: 1 }}
-            disabled={activeStep === 0}
-            onClick={handleBack}
-          >
-            Atrás
-          </Button>
-          <Button
-            // className={classes.button}
-            variant="contained"
-            color="secondary"
-            onClick={handleNext}
-            type="submit"
-            disabled={editForm}
-          >
-            {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
-          </Button>
-        </Box>
-      </>
-    </div>
+              return (
+                <Step {...stepProps} key={index}>
+                  <StepLabel {...labelProps}>{step}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+          <>
+            {getStepContent(activeStep)}
+            <Box sx={{ display: "flex", justifyContent: "right" }} >
+              <Button
+                sx={{ mr: 1 }}
+                disabled={activeStep === 0}
+                onClick={handleBack}
+              >
+                Atrás
+              </Button>
+              <Button
+                // className={classes.button}
+                variant="contained"
+                color="secondary"
+                onClick={handleNext}
+                type="submit"
+                disabled={editForm || (cartProducts && cartProducts.length === 0)}
+              >
+                {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
+              </Button>
+            </Box>
+          </>
+        </div>
   )
 };
 

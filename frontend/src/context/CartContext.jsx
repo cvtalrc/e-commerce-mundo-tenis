@@ -22,7 +22,7 @@ const CartProvider = ({ children }) => {
 
     const [form, setForm] = useState(initialForm);
 
-    const email = user != null ? user.email : ''
+    const idUser = user != null ? user._id : ''
 
     useEffect(() => {
         if (user === null) {
@@ -31,7 +31,7 @@ const CartProvider = ({ children }) => {
     }, [user]);
 
     let api = helpHttp();
-    let url = `http://localhost:3000/api/cart/${email}`;
+    let url = `http://localhost:3000/api/cart/${idUser}`;
 
     //console.log('email: ', email)
 
@@ -43,7 +43,7 @@ const CartProvider = ({ children }) => {
             }
         }
 
-        if (email != '') {
+        if (idUser != '') {
             api
                 .get(url, options)
                 .then((res) => {

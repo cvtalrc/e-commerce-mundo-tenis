@@ -4,9 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Toast } from '../components/Alerts/Toast';
 import { Modal } from '../components/Alerts/Modal';
 import jwtDecode from 'jwt-decode';
-import Swal from 'sweetalert2'
-import CartContext from "./CartContext";
-
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
@@ -18,14 +15,14 @@ const UserProvider = ({ children }) => {
     const localStorageData = { ...localStorage };
 
     useEffect(() => {
-        if (localStorageData != undefined) { //evita el error n
-            if (localStorage.getItem('user')) {
+        if(localStorageData != undefined){ //evita el error n
+            if(localStorage.getItem('user')){
                 setToken(localStorage.getItem('user'))
-                let decodedUser = jwtDecode(localStorage.getItem('user'));
-                setUser(decodedUser._doc)
+                let decodedUser = jwtDecode(token);
+                setUser(decodedUser)
             }
         }
-    }, [localStorage.getItem('user')]);
+    }, [token]);
 
     const navigate = useNavigate();
 
