@@ -3,9 +3,10 @@ import usePagination from "../Pagination/Pagination";
 import { useState } from "react";
 import OrderItem from "./OrderItem";
 
-export default function PaginationOrder({ orders }) {
+export default function PaginationOrder({ orders, type}) {
     let [page, setPage] = useState(1);
     let PER_PAGE = 12;
+    console.log(type)
 
     let count = Math.ceil(orders.length / PER_PAGE);
     let _DATA = usePagination(orders, PER_PAGE);
@@ -21,7 +22,7 @@ export default function PaginationOrder({ orders }) {
             <Grid container spacing={6}>
                 {
                     (_DATA.currentData().map(order =>
-                        <Grid key={order._id} item md={4} sm={4} xs={6}> <OrderItem key={order._id} order={order} /> </Grid>))
+                        <Grid key={order._id} item md={4} sm={4} xs={6}> <OrderItem type={type} key={order._id} order={order} /> </Grid>))
                 }
 
             </Grid>

@@ -16,6 +16,8 @@ import { Modal } from "../../components/Alerts/Modal";
 import CheckIcon from '@mui/icons-material/Check';
 import EditIcon from '@mui/icons-material/Edit';
 import { helpHttp } from "../../helpers/helpHttp";
+import OrderContext from '../../context/OrderContext'
+import PaginationOrder from "../../components/OrderItem/PaginationOrder";
 
 function isValidName(name) {
     const regex = /^[A-Za-zÁ-ÿ\s]+$/;
@@ -39,6 +41,8 @@ function isValidAddress(address) {
 
 export default function User() {
     const { user, updateUserData } = useContext(UserContext);
+    // const { orderByUser } = useContext(OrderContext)
+    const { orders } = useContext(OrderContext)
     const [validationErrors, setValidationErrors] = useState({});
     const [edit, setEdit] = useState(false);
     const [editPass, setEditPass] = useState(false);
@@ -46,7 +50,16 @@ export default function User() {
     const [newPass, setNewPass] = useState('');
     const [confirmedPass, setConfirmedPass] = useState('')
     const [form, setForm] = useState(null);
-    console.log('console.log 1, inicio User.jsx', user)
+    const [userOrders, setUserOrders] = useState(null)
+    
+
+    useEffect(() => {
+        if (orders !== null && user !== null) {
+            setUserOrders(orders.filter((order) => order.User._id === user._id));
+        }
+    }, [orders, user]);
+
+    console.log(userOrders)
 
     const region = ['Valparaíso', "Libertador General Bernardo O'Higgins", 'Metropolitana'];
     const comunas = [
@@ -82,8 +95,6 @@ export default function User() {
                 newPass: ''
             }
             setForm(initialForm);
-            console.log("form user", form)
-            console.log(user)
         }
     }, [user])
 
@@ -194,7 +205,7 @@ export default function User() {
     return (
         <>
             {
-                user != null && (
+                user != null && userOrders !== null && (
                     <Container maxWidth="xl" sx={{
                     }}
                     >
@@ -429,27 +440,36 @@ export default function User() {
                             :
                             <>
                                 {form != null ?
-                                    <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex' }}>
-                                        <Grid spacing={2} container direction='row' justifyContent='center'>
-                                            <Grid sm={5} item >
-                                                <List>
-                                                    <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos personales</ListItem>
-                                                    <ListItem>Nombre: {form.name}</ListItem>
-                                                    <ListItem>Apellido: {form.lastName}</ListItem>
-                                                    <ListItem>Correo electrónico: {form.email}</ListItem>
-                                                    <ListItem>Celular: {form.cellNumber}</ListItem>
-                                                    <ListItem>Dirección: {form.address}</ListItem>
-                                                    <ListItem>Región: {form.region}</ListItem>
-                                                    <ListItem>Comuna: {form.comuna}</ListItem>
-                                                </List>
+                                    <>
+                                        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex' }}>
+                                            <Grid spacing={2} container direction='row' justifyContent='center'>
+                                                <Grid sm={5} item >
+                                                    <List>
+                                                        <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos personales</ListItem>
+                                                        <ListItem>Nombre: {form.name}</ListItem>
+                                                        <ListItem>Apellido: {form.lastName}</ListItem>
+                                                        <ListItem>Correo electrónico: {form.email}</ListItem>
+                                                        <ListItem>Celular: {form.cellNumber}</ListItem>
+                                                        <ListItem>Dirección: {form.address}</ListItem>
+                                                        <ListItem>Región: {form.region}</ListItem>
+                                                        <ListItem>Comuna: {form.comuna}</ListItem>
+                                                    </List>
+                                                </Grid>
+                                                <Box sm={7} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                                    <Button onClick={() => { setEdit(true) }}>
+                                                        <EditIcon variant="contained" color="secondary" />
+                                                    </Button>
+                                                </Box>
                                             </Grid>
-                                            <Box sm={7} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                <Button onClick={() => { setEdit(true) }}>
-                                                    <EditIcon variant="contained" color="secondary" />
-                                                </Button>
-                                            </Box>
-                                        </Grid>
-                                    </Box> : ''
+                                        </Box>
+
+                                        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex' }}>
+                                            <Typography variant='h5' sx={{ mt:1, fontWeight: 700 }}> Pedidos </Typography>
+                                                        <PaginationOrder type={'user'} orders={userOrders}></PaginationOrder>
+                                                    
+                                        </Box>
+                                    </>
+                                    : ''
 
                                 }
                             </>

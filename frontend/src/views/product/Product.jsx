@@ -16,6 +16,7 @@ import {
   import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
   import ProductsContext from "../../context/ProductsContext";
   import CartContext from "../../context/CartContext";
+import { Modal } from "../../components/Alerts/Modal";
   
   export default function Product() {
     const { sport, category, id } = useParams();
@@ -159,12 +160,23 @@ import {
                   </ButtonGroup>
                   <Button
                     onClick={() => {
-                      addToCart(
-                        product[0]._id,
-                        product[0].title,
-                        form.Size,
-                        itemCount
-                      );
+                      if(product[0].stock[0].size.length > 0  && (form.Size === undefined || form.Size === null || form.Size === '')){
+                        Modal(
+                          'Añadir al carrito de compras',
+                          'Debes seleccionar una talla.',
+                          'error',
+                          ''
+                        )
+                      }else {
+                        addToCart(
+                          product[0]._id,
+                          product[0].title,
+                          form.Size,
+                          itemCount
+                        );
+                        
+                      }
+                      
                     }}
                     color="secondary"
                     variant="outlined"

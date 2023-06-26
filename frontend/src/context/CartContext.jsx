@@ -33,7 +33,7 @@ const CartProvider = ({ children }) => {
     let api = helpHttp();
     let url = `http://localhost:3000/api/cart/${email}`;
 
-    console.log('email: ', email)
+    //console.log('email: ', email)
 
     useEffect(() => {
         let options = {
@@ -49,7 +49,7 @@ const CartProvider = ({ children }) => {
                 .then((res) => {
                     console.log(res);
                     if (!res.err) {
-                        console.log("productos en el carro", email + '' + res.data.items)
+                        //console.log("productos en el carro", email + '' + res.data.items)
                         setCartProducts(res.data.items);
                         setTotalPrice(res.data.total);
                         setError(null);

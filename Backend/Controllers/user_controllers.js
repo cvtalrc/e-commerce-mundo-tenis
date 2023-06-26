@@ -105,7 +105,7 @@ async function updateUser(req, res) {
       httpOnly: true,
       secure: true,
     });
-    res.status(200).json({"updateUser":updateUser});
+    res.status(200).json({"updateUser":updatedUser, "newToken": accessToken});
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
     res.status(500).json({ error: "Error al actualizar el usuario" });

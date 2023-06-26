@@ -5,8 +5,8 @@ export const Modal = async (title, text, icon, content) => {
       title: title,
       text: text,
       icon: icon,
-      showCancelButton: icon === 'error' || 'success' ? false : true,
-      showConfirmButton: icon === 'error' || 'success' ? false : true,
+      showCancelButton: icon === 'error' || icon == 'success' ? false : true,
+      showConfirmButton: icon === 'error' || icon === 'success' ? false : true,
       confirmButtonText: 'Sí',
       cancelButtonText: 'No',
       confirmButtonColor: '#008f39',
@@ -26,16 +26,4 @@ export const Modal = async (title, text, icon, content) => {
     }
   };
 
-//   Swal.fire({
-//         title: title,
-//         text: content,
-//         icon: type,
-//         type: type,
-//         showConfirmButton: (type === 'error' || type === 'warning') ? true : false,
-//         confirmButtonText: type === 'error' ? 'Ok' : 'Sí',
-//         showCancelButton: type === 'warning' ? true : false,
-//         cancelButtonText: 'No',
-//         confirmButtonColor: '#5E67FF',
-//         timer: type === 'success' ? 5000 : false
-    
-//     });
+ 

@@ -2,10 +2,10 @@ const Comment = require('../Models/Comment');
 
 // Controlador para crear un nuevo comentario
 async function createComment(req, res) {
-  const {Author,Content} = req.body;
+  const {Author,Content, Stars} = req.body;
 
   try {
-    const newComment = await Comment.create({Author, Content});
+    const newComment = await Comment.create({Author, Content, Stars});
     res.status(201).json(newComment);
   } catch (error) {
     console.error('Error al crear el comentario:', error);
