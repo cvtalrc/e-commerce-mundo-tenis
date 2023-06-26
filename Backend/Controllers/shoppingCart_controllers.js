@@ -1,17 +1,18 @@
 const Product = require("../Models/Product");
 const shoppingCart = require("../Models/shoppingCart");
 const Order = require("../Models/Order")
+const User = require("../Models/User")
 const cron = require("node-cron");
 
 //CREAR CARRO VACIO
-async function createEmpty_shoppingCart(user) {
+async function createEmpty_shoppingCart(userID) {
   try {
     const Cart = new shoppingCart({
-      User: user,
+      User: userID,
       items: [],
       total: 0,
     });
-    const find_cart = await shoppingCart.findOne({ User: user });
+    const find_cart = await shoppingCart.findOne({ User: userID });
     if (find_cart) throw new Error("Ya existe un carro asociado al usuario");
 
     await shoppingCart.create(Cart);
@@ -22,39 +23,35 @@ async function createEmpty_shoppingCart(user) {
 
 //AGREGAR PRODUCTO AL CARRO
 async function addtoCart(req, res) {
-  const User = req.body.User;
-  const TitleProduct = req.body.TitleProduct;
+  const userID = req.body.userID;
+  const idProduct = req.body.idProduct;
   const Size = req.body.Size;
   const Quantity = req.body.Quantity;
   try {
     //Buscar si el producto esta en la bdd
-    const isProduct = await Product.findOne({ title: TitleProduct });
+    const isProduct = await Product.findById(idProduct);
     if (!isProduct)
-      return res
-        .status(400)
-        .send({ msj: "Producto no encontrado", status: "error" });
+      return res.status(404).send({ msj: "Producto no encontrado", status: "error" });
+   
     //revisa que exista stock
-
     const stockItem = isProduct.stock.find((item) => item.size === Size);
-    if (stockItem == null) return res.status(400).send({ msj: "No existe esa talla", status: "error" });
+    if (stockItem == null) return res.status(404).send({ msj: "No existe esa talla", status: "error" });
     if (stockItem.quantity < Quantity) return res.status(400).send({ msj: "No hay stock suficiente", status: "error" });
-
+    const user = await User.findById(userID);
     //Buscar el carro asociado al usuario
-    let cart = await shoppingCart.findOne({ User: User });
+    let cart = await shoppingCart.findOne({User: user});
     //Si no existe el carro, se crea asociado al usuario
     if (!cart) {
       cart = new shoppingCart({
-        User: User,
+        User: userID,
         items: [],
         total: 0,
       });
     }
 
     //Verificacion de si el producto esta en el carro
-    const existItem = await cart.items.find(
-      (item) => item.TitleProduct === TitleProduct && item.Size === Size
-    );
-    //const existSize = await cart.items.find(item => item.Size===Size);
+    const existItem = await cart.items.find((item) => item.idProduct.toString() === idProduct && item.Size === Size);
+  
     if (existItem) {
       //Se suma la cantidad al producto asociado en el carritp
       existItem.Quantity += Quantity;
@@ -65,7 +62,8 @@ async function addtoCart(req, res) {
         price = Math.floor((isProduct.price-(isProduct.price*(isProduct.percentageSale/100))));
       }
       cart.items.push({
-        TitleProduct: TitleProduct,
+        idProduct : idProduct,
+        TitleProduct: isProduct.title,
         Size: Size,
         Quantity: Quantity,
         price: price,
@@ -77,57 +75,36 @@ async function addtoCart(req, res) {
     } else {
       cart.total = 0;
     }
-    await cart.save((error, cartUpdate) => {
-      if (error) {
-        return res
-          .status(400)
-          .send({ msj: "Error al crear el producto, intentar nuevamente" });
-      } else {
-        res.status(200).send(cartUpdate);
-      }
-    });
+
+    await cart.save();
+    res.status(200).send(cart);
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .send({
-        msj: "Ha ocurrido un error al agregar el producto al carro",
-        status: "error",
-      });
+    res.status(400).send({msj: "Ha ocurrido un error al agregar el producto al carro", status: "error",});
   }
 }
 
 //CALCULO DEL TOTAL DEL CARRO
 const calculateTotal = (items) => {
   let total = 0;
-  items.forEach((item) => {
-    total += item.price * item.Quantity;
-  });
+  items.forEach((item) => { total += item.price * item.Quantity;});
   return total;
 };
 
 //ELIMINACION DE PRODUCTOS DEL CARRO
 async function removeFromCart(req, res) {
-  const User = req.body.User;
-  const TitleProduct = req.body.TitleProduct;
+  const userID = req.body.userID;
+  const idProduct = req.body.idProduct;
   const Size = req.body.Size;
   const Quantity = req.body.Quantity;
   try {
     //Buscar el carro asociado al usuario
-    const cart = await shoppingCart.findOne({ User: User });
-    if (!cart)
-      return res
-        .status(400)
-        .send({ msj: "El carro no existe", status: "error" });
+    const cart = await shoppingCart.findOne({ User: userID });
+    if (!cart) return res.status(404).send({ msj: "El carro no existe", status: "error" });
 
     //Buscar el producto en el carro
-    const ItemIndex = cart.items.findIndex(
-      (item) => item.TitleProduct === TitleProduct && item.Size === Size
-    );
-    if (ItemIndex == -1)
-      return res
-        .status(400)
-        .send({ msj: "El producto no existe en el carro", status: "error" });
+    const ItemIndex = cart.items.findIndex((item) => item.idProduct.toString() === idProduct && item.Size === Size);
+    if (ItemIndex == -1) return res.status(404).send({ msj: "El producto no existe en el carro", status: "error" });
 
     //Item actual
     const currenItem = cart.items[ItemIndex];
@@ -138,12 +115,7 @@ async function removeFromCart(req, res) {
         cart.items.splice(ItemIndex, 1);
       }
     } else {
-      return res
-        .status(400)
-        .send({
-          msj: "La cantidad a eliminar es mayor a la que este en el carro",
-          status: "error",
-        });
+      return res.status(400).send({msj: "La cantidad a eliminar es mayor a la que este en el carro", status: "error",});
     }
 
     //Calcular total actualizado
@@ -154,26 +126,19 @@ async function removeFromCart(req, res) {
     }
     //Guardar el carro actualizado
     await cart.save();
-    res
-      .status(200)
-      .send({
-        msj: "Producto eliminado del carrito con exito",
-        status: "success",
-      });
+    res.status(200).send({ msj: "Producto eliminado del carrito con exito", status: "success",});
   } catch (error) {
     console.log(error);
-    res
-      .status(400)
-      .send({ msj: "Error al eliminar el producto", status: "error" });
+    res.status(400).send({ msj: "Error al eliminar el producto", status: "error" });
   }
 }
 
 //OBTENER EL CONTENIDO DEL CARRO
 async function getCart(req, res) {
-  const user = req.params.user; //0|| req.sessionID;
+  const userID = req.params.userID; //0|| req.sessionID;
   try {
-    const cart = await shoppingCart.findOne({ User: user });
-    if (!cart) return res.status(400).send({ msj: "Carrito no encontrado", status: "error" });
+    const cart = await shoppingCart.findOne({ User: userID });
+    if (!cart) return res.status(404).send({ msj: "Carrito no encontrado", status: "error" });
     //revisar stock
     res.status(200).send({ data: cart, status: "success" });
   } catch (error) {
@@ -184,10 +149,10 @@ async function getCart(req, res) {
 
 //VACIAR EL CARRITO
 async function emptyCart(req, res) {
-  const User = req.body.User;
+  const userID = req.body.userID;
   try {
-    const cart = await shoppingCart.findOne({ User: User });
-    if (!cart) return res.status(400).send({ msj: "Carrito no encontrado", status: "error" });
+    const cart = await shoppingCart.findOne({ User: userID });
+    if (!cart) return res.status(404).send({ msj: "Carrito no encontrado", status: "error" });
     cart.items = [];
     cart.total = 0;
     await cart.save();
@@ -202,9 +167,7 @@ async function emptyAll(req, res) {
   try {
     const carts = await shoppingCart.find(); // Obtener todos los carritos
     if (carts.length === 0) {
-      return res
-        .status(400)
-        .send({ msj: "No se encontraron carritos", status: "error" });
+      return res.status(404).send({ msj: "No se encontraron carritos", status: "error" });
     }
 
     for (let i = 0; i < carts.length; i++) {
@@ -214,14 +177,10 @@ async function emptyAll(req, res) {
       await cart.save();
     }
 
-    return res
-      .status(200)
-      .send({ msj: "Todos los carritos han sido vaciados", status: "success" });
+    return res.status(200).send({ msj: "Todos los carritos han sido vaciados", status: "success" });
   } catch (error) {
     console.log(error);
-    return res
-      .status(400)
-      .send({ msj: "Error al vaciar los carritos", status: "error" });
+    return res.status(400).send({ msj: "Error al vaciar los carritos", status: "error" });
   }
 }
 // Tarea programada para vaciar el carrito cada 24 horas
@@ -231,13 +190,13 @@ async function emptyAll(req, res) {
 
 async function reduceStock(orderID){
   //const orderID = req.params.orderID
-  const order = await Order.findOne({_id : orderID})
+  const order = await Order.findById(orderID)
   console.log(order.Cart[1].Products)
   //console.log(order.Cart);
   try{
     //reducir stock
     for (const item of order.Cart[1].Products) {
-      const isProduct = await Product.findOne({ title: item.TitleProduct }); //identifico el producto
+      const isProduct = await Product.findById(item.idProduct); //identifico el producto
       if (isProduct) {
         const stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el stock actual del producto
     
@@ -255,15 +214,15 @@ async function reduceStock(orderID){
       }
     }
     //vaciar carro
-    const cart = await shoppingCart.findOne({_id: order.Cart[0].cartID});
+    const cart = await shoppingCart.findById(order.Cart[0].cartID);
     if (!cart) throw new Error("Carrito no encontrado");
     cart.items = [];
     cart.total = 0;
     await cart.save();
 
     // return res.status(200).send({
-    //   message: "Stock actualizado y carro vaciado",
-    // });
+    //    message: "Stock actualizado y carro vaciado",
+    //  });
   }catch(error){
     throw error;
   }

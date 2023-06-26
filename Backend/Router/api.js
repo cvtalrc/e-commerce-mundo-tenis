@@ -29,7 +29,7 @@ api.get("/user/", func_auth.authenticateToken, func_user.getAll);
 api.get("/user/:id", func_auth.authenticateToken, func_user.getUser);
 api.get("/product/", func_auth.authenticateToken, func_product.getAll);
 api.get("/product/:id", func_auth.authenticateToken, func_product.getId);
-api.get("/cart/:user", func_auth.authenticateToken, func_shoppingCart.getCart);
+api.get("/cart/:userID", func_auth.authenticateToken, func_shoppingCart.getCart);
 api.get("/guestCart/:sessionID", func_guestCart.getCart);
 api.get("/order/:id", func_auth.authenticateToken, func_order.getOrder);
 api.get("/order/", func_auth.authenticateToken, func_order.getAll);
@@ -51,7 +51,7 @@ api.delete("/comment/:id", func_auth.authenticateToken, func_comment.deleteComme
 api.put("/user/update/:id", func_auth.authenticateToken, func_user.updateUser);
 api.put("/product/update/:id", func_auth.authenticateToken, func_product.update);
 api.put("/cart/update/:orderID", func_auth.authenticateToken, func_shoppingCart.reduceStock);
-api.put("/order/update/:id", func_auth.authenticateToken, func_order.updateOrderStatus)
+api.put("/order/update/:id", func_order.updateOrderStatusAmdmin)
 api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateComment);
 
 api.post("/payment", func_auth.authenticateToken, func_payment.generateTransaction)
