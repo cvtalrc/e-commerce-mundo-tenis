@@ -1,4 +1,4 @@
-import { Grid, List, Box, ListItem, Container, Divider, Button, Typography, TextField } from "@mui/material";
+import { Grid, List, Box, ListItem, Container, Divider, Button, Typography, TextField, Menu, MenuItem } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import UpdateIcon from '@mui/icons-material/Update';
 import Dialog from '@mui/material/Dialog';
@@ -21,9 +21,16 @@ export default function OrderItem({ order, type }) {
   const [rating, setRating] = useState(0);
   const [scroll, setScroll] = useState('paper');
   const [form, setForm] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [status, setStatus] = useState(order.Status)
+  const openButtonMenu = Boolean(anchorEl);
+
+  console.log(order)
+  console.log(user)
 
   useEffect(() => {
     if (user !== null) {
+      console.log(user)
       const initialForm = {
         Author: user.name,
         Content: "",
@@ -112,6 +119,20 @@ export default function OrderItem({ order, type }) {
     });
   };
 
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleChangeStatus = (e) => {
+    console.log(e.target.value)
+    console.log(e.target.name)
+    setStatus(e.target.value);
+    console.log(status)
+  };
+
   useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -120,6 +141,10 @@ export default function OrderItem({ order, type }) {
       }
     }
   }, [open]);
+
+  useEffect(() => {
+    //actualizar estado con la api
+  }, [status]);
 
   return (
     <>
@@ -130,13 +155,42 @@ export default function OrderItem({ order, type }) {
             <ListItem sx={{ mb: 1 }}>Nombre: {order.User.name} {order.User.lastName}</ListItem>
             <ListItem sx={{ mb: 1 }}>Tipo de Entrega: {order.Delivery.delivery}</ListItem>
             <ListItem sx={{ mb: 1 }}>Productos: {order.Cart[1].Products.length} </ListItem>
-            <ListItem sx={{ mb: 1 }}>Estado: {order.Status}</ListItem>
+            <ListItem sx={{ mb: 1 }}>Estado: {status}</ListItem>
             <Box sx={{ display: 'flex', justicyContent: 'right', flexDirection: 'row', mt: 2 }}>
               {type !== 'user' ?
+                <>
+                  {/* <Button color="secondary" size="small" sx={{ mr: 1 }} variant="outlined">
+                    <UpdateIcon />
+                  </Button> */}
 
-                <Button color="secondary" size="small" sx={{ mr: 1 }} variant="outlined">
-                  <UpdateIcon />
-                </Button>
+                  <Button
+                    color="secondary" 
+                    size="small" 
+                    sx={{ mr: 1 }} 
+                    variant="outlined"
+                    id="basic-button"
+                    aria-controls={openButtonMenu ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openButtonMenu ? 'true' : undefined}
+                    onClick={handleClickMenu}
+                  >
+                    <UpdateIcon />
+                  </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={openButtonMenu}
+                    onClose={handleCloseMenu}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                  >
+                    <MenuItem onClick={() => {setStatus("En curso") 
+                    setAnchorEl(null)}} name="En curso" id="En curso" value="En curso">En curso</MenuItem>
+                    <MenuItem onClick={() => {setStatus("Entregado")
+                  setAnchorEl(null)}} name="Entregado" id="Entregado" value="Entregado">Entregado</MenuItem>
+                  </Menu>
+                </>
 
                 :
 

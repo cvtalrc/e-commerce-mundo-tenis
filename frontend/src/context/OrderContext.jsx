@@ -6,7 +6,7 @@ const OrderContext = createContext();
 
 const OrderProvider = ({ children }) => {
     const [orders, setOrders] = useState(null)
-    const { user } = useContext(UserContext);
+    const { user, token } = useContext(UserContext);
     const [userOrders, setUserOrders] = useState([]);
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(null)
@@ -17,15 +17,23 @@ const OrderProvider = ({ children }) => {
     let url = "http://localhost:3000/api/order";
 
     useEffect(() => {
+
+        let options = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
         api
-            .get(url)
+            .get(url, options)
             .then((res) => {
                 //console.log(res);
                 if (!res.err) {
                     setOrders(res);
-                    console.log('bdd responde' + res[0].User[0])
+                    console.log(res)
                     setError(null);
-                    console.log('pedidos' + orders)
+              
                 } else {
                     setOrders(null);
                     setError(res);

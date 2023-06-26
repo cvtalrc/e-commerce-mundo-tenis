@@ -113,30 +113,32 @@ function authenticateToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    return res
-      .status(401)
-      .send({
-        message: "No se proporcionó un token de acceso",
-        status: "error",
-      });
+    return res.status(401).send({ message: "No se proporcionó un token de acceso", status: "error",});
   }
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
-    if (err) {
-      return res
-        .status(401)
-        .send({ message: "Token de acceso inválido", status: "error" });
-    }
-
+    if (err) return res.status(401).send({ message: "Token de acceso inválido", status: "error" });
     req.user = user;
     next();
   });
 }
+
+function authenticateAdmin(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+  const role = req.body.type;
+  // Verificar si el usuario es administrador
+  if (token && role === 'admin') {
+    next();
+  } else {
+    res.status(403).send('Acceso denegado');
+  }
+};
 
 module.exports = {
   sign_up,
   sign_in,
   sign_out,
   authenticateToken,
+  authenticateAdmin,
   SECRET_KEY,
 };

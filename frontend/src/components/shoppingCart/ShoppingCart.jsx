@@ -25,29 +25,35 @@ const ShoppingCart = (SetOpenShoppingCart) => {
           }
         >
           <Grid >
-            {
+            {cartProducts.length > 0 ?
               cartProducts.map((item, index) => (
                 <CartItem key={index} data={item} id={true} />
               ))
+              :
+              <Typography>Tu carrito está vacío</Typography>
             }
+
           </Grid>
         </List>
-        <Box sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', bottom: 0, width: '100%', paddingBottom: 1, pt: 2, borderTop: "thin solid gray", margin: '20px'}}>
-        {totalPrice != null && (
-          <Typography variant="h6" sx={{ fontWeight: 600, pl: 'auto', fontSize: 15, flexGrow: 1, justifyContent: 'flex-end', display: 'flex' }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
-        )
+        <Box sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', bottom: 0, width: '100%', paddingBottom: 1, pt: 2, borderTop: "thin solid gray", margin: '20px' }}>
+          {totalPrice != null && cartProducts.length > 0 ? (
+            <>
+              <Typography variant="h6" sx={{ fontWeight: 600, pl: 'auto', fontSize: 15, flexGrow: 1, justifyContent: 'flex-end', display: 'flex' }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
 
-        }
-          <Button
-            color="secondary"
-            variant="contained"
-            component={NavLink}
-            to="/order"
-            sx={{ display: "flex", alignItems: "center", margin: 1.5, justifyContent: "center", width: '80%' }}
-            onClick={() => SetOpenShoppingCart(false)}
-          >
-            Comprar
-          </Button>
+
+              <Button
+                color="secondary"
+                variant="contained"
+                component={NavLink}
+                to="/order"
+                sx={{ display: "flex", alignItems: "center", margin: 1.5, justifyContent: "center", width: '80%' }}
+                onClick={() => SetOpenShoppingCart(false)}
+              >
+                Comprar
+              </Button>
+            </>
+          ) : ''
+          }
         </Box>
       </Box>
 
@@ -55,5 +61,4 @@ const ShoppingCart = (SetOpenShoppingCart) => {
   </>
   )
 };
-
 export default ShoppingCart;

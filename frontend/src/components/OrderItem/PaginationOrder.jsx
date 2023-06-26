@@ -3,7 +3,7 @@ import usePagination from "../Pagination/Pagination";
 import { useState } from "react";
 import OrderItem from "./OrderItem";
 
-export default function PaginationOrder({ orders, type}) {
+export default function PaginationOrder({ orders, type }) {
     let [page, setPage] = useState(1);
     let PER_PAGE = 12;
     console.log(type)
