@@ -51,7 +51,6 @@ const navArrayLinks = [
         title: "Oder",
         path: "/order"
     },
-
 ]
 
 function App() {

@@ -112,9 +112,10 @@ export default function Navbar() {
                         sx={{
                           "&:hover": {
                             cursor: "auto",
-                          },
-                          pointerEvents: "none",
+                          }
                         }}
+                        component={NavLink}
+                        to={`/user/${user._id}`}
                       >
                         ¡Hola, {user.name}!
                       </Button>

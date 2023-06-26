@@ -4,6 +4,8 @@ import { helpHttp } from '../../helpers/helpHttp'
 
 export default function Payment() {
     const param = useLocation()
+    console.log(param)
+    console.log(param.search)
     // const { token_ws } = param
     // console.log(param.search);
 
