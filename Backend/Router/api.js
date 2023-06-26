@@ -16,7 +16,7 @@ api.use(cookieParser());
 api.post("/sign-up", func_auth.sign_up); //registrar
 api.post("/sign-in", func_auth.sign_in); //login
 api.post("/sign-out", func_auth.authenticateToken, func_auth.sign_out); //salir
-api.post("/product/", func_product.add);
+api.post("/product/", func_auth.authenticateToken, func_product.add);
 api.post("/cart", func_auth.authenticateToken, func_shoppingCart.createEmpty_shoppingCart); //ahora solo se crea el carro cuando se registra el usuario
 api.post("/guestCart/", func_guestCart.createEmpty_shoppingCart);
 api.post("/cart/add", func_auth.authenticateToken, func_shoppingCart.addtoCart);
@@ -25,15 +25,15 @@ api.post("/order/", func_auth.authenticateToken, func_order.createOrder);
 api.post("/comment/", func_auth.authenticateToken, func_comment.createComment);
 
 //API GET
-api.get("/user/", func_user.getAll);
-api.get("/user/:id", func_auth.authenticateToken, func_user.getUser); //la cata le sacó el token pero debe tener uno
-api.get("/product/", func_product.getAll);
-api.get("/product/:id", func_product.getId);
+api.get("/user/", func_auth.authenticateToken, func_user.getAll);
+api.get("/user/:id", func_auth.authenticateToken, func_user.getUser);
+api.get("/product/", func_auth.authenticateToken, func_product.getAll);
+api.get("/product/:id", func_auth.authenticateToken, func_product.getId);
 api.get("/cart/:user", func_auth.authenticateToken, func_shoppingCart.getCart);
 api.get("/guestCart/:sessionID", func_guestCart.getCart);
 api.get("/order/:id", func_auth.authenticateToken, func_order.getOrder);
-api.get("/order/", func_order.getAll);
-api.get("/comment/", func_comment.getAllComments);
+api.get("/order/", func_auth.authenticateToken, func_order.getAll);
+api.get("/comment/", func_auth.authenticateToken, func_comment.getAllComments);
 
 //API DELETE
 api.delete("/user/remove/:id", func_auth.authenticateToken, func_user.removeUser)
@@ -49,8 +49,8 @@ api.delete("/comment/:id", func_auth.authenticateToken, func_comment.deleteComme
 
 //API PUT
 api.put("/user/update/:id", func_auth.authenticateToken, func_user.updateUser);
-api.put("/product/update/:id", func_product.update);
-api.put("/cart/update/:orderID", func_shoppingCart.reduceStock);
+api.put("/product/update/:id", func_auth.authenticateToken, func_product.update);
+api.put("/cart/update/:orderID", func_auth.authenticateToken, func_shoppingCart.reduceStock);
 api.put("/order/update/:id", func_auth.authenticateToken, func_order.updateOrderStatus)
 api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateComment);
 
