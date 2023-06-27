@@ -16,6 +16,7 @@ import UserContext from "../../context/UserContext";
 import { helpHttp } from "../../helpers/helpHttp";
 import FormDelivery from "./FormDelivery";
 import FormCheck from "./FormCheck";
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 
 function getSteps() {
   return [
@@ -68,7 +69,11 @@ function getStepContent(step) {
                     <CartItem key={index} data={item} id={false} />
                   ))
                   :
-                  <Typography>Tu carrito está vacío</Typography>
+                  <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", height: "200px", ml: 50 }}>
+                    <AddShoppingCartOutlinedIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
+
+                    <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2 }}>Agrega productos a tu carrito</Typography>
+                  </Box>
               }
             </Grid>
             <Grid item>
@@ -165,18 +170,18 @@ const FormStepper = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-  
+
       const response = await api.post(url, options); // Esperar la respuesta del servidor
-  
+
       const form = document.createElement("form");
       form.action = response.url;
       form.method = "POST";
-  
+
       const tokenInput = document.createElement("input");
       tokenInput.type = "hidden";
       tokenInput.name = "token_ws";
       tokenInput.value = response.token;
-  
+
       form.appendChild(tokenInput);
       document.body.appendChild(form);
       form.submit();
