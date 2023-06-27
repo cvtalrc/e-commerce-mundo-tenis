@@ -14,7 +14,7 @@ const emailController = {
       });
 
       // Enviar el correo
-      await sendEmail(infoUser.email, 'Confirmación de pago', '', html);
+      await sendEmail(infoUser.email, 'Confirmación de compra', '', html);
     } catch (error) {
       console.log('Error al enviar el correo electrónico:', error);
       throw error;

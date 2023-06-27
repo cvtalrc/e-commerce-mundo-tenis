@@ -72,10 +72,6 @@ async function processPaymentWebpay(req, res) {
           }
         });
         const order = await OrderM.findById(commitResponse.buy_order);
-        console.log(order);
-        const userID = order.User._id;
-        console.log(userID);
-        //const user = await User.findById(userID);
 
         const payment = new Payment({
           User: order.User,
@@ -88,16 +84,18 @@ async function processPaymentWebpay(req, res) {
           name: order.User.name + " " + order.User.lastName,
           email: order.User.email ,
         };
-      
+        
         const infoDelivery = {
-          //type: order.Delivery.
           name: order.Delivery.name + " " + order.Delivery.lastName,
-          address : order.Delivery.address + " " + order.Delivery.comuna + " " + order.Delivery.region,
-          cellNumber : order.Delivery.cellNumber
+          address : order.Delivery.address ,
+          comuna: order.Delivery.comuna,
+          region: order.Delivery.region,
+          cellNumber : order.Delivery.cellNumber,
+          delivery: order.Delivery.delivery
         };
-    
         const products = {
-          items: order.Cart[1].Products
+          items: order.Cart[1].Products,
+          total: order.Cart[2].Total
         };
     
         await emailController.sendPaymentConfirmation(infoUser, infoDelivery, products);

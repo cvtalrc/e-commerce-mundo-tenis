@@ -3,25 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <title>Confirmación de compra - Mundo Tenis CGA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-container {
+    
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            color: #999999;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Confirmación de compra - Mundo Tenis CGA</h1>
-    <p>¡Hola <%= infoUser.name %>!</p>
-    <p>¡Gracias por tu compra en Mundo Tenis CGA! Estamos encantados de confirmar que tu pedido ha sido procesado con éxito. A continuación, encontrarás los detalles de tu compra:</p>
-    <ul>
-        <% for (let item of products.items) { %>
-          <li><%= item.TitleProduct %> - <%= item.Size %> - Cantidad: <%= item.Quantity %> - Total: <%= item.price %></li>
+    <div class="container">
+      <img src="https://example.com/logo.png" alt="Logo de Mundo Tenis CGA" class="logo">
+        <h1>Confirmación de compra Mundo Tenis CGA</h1>
+        <p>¡Hola <%= infoUser.name %>!</p>
+        <p>¡Gracias por tu compra en Mundo Tenis CGA! Estamos encantados de confirmar que tu pedido ha sido procesado con éxito.</p>
+        <h2>Detalle de la compra :</h2>
+        <ul>
+            <% for (let item of products.items) { %>
+            <div class="product-container">
+              <li><%= item.TitleProduct %> </li>
+              <% if (item.Size) { %>
+                <li>Talla: <%= item.Size %></li>
+              <% } %>
+              <li>Cantidad: <%= item.Quantity %></li> 
+              <li>Total: <%= item.price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' }) %></li>
+            </div>
+            <% } %>
+            <div class="product-container">
+            <li>Total de la compra: <%= products.total.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' }) %></li>
+            </div>
+        </ul>
+        <% if (infoDelivery.delivery === "delivery") { %>
+          <h2>Información de envío:</h2>
+        <% } else if (infoDelivery.delivery === "store-pickup") { %>
+          <h2>Información de retiro :</h2>
         <% } %>
-      </ul>
-    <h2>Dirección de envío:</h2>
-    <ul>
-        <li>Nombre: <%= infoDelivery.name %></li>
-        <li>Dirección: <%= infoDelivery.address %></li>
-        <li>Telefono de contacto: <%= infoDelivery.cellNumber %></li>
-    </ul>
-    <p>Método de envío: Envío estándar</p>
-    <p>Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en contactarnos a través de nuestro servicio de atención al cliente.</p>
-    <p>¡Que tengas un excelente día!</p>
-    <p>Atentamente,<br>Mundo Tenis CGA</p>
+        
+        <ul>
+          <div class="product-container">
+            <li>Nombre: <%= infoDelivery.name %></li>
+            <li>Dirección: <%= infoDelivery.address %></li>
+            <li>Comuna: <%= infoDelivery.comuna %></li>
+            <li>Region: <%= infoDelivery.region %></li>
+            <li>Teléfono de contacto: <%= infoDelivery.cellNumber %></li>
+          </div>
+        </ul>
+      
+        <p>Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en contactarnos a través de nuestro servicio de atención al cliente.</p>
+        <p>¡Que tengas un excelente día!</p>
+        <p class="footer">Atentamente,<br>Mundo Tenis CGA</p>
+    </div>
 </body>
 </html>
