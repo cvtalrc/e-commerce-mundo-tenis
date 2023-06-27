@@ -24,8 +24,6 @@ async function createOrder(userID, Delivery) {
         available = stockItem.quantity; //stock disponible de la talla
         //carro
         amount = item.Quantity;
-        console.log(available);
-        console.log(amount);
         if (available < amount)
           throw new Error("No hay suficiente stock del producto");
       } else {
@@ -107,7 +105,7 @@ async function getAll(req, res){
     if (error) {
       return res.status(400).send({ message: "Error al encontrar las ordenes" , status: "Error"});
     } else {
-      res.status(200).send({oreders: orders, status: "success"}); // El producto encontrado
+      res.status(200).send({orders: orders, status: "success"}); // El producto encontrado
     }
   });
 }

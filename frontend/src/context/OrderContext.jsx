@@ -30,8 +30,8 @@ const OrderProvider = ({ children }) => {
             .then((res) => {
                 //console.log(res);
                 if (!res.err) {
-                    setOrders(res);
-                    console.log(res)
+                    setOrders(res.orders);
+                    console.log(res.orders)
                     setError(null);
               
                 } else {

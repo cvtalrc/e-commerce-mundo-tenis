@@ -5,6 +5,7 @@ const emailController = require('../Controllers/email_controllers');
 const Payment = require("../Models/Payment");
 const OrderM = require("../Models/Order");
 
+
 const { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } = require("transbank-sdk"); // CommonJS
 
 
@@ -41,11 +42,11 @@ async function generateTransaction(req, res) {
 
 // Procesar la respuesta de Webpay después de que el usuario haya completado el pago
 async function processPaymentWebpay(req, res) {
+  console.log("funcion pago webpay")
   try {
     //let token = req.body.token_ws;
     //let tbkToken = req.body.TBK_TOKEN;
      let tokens = req.query;
-    
      console.log("token pago vuelta", tokens)
      //let tbkToken = req.params.TBK_TOKEN;
     // let tbkOrdenCompra = params.TBK_ORDEN_COMPRA;

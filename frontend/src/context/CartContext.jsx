@@ -14,8 +14,8 @@ const CartProvider = ({ children }) => {
     let totalCartPrice = 0
 
     const initialForm = {
-        User: "",
-        TitleProduct: "",
+        userID: "",
+        idProduct: "",
         Size: "",
         Quantity: ""
     };
@@ -50,8 +50,8 @@ const CartProvider = ({ children }) => {
                     console.log(res);
                     if (!res.err) {
                         //console.log("productos en el carro", email + '' + res.data.items)
-                        setCartProducts(res.data.items);
-                        setTotalPrice(res.data.total);
+                        setCartProducts(res.cart.items);
+                        setTotalPrice(res.cart.total);
                         setError(null);
                     } else {
                         setCartProducts(null);
@@ -62,12 +62,13 @@ const CartProvider = ({ children }) => {
 
     }, [url]);
 
-    const addToCart = (_id, title, size, quantity) => {
+    const addToCart = (_id, size, quantity) => {
         const urlAdd = `http://localhost:3000/API/cart/add`
-        form.User = email
-        form.TitleProduct = title
+        form.userID = idUser
+        form.idProduct = _id
         form.Size = size
         form.Quantity = quantity
+        console.log(form)
         console.log("token carro", token)
 
         let options = {
@@ -83,8 +84,8 @@ const CartProvider = ({ children }) => {
             .then((res) => {
                 if (!res.err) {
                     console.log(res);
-                    setCartProducts(res.items);
-                    setTotalPrice(res.total);
+                    setCartProducts(res.cart.items);
+                    setTotalPrice(res.cart.total);
                 }
             })
             .catch((e) => {
@@ -94,10 +95,10 @@ const CartProvider = ({ children }) => {
         setForm(initialForm);
     };
 
-    const delFromCart = (title, size, quantity) => { //eliminando de a uno
+    const delFromCart = (_id, size, quantity) => { //eliminando de a uno
         const urlDel = "http://localhost:3000/API/cart/remove"
-        form.User = email
-        form.TitleProduct = title
+        form.userID = idUser
+        form.idProduct = _id
         form.Size = size
         form.Quantity = quantity
 
@@ -113,8 +114,8 @@ const CartProvider = ({ children }) => {
             .del(urlDel, options)
             .then((res) => {
                 if (!res.err) {
-                    console.log(res);
-                    let newData = cartProducts.filter((el) => el.TitleProduct !== title);
+                    console.log(res.cart);
+                    let newData = cartProducts.filter((el) => el.idProduct !== _id);
                     setCartProducts(newData);
                     console.log("newData", newData)
                     Toast (

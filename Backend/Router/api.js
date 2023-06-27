@@ -33,7 +33,7 @@ api.get("/product/:id", func_product.getId);
 api.get("/cart/:userID", func_auth.authenticateToken, func_shoppingCart.getCart);
 api.get("/guestCart/:sessionID", func_guestCart.getCart);
 api.get("/order/:id", func_order.getOrder); //después agregar token admin
-api.get("/order/",  func_order.getAll); //después agregar token admin
+api.get("/order/",  func_auth.authenticateToken, func_order.getAll); //después agregar token admin
 api.get("/comment/", func_comment.getAllComments);
 
 //API DELETE

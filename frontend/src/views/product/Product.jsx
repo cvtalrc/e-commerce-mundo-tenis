@@ -37,6 +37,8 @@ import { Modal } from "../../components/Alerts/Modal";
         console.log(sizes);
       }
     }, [product]);
+
+    console.log(product)
   
     const handleChange = (e) => {
       setForm({ ...form, Size: e.target.value });
@@ -170,7 +172,6 @@ import { Modal } from "../../components/Alerts/Modal";
                       }else {
                         addToCart(
                           product[0]._id,
-                          product[0].title,
                           form.Size,
                           itemCount
                         );

@@ -25,8 +25,9 @@ const ProductsProvider = ({ children }) => {
             .then((res) => {
                 //console.log(res);
                 if (!res.err) {
-                    setProducts(res);
-                    const filteredProducts = res.filter((product) => product.sale === true);
+                    console.log(res.products)
+                    setProducts(res.products);
+                    const filteredProducts = res.products.filter((product) => product.sale === true);
                     setProductsSale(filteredProducts);
                     setError(null);
                 } else {

@@ -24,7 +24,7 @@ export default function Home() {
             .get(url)
             .then((res) => {
                 if (!res.err) {
-                    setComments(res)
+                    setComments(res.comments)
                     console.log(res)
                 }
             })
