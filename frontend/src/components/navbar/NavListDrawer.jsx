@@ -45,14 +45,14 @@ export default function NavListDrawer({SetOpenMenu, user, logOut}) {
             </List>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', bottom: 0, width: '100%', paddingBottom: 5 }}>
-            <Button color="inherit" component={NavLink} to="/">
-            <IconButton aria-label="Example">
+           
+            <IconButton component={NavLink}  onClick={() => SetOpenMenu(false)} sx={{mr:2}} to="/" aria-label="Example">
                    <HomeIcon/> 
                    </IconButton>
                   
-                </Button>
+            
             {user != null ? (
-                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center' }}>
+                   <>
                       {/* <Button
                         color="inherit"
                         size="small"
@@ -66,7 +66,7 @@ export default function NavListDrawer({SetOpenMenu, user, logOut}) {
                         component={NavLink}
                         to={`/user/${user._id}`}
                       > */}
-                        <IconButton aria-label="Example" onClick={() => SetOpenMenu(false)}
+                        <IconButton aria-label="Example" sx={{mr:2}} onClick={() => SetOpenMenu(false)}
                         component={NavLink}
                         to={`/user/${user._id}`}>
                             <AccountCircleIcon/>
@@ -82,7 +82,7 @@ export default function NavListDrawer({SetOpenMenu, user, logOut}) {
                       {/* <Button  onClick={logOutDrawer} color="inherit" sx={{mr:4}} size="small">
                         Cerrar sesión
                       </Button> */}
-                    </Box>
+                    </>
                   ) : (
                     <Button color="inherit"  onClick={() => SetOpenMenu(false)} component={NavLink} to="/login">
                       Iniciar sesión

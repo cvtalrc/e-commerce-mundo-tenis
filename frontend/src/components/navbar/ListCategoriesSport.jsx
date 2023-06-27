@@ -50,7 +50,7 @@ export default function ListCategoriesSport({ sport, SetOpenMenu }) {
                     <ListItemButton sx={{ pl: 4 }}
                         key={sport}
                         component={NavLink}
-                        to={`/sport/${sport}`}
+                        to={`/${sport}`}
                         onClick={() => SetOpenMenu(false)}>
                         <ListItemText
                             primary={`Ver todo ${sport}`}

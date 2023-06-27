@@ -15,8 +15,8 @@ const UserProvider = ({ children }) => {
     const localStorageData = { ...localStorage };
 
     useEffect(() => {
-        if(localStorageData != undefined){ //evita el error n
-            if(localStorage.getItem('user')){
+        if (localStorageData != undefined) { //evita el error n
+            if (localStorage.getItem('user')) {
                 setToken(localStorage.getItem('user'))
                 let decodedUser = jwtDecode(token);
                 setUser(decodedUser)
@@ -86,16 +86,13 @@ const UserProvider = ({ children }) => {
                 if (res.err) {
                     console.error(res.err)
                 } else {
-                    const modalResult = await Modal(
-                        'Cierre de sesión',
-                        '¿Deseas cerrar tu sesión?',
-                        'question',
-                        '¡Hasta la próxima!'
-                    )
-                    if (modalResult.confirmed) {
+                    const result = await Modal('Cierre de sesión', '¿Deseas cerrar tu sesión?', 'question');
+                    if (result.isConfirmed) {
                         setToken(null);
                         setUser(null);
                         localStorage.removeItem('user');
+                        await Modal('Cierre de sesión exitoso', '¡Hasta la próxima!', 'success');
+                        navigate('/');
                     }
                 }
             })
@@ -125,13 +122,13 @@ const UserProvider = ({ children }) => {
                     let decodedUser = jwtDecode(res.newToken);
                     console.log('usuario nuevo', decodedUser._doc)
                     setUser(decodedUser._doc);
-                    
+
                 }
             })
             .catch((err) => {
                 console.error("error del catch", err)
             })
-            return  user;
+        return user;
     }
 
     const data = {

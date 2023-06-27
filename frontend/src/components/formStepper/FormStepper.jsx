@@ -60,28 +60,30 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return (
-        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5 }}>
-         
-              {
-                cartProducts && cartProducts.length > 0 ?
-                  cartProducts.map((item, index) => (
-                    <CartItem key={index} data={item} id={false} />
-                  ))
-                  :
-                  <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", height: "200px" }}>
-                    <AddShoppingCartOutlinedIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
-                    <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2 }}>Agrega productos a tu carrito</Typography>
-                  </Box>
-              }
-            <Box sx={{pr:5}}>
-              {cartProducts && cartProducts.length > 0 ?
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                  Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-                </Typography>
-                : ''
-              }
-            </Box>
-         
+        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 2 }}>
+
+          {
+            cartProducts && cartProducts.length > 0 ?
+              cartProducts.map((item, index) => (
+                <CartItem key={index} data={item} id={false} />
+              ))
+              :
+              <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", height: "200px" }}>
+                <AddShoppingCartOutlinedIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
+                <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2 }}>Agrega productos a tu carrito</Typography>
+              </Box>
+          }
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 'auto', ml: 3, mr: 3, mb: 1.5 }}>
+            {cartProducts && cartProducts.length > 0 ?
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center', borderTop: "thin solid gray", borderBottom: "thin solid gray", mb: 2, mt: 2 }}>
+                <Typography sx={{ fontWeight: 600, mt: .5, mb: .5, fontSize: { xs: '18px', md: '20px' } }}>Total: </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600, mt: .5, mb: .5, fontSize: { xs: '18px', md: '20px' } }}> ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} </Typography>
+
+              </Box>
+              : ''
+            }
+          </Box>
+
         </Box>
       );
     case 1:

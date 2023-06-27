@@ -1,21 +1,18 @@
-import { useContext, useEffect, useState } from "react";
-import { Box, List, ListSubheader, Grid, Button, Typography, Container, Icon } from "@mui/material";
+import { useContext} from "react";
+import { Box, List, ListSubheader, Grid, Button, Typography} from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { helpHttp } from "../../helpers/helpHttp";
-import axios from 'axios'
 import CartItem from "../CartItem/CartItem";
 import CartContext from "../../context/CartContext";
-import ProductsContext from "../../context/ProductsContext";
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 
 const ShoppingCart = (SetOpenShoppingCart) => {
   const { cartProducts, totalPrice } = useContext(CartContext); //items dentro del carro
   console.log("hola", cartProducts)
 
   return (<>
-    {cartProducts != null &&
-      <Box sx={{ width: 450, height: '87%', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+    {cartProducts != null ?
+      <Box sx={{ width: { sm: 450, xs: 320 }, height: '87%', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <List
           sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper', overflow: 'auto', maxHeight: '100%' }}
           component="nav"
@@ -32,21 +29,23 @@ const ShoppingCart = (SetOpenShoppingCart) => {
                 <CartItem key={index} data={item} id={true} />
               ))
               :
-              <Box sx={{display: 'flex', justifyContent:"center", flexDirection:'column', alignItems:"center", alignContent:"center", height: "800px"}}>
-                <AddShoppingCartOutlinedIcon color="secondary" sx={{mt: 2, fontSize: 100, strokeWidth: 0.5}}/>
-
-                <Typography variant="h6" color="secondary" sx={{fontWeight: 500, mt:2}}>Agrega productos a tu carrito</Typography>
+              <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", alignContent: "center", height: { sm: "800px", xs: "550px" } }}>
+                <AddShoppingCartOutlinedIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
+                <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2 }}>Agrega productos a tu carrito</Typography>
               </Box>
-              
+
             }
 
           </Grid>
         </List>
-        <Box sx={{ mt: 'auto', ml: 2.5, mr: 2.5, mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'right' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 'auto', ml: 3, mr: 3, mb:1.5 }}>
           {totalPrice != null && cartProducts.length > 0 ? (
             <>
-                <Typography variant="body1" sx={{ mb: 3, mt:3, fontWeight: 600 }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
-             
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center' , borderTop: "thin solid gray", borderBottom: "thin solid gray",mb: 2, mt: 2 }}>
+                <Typography sx={{ fontWeight: 600, mt: .5, mb: .5, fontSize: {xs: '14px', md: '16px'}}}>Total: </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600, mt: .5, mb: .5,  fontSize: {xs: '14px', md: '16px'}}}> ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} </Typography>
+
+              </Box>
               <Button
                 fullWidth
                 color="secondary"
@@ -64,7 +63,26 @@ const ShoppingCart = (SetOpenShoppingCart) => {
         </Box>
       </Box>
 
-    }
+    : <Box sx={{ width: { sm: 450, xs: 320 }, height: '87%', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+    <List
+      sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper', overflow: 'auto', maxHeight: '100%' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          ARTÍCULOS DEPORTIVOS
+        </ListSubheader>
+      }
+    >
+      <Grid >
+          <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", alignContent: "center", height: { sm: "800px", xs: "550px" } }}>
+            <LoginIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
+            <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2, pl:5, pr:5, textAlign:'center' }}>Inicia sesión o Regístrate para añadir actículos al carrito</Typography>
+          </Box>
+      </Grid>
+    </List>
+    
+  </Box>}
   </>
   )
 };

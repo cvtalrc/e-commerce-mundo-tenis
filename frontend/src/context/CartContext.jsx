@@ -2,6 +2,7 @@ import { createContext, useEffect, useState, useContext } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import UserContext from "./UserContext";
 import { Toast } from "../components/Alerts/Toast";
+import { Modal } from "../components/Alerts/Modal";
 
 const CartContext = createContext();
 
@@ -79,7 +80,8 @@ const CartProvider = ({ children }) => {
             },
         };
 
-        api
+        if(token !== null){
+            api
             .post(urlAdd, options)
             .then((res) => {
                 if (!res.err) {
@@ -93,6 +95,17 @@ const CartProvider = ({ children }) => {
             });
 
         setForm(initialForm);
+        }else {
+            Modal(
+                'Añadir al carrito de compras.',
+                'Debes iniciar sesión para agregar artículos al carro. Si no tienes una ¡Regístrate!',
+                'info',
+            )
+        }
+
+        
+
+        
     };
 
     const delFromCart = (_id, size, quantity) => { //eliminando de a uno
