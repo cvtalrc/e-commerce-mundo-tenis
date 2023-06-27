@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de compra - Mundo Tenis CGA</title>
+</head>
+<body>
+    <h1>Confirmación de compra - Mundo Tenis CGA</h1>
+    <p>¡Hola <%= infoUser.name %>!</p>
+    <p>¡Gracias por tu compra en Mundo Tenis CGA! Estamos encantados de confirmar que tu pedido ha sido procesado con éxito. A continuación, encontrarás los detalles de tu compra:</p>
+    <ul>
+        <% for (let item of products.items) { %>
+          <li><%= item.TitleProduct %> - <%= item.Size %> - Cantidad: <%= item.Quantity %> - Total: <%= item.price %></li>
+        <% } %>
+      </ul>
+    <h2>Dirección de envío:</h2>
+    <ul>
+        <li>Nombre: <%= infoDelivery.name %></li>
+        <li>Dirección: <%= infoDelivery.address %></li>
+        <li>Telefono de contacto: <%= infoDelivery.cellNumber %></li>
+    </ul>
+    <p>Método de envío: Envío estándar</p>
+    <p>Si tienes alguna pregunta o necesitas asistencia adicional, no dudes en contactarnos a través de nuestro servicio de atención al cliente.</p>
+    <p>¡Que tengas un excelente día!</p>
+    <p>Atentamente,<br>Mundo Tenis CGA</p>
+</body>
+</html>

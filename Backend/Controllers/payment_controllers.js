@@ -1,8 +1,8 @@
 const WebpayPlus = require("transbank-sdk").WebpayPlus;
 const Order = require("../Controllers/order_controllers");
 const shoppingCart = require("../Controllers/shoppingCart_controllers");
+const emailController = require('../Controllers/email_controllers');
 const Payment = require("../Models/Payment");
-const User = require("../Models/User");
 const OrderM = require("../Models/Order");
 
 const { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } = require("transbank-sdk"); // CommonJS
@@ -14,8 +14,8 @@ const commerceCode = "597055555532";
 const returnUrl = "http://localhost:5173/payment";
 
 async function generateTransaction(req, res) {
-  const userToken = req.headers.authorization?.split(' ')[1]; //token usuario
-  //const userToken = req.cookies.accessToken;
+  //const userToken = req.headers.authorization?.split(' ')[1]; //token usuario
+  const userToken = req.cookies.accessToken;
   const sessionID = userToken.substring(0, 10); // Obtener los primeros 10 caracteres
   const { userID, Delivery } = req.body
   //console.log(sessionID);
@@ -74,15 +74,33 @@ async function processPaymentWebpay(req, res) {
         console.log(order);
         const userID = order.User._id;
         console.log(userID);
-        const user = await User.findById(userID);
+        //const user = await User.findById(userID);
 
         const payment = new Payment({
-          User: user,
+          User: order.User,
           Details: commitResponse
         });
 
         await Payment.create(payment);
-        
+
+        const infoUser = {
+          name: order.User.name + " " + order.User.lastName,
+          email: order.User.email ,
+        };
+      
+        const infoDelivery = {
+          //type: order.Delivery.
+          name: order.Delivery.name + " " + order.Delivery.lastName,
+          address : order.Delivery.address + " " + order.Delivery.comuna + " " + order.Delivery.region,
+          cellNumber : order.Delivery.cellNumber
+        };
+    
+        const products = {
+          items: order.Cart[1].Products
+        };
+    
+        await emailController.sendPaymentConfirmation(infoUser, infoDelivery, products);
+
         return res.status(200).send({
           message: "Pago realizado con éxito",
           order: updateOrder,

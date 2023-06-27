@@ -5,23 +5,27 @@ const shoppingCart = require("../Models/shoppingCart");
 const cron = require("node-cron");
 const moment = require('moment');
 
+
 async function createOrder(userID, Delivery) {
   try {
     // Crear una instancia del modelo Order con los datos de la orden de compra
     const user = await User.findById(userID).select('-pass');;
     const cart = await shoppingCart.findOne({ User: user });
-
+    let available;
+    let amount;
     //validar carrito
     for (const item of cart.items) {
-      const isProduct = await Product.findOne({ idProduct: item.idProduct }); //identifico el producto
+      let isProduct = await Product.findById(item.idProduct); //identifico el producto
+      //console.log(isProduct);
+
       if (isProduct) {
         //producto
-        const stockItem = isProduct.stock.find(
-          (stock) => stock.size === item.Size
-        ); //encuentro el producto de la talla que hay en el carrito
-        const available = stockItem.quantity; //stock disponible de la talla
+        let stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el producto de la talla que hay en el carrito
+        available = stockItem.quantity; //stock disponible de la talla
         //carro
-        const amount = item.Quantity;
+        amount = item.Quantity;
+        console.log(available);
+        console.log(amount);
         if (available < amount)
           throw new Error("No hay suficiente stock del producto");
       } else {

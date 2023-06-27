@@ -12,7 +12,6 @@ const orderschema = mongoose.Schema({
     // name
     // lastName
     // address
-    // addressNumber
     // region
     // comuna
     // cellNumber
