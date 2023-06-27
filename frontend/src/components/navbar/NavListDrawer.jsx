@@ -36,7 +36,7 @@ export default function NavListDrawer({SetOpenMenu, user, logOut}) {
                 <ListItemButton
                     onClick={() => SetOpenMenu(false)}
                     component={NavLink}
-                    to="/sobre-nosotros">
+                    to="/about-us">
                     <ListItemText
                         primary="Sobre Nosotros"
                     />

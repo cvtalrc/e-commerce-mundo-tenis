@@ -22,6 +22,7 @@ import Payment from './components/payment/Payment';
 import { OrderProvider } from './context/OrderContext';
 import AdminOrders from './views/admin/AdminOrders';
 import User from './views/user/User';
+import AboutUs from './views/aboutUs/AboutUs';
 
 const navArrayLinks = [
     {
@@ -78,6 +79,7 @@ function App() {
                                     <Route path="/user/:user" element={<User/>} />
                                     <Route path="/payment" element={<Payment />} />
                                     <Route path="/ticket" element={<Ticket />} />
+                                    <Route path="/about-us" element={<AboutUs />} />
                                 </Routes>
                                 <Footer />
                             </OrderProvider>

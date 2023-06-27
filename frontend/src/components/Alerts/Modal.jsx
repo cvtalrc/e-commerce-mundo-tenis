@@ -5,13 +5,13 @@ export const Modal = (title, text, icon, content) => {
     title: title,
     text: text,
     icon: icon,
-    showCancelButton: icon === 'error' || icon === 'success' || icon === 'info' ? false : true,
-    showConfirmButton: icon === 'error' || icon === 'success' || icon === 'info' ? false : true,
+    showCancelButton: icon === 'error' || icon === 'success' || icon === 'info' || icon === 'warning'? false : true,
+    showConfirmButton: icon === 'error' || icon === 'success' || icon === 'info' || icon === 'warning'? false : true,
     confirmButtonText: 'Sí',
     cancelButtonText: 'No',
     confirmButtonColor: '#008f39',
     cancelButtonColor: '#bebebe',
-    timer: icon === 'error' || icon === 'success' ? 5000 : false
+    timer: icon === 'error' || icon === 'success' || icon === 'info' || icon === 'warning'? 5000 : false
   });
 };
  
