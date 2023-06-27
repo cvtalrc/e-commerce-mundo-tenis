@@ -50,8 +50,8 @@ const CartProvider = ({ children }) => {
                     console.log(res);
                     if (!res.err) {
                         //console.log("productos en el carro", email + '' + res.data.items)
-                        setCartProducts(res.data.items);
-                        setTotalPrice(res.data.total);
+                        setCartProducts(res.cart.items);
+                        setTotalPrice(res.cart.total);
                         setError(null);
                     } else {
                         setCartProducts(null);
@@ -84,8 +84,8 @@ const CartProvider = ({ children }) => {
             .then((res) => {
                 if (!res.err) {
                     console.log(res);
-                    setCartProducts(res.items);
-                    setTotalPrice(res.total);
+                    setCartProducts(res.cart.items);
+                    setTotalPrice(res.cart.total);
                 }
             })
             .catch((e) => {
@@ -114,7 +114,7 @@ const CartProvider = ({ children }) => {
             .del(urlDel, options)
             .then((res) => {
                 if (!res.err) {
-                    console.log(res);
+                    console.log(res.cart);
                     let newData = cartProducts.filter((el) => el.idProduct !== _id);
                     setCartProducts(newData);
                     console.log("newData", newData)

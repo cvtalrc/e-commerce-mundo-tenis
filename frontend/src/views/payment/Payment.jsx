@@ -156,13 +156,15 @@ export default function Payment() {
             {Object.keys(response).length > 0 && (
                 <Container maxWidth='xl'>
                     <Box sx={{mt: 4, display:'flex', justifyContent:'center'}}>
-                        <CheckCircleOutlineIcon color='success' sx={{fontSize: 100, strokeWidth: 2}}/>
+                        <CheckCircleOutlineIcon color='success' sx={{fontSize: 100, strokeWidth: 0.5}}/>
                     </Box>
 
                     <Typography variant="h4" sx={{
                         mb: 4,
                         fontWeight: 700,
                         marginTop: 6,
+                        justifyContent: "center",
+                        alignItems: "center"
                     }}
                     >
                         
