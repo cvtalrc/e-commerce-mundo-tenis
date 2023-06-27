@@ -24,6 +24,9 @@ api.post("/cart/add", func_auth.authenticateToken, func_shoppingCart.addtoCart);
 api.post("/guestCart/add", func_guestCart.addtoCart);
 api.post("/order/", func_auth.authenticateToken, func_order.createOrder);
 api.post("/comment/", func_auth.authenticateToken, func_comment.createComment);
+api.post("/forgot-password",func_user.resetPasswordMail);
+api.post("/reset-password", func_user.resetPassword);
+api.post("/email-confirm", func_user.validateEmail);
 
 //API GET
 api.get("/user/", func_auth.authenticateAdmin, func_user.getAll);
@@ -58,5 +61,8 @@ api.put("/comment/update/:id", func_auth.authenticateToken, func_comment.updateC
 api.post("/payment", func_auth.authenticateToken, func_payment.generateTransaction)
 api.get("/verify-payment", func_payment.processPaymentWebpay)
 
-api.post("/sendMail", func_testMail.test)
+//api.post("/sendMail", func_testMail.test)
+
+
+
 module.exports = api;
