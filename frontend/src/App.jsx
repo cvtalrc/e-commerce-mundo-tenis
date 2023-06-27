@@ -12,12 +12,13 @@ import AdminProducts from './views/admin/AdminProducts';
 import NewAccount from './views/register/Register';
 import { useState } from 'react'
 import { Modal } from './components/Alerts/Modal';
+import Ticket from './views/ticket/Ticket';
 import { ProductsProvider } from './context/ProductsContext';
 import Search from './views/search/Search';
 import { UserProvider } from './context/UserContext';
 import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
-import Payment from './views/payment/Payment';
+import Payment from './components/payment/Payment';
 import { OrderProvider } from './context/OrderContext';
 import AdminOrders from './views/admin/AdminOrders';
 import User from './views/user/User';
@@ -76,7 +77,7 @@ function App() {
                                     <Route path="/search" element={<Search />} />
                                     <Route path="/user/:user" element={<User/>} />
                                     <Route path="/payment" element={<Payment />} />
-                                    
+                                    <Route path="/ticket" element={<Ticket />} />
                                 </Routes>
                                 <Footer />
                             </OrderProvider>

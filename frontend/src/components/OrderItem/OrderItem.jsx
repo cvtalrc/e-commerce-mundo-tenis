@@ -92,14 +92,13 @@ export default function OrderItem({ order, type }) {
         if (!res.err) {
           console.log(res)
           setOpenComment(false);
+          setForm(initialForm)
           Modal(
             'Sección de comentarios',
             'Tu comentario se agregó exitosamente.',
             'success',
             ''
           )
-
-          setForm(initialForm)
 
         } else {
           console.error(res.err)

@@ -1,4 +1,4 @@
-import { Typography, Container, Box, Grid, Pagination, List } from "@mui/material";
+import { Typography, Container, Box, Grid, Pagination, List, Rating } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import { helpHttp } from "../../helpers/helpHttp";
@@ -16,8 +16,10 @@ export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
     const [comments, setComments] = useState(null)
 
+    console.log(comments)
+
     let api = helpHttp()
-    let url = "http://localhost:3000/api/comment/" 
+    let url = "http://localhost:3000/api/comment/"
 
     useEffect(() => {
         api
@@ -32,7 +34,7 @@ export default function Home() {
                 console.error(e)
             })
     }, [])
-  
+
     const slides = [
         { url: vcore, title: "vcore" },
         { url: vcore7, title: "vcore7" },
@@ -49,6 +51,28 @@ export default function Home() {
         marginTop: "18px"
     };
 
+    function convertToChileanTimeInWinter(dateString) {
+        // Parsear la fecha en formato UTC
+        const date = new Date(dateString);
+
+        // Obtener la hora y el minuto en horario local
+        const localHour = date.getHours();
+        const localMinute = date.getMinutes();
+
+        // Ajustar la hora según el horario chileno en invierno
+        const chileanHour = localHour - 3; // Restar 3 horas
+
+        // Construir la nueva fecha con la hora ajustada
+        const chileanDate = new Date(date);
+        chileanDate.setHours(chileanHour);
+        chileanDate.setMinutes(localMinute);
+
+        // Formatear la fecha en el formato deseado (por ejemplo, 'DD-MM-YYYY HH:mm:ss')
+        const formattedDate1 = `${chileanDate.getDate().toString().padStart(2, '0')}-${(chileanDate.getMonth() + 1).toString().padStart(2, '0')}-${chileanDate.getFullYear()} ${chileanDate.getHours().toString().padStart(2, '0')}:${chileanDate.getMinutes().toString().padStart(2, '0')}:${chileanDate.getSeconds().toString().padStart(2, '0')}`;
+
+        return formattedDate1;
+    }
+
     return (
         <>
             {/* mejorar loading y error */}
@@ -61,29 +85,43 @@ export default function Home() {
             {
                 products != null && comments != null &&
                 (<Box sx={{ mb: 1 }}>
-                    <Container maxWidth="xl" sx={{ bgcolor: 'white', mt: 2,borderRadius: 1 }}>
+                    <Container maxWidth="xl" sx={{ bgcolor: 'white', mt: 2, borderRadius: 1 }}>
                         <Box sx={containerStyles} >
                             <ImageSlider slides={slides} />
                         </Box>
-                        <Box sx={{ backgroundColor: "secondary.main", color:'white', borderRadius: 1, justifyContent: 'center', display: 'flex', mb: 2 }}>
+                        <Box sx={{ backgroundColor: "secondary.main", color: 'white', borderRadius: 1, justifyContent: 'center', display: 'flex', mb: 2 }}>
                             <Typography variant="body1" sx={{ fontWeight: 700, mt: 1, mb: 1 }}>OFERTAS</Typography>
                         </Box>
 
                         <PaginationCard key={`sale`} products={productsSale} type={`sale`} />
 
-                        <Box sx={{ backgroundColor: "secondary.main", color:'white', borderRadius: 1, justifyContent: 'center', display: 'flex', mb: 2 }}>
+                        <Box sx={{ backgroundColor: "secondary.main", color: 'white', borderRadius: 1, justifyContent: 'center', display: 'flex', mb: 2 }}>
                             <Typography variant="body1" sx={{ fontWeight: 700, mt: 1, mb: 1 }}>ARTÍCULOS DEPORTIVOS</Typography>
                         </Box>
 
                         <PaginationCard key={`normal`} products={products} type={`normal`} />
 
-                        <Box>
-                            <Typography>Comentarios: </Typography>
-                            {comments.map((comment) => (
-                                <Typography key={comment._id}> {comment.Content}</Typography>
-                            ))}
-
+                        <Box sx={{ backgroundColor: "secondary.main", color: 'white', borderRadius: 1, justifyContent: 'center', display: 'flex', mb: 2 }}>
+                            <Typography variant="body1" sx={{ fontWeight: 700, mt: 1, mb: 1 }}>COMENTARIOS</Typography>
                         </Box>
+
+                        
+                            <Grid spacing={4} sx={{ display:'flex', flexDirection:'row', width: 'auto',  overflowX: 'auto' }} container>
+                                {comments.map((comment) => (
+                                    <Grid key={comment._id} item sm={2} xs={12} md={4}>
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', border: '1px solid #bebebe', borderRadius: 1, mb: 2 }}>
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
+                                                <Rating name="size-small" value={comment.Stars} readOnly sx={{ mb: 1 }} size="small" />
+                                                <Typography variant="p" > {convertToChileanTimeInWinter(comment.createdAt)} </Typography>
+
+                                                <Typography sx={{ mt: 1 }}> {comment.Author}:</Typography>
+                                                <Typography > {comment.Content}</Typography>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                   
 
 
                     </Container>

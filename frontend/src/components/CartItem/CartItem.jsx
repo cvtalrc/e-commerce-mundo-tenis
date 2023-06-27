@@ -19,11 +19,11 @@ const CartItem = ({ data, id }) => {
   return (
     <>
       {products != null && product != null &&
-        <Container sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+        <Container sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', mt:2 }}>
           {
             id ? // vista shoppingCart
               (
-                <Box sx={{ border: '1px solid #bebebe', borderRadius: 1, mb: 1 }}>
+                <Box sx={{ borderBottom: "thin solid gray", mb: 1 }}>
                   <Grid spacing={2} container>
                     <Grid item md={4}>
                       <img src={product[0].imgUrl} />
@@ -54,19 +54,19 @@ const CartItem = ({ data, id }) => {
 
               (
                
-                  <Grid sx={{mb:5, borderBottom: "thin solid gray"}} justifyContent={"space-around"} alignItems={"center"} container>  
-                    <Grid item md={2} sm={2} xs={4}>
-                      <img style={{width: '75%'}} src={product[0].imgUrl} />
+                  <Grid sx={{mb:5, borderBottom: "thin solid gray"}} justifyContent={"space-around"} alignItems={"center"} justifyItems={"center"} container>  
+                    <Grid item md={4} sm={2} xs={4}>
+                      <img style={{width: '50%'}} src={product[0].imgUrl} />
                     </Grid>
-                    <Grid item md={7} sm={4} xs={5}>
+                    <Grid item md={4} sm={4} xs={5}>
                       <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, pl: 7, pt: 'auto' }}>{TitleProduct}</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 15, pl: 7, pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
                       {Size && (
                         <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 15, pl: 7, pt: 'auto' }}>Talla: {Size}</Typography>
                       )}
                     </Grid>
-                    <Grid item md={2.5} sm={6} xs={3}>
-                    <IconButton sx={{ mr: 1.5 ,mt:3.5 }} onClick={() => delFromCart(idProduct, Size, Quantity)} >
+                    <Grid item md={4} sm={6} xs={3} sx={{ display:'flex', justifyContent:'center'}} >
+                    <IconButton onClick={() => delFromCart(idProduct, Size, Quantity)} >
                         <RemoveCircleOutlineRoundedIcon fontSize="large" />
                       </IconButton>
                     </Grid>
