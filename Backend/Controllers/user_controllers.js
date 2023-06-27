@@ -8,17 +8,16 @@ const SALT_ROUNDS = 10;
 async function getUser(req, res) {
   const id = req.params.id;
   const user = await User.findOne({ _id: id }).select("-pass");
-  if (!user)
-    return res.status(404).send({ message: "El usuario no existe", status: "error" });
-  return res.status(200).send({ user });
+  if (!user) return res.status(404).send({ message: "El usuario no existe", status: "error" });
+  return res.status(200).send({ user: user, status: "success" });
 }
 
 function getAll(req, res) {
   User.find({},  "-pass", (error, users) => {
     if (error) {
-      return res.status(400).send({ msj: "No existen usuarios" });
+      return res.status(400).send({ message: "No existen usuarios", status: "error" });
     } else {
-      res.status(200).send(users);
+      res.status(200).send({users: users, status: "success"});
     }
   });
 }
@@ -32,13 +31,13 @@ async function removeUser(req, res) {
 
     const removedCartUser = await shoppingCart.findOneAndRemove({ User: user });
     if (!removedUser) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(404).send({ message: "Usuario no encontrado" , status: "error"});
     }
 
-    return res.status(200).json({ message: "Usuario eliminado exitosamente" });
+    return res.status(200).send({ message: "Usuario eliminado exitosamente" , status: "success"});
   } catch (error) {
     console.error("Error al eliminar el usuario:", error);
-    return res.status(500).json({ message: "Error al eliminar el usuario" });
+    return res.status(500).json({ message: "Error al eliminar el usuario" , status: "error"});
   }
 }
 
@@ -57,7 +56,6 @@ function removeAll(req, res) {
   }catch (error) {
     return res.status(400).send({message: "Error al remover usuarios", status: "error"})
   }
-
 }
 
 async function updateUser(req, res) {
@@ -67,13 +65,13 @@ async function updateUser(req, res) {
   try {
     const user = await User.findById(id);
     if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(404).json({ message: "Usuario no encontrado" , status: "error"});
     }
     let hashedPassword = null;
     if (currentPassword && newPassword) {
       const passwordsMatch = await comparePasswords(currentPassword, user.pass);
       if (!passwordsMatch) {
-        return res.status(400).json({ message: "La contraseña actual no es correcta" });
+        return res.status(400).json({ message: "La contraseña actual no es correcta" , status: "error"});
       }
       const salt = await bcrypt.genSalt(SALT_ROUNDS);
       hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -81,7 +79,7 @@ async function updateUser(req, res) {
 
     const findUser = await User.findOne({ email: email });
     if (findUser && findUser._id.toString() !== id) {
-      return res.status(400).json({ message: "El email ya está asociado a otro usuario" });
+      return res.status(400).json({ message: "El email ya está asociado a otro usuario" , status: "error"});
     }
 
     const updatedUser = await User.findByIdAndUpdate(id,
@@ -105,10 +103,10 @@ async function updateUser(req, res) {
       httpOnly: true,
       secure: true,
     });
-    res.status(200).json({"updateUser":updatedUser, "newToken": accessToken});
+    res.status(200).send({"updateUser":updatedUser, "newToken": accessToken, status: "succes"});
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
-    res.status(500).json({ error: "Error al actualizar el usuario" });
+    res.status(500).send({ message: "Error al actualizar el usuario", status: "error" });
   }
 }
 

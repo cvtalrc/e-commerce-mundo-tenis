@@ -9,7 +9,10 @@ async function createComment(req, res) {
     res.status(201).json(newComment);
   } catch (error) {
     console.error('Error al crear el comentario:', error);
-    res.status(500).json({ error: 'Error al crear el comentario' });
+    res.status(500).send({
+      message: "Error al crear el comentario",
+      status: "error",
+    });
   }
 }
 
@@ -17,10 +20,16 @@ async function createComment(req, res) {
 async function getAllComments(req, res) {
   try {
     const comments = await Comment.find().sort({ createdAt: -1 });
-    res.status(200).json(comments);
+    res.status(200).json({
+      comments: comments,
+      status: "success",
+    });
   } catch (error) {
     console.error('Error al obtener los comentarios:', error);
-    res.status(500).json({ error: 'Error al obtener los comentarios' });
+    res.status(500).send({
+      message: "Error al obtener los comentarios",
+      status: "error",
+    });
   }
 }
 
@@ -30,10 +39,10 @@ async function deleteComment(req, res) {
 
   try {
     const deletedComment = await Comment.findByIdAndDelete(id);
-    res.status(200).json(deletedComment);
+    res.status(200).send({message: "Comentario eliminado con éxito", status: "success" });
   } catch (error) {
     console.error('Error al eliminar el comentario:', error);
-    res.status(500).json({ error: 'Error al eliminar el comentario' });
+    res.status(500).send({ message: 'Error al eliminar el comentario', status: "error" });
   }
 }
 
@@ -46,10 +55,10 @@ async function updateComment(req, res){
       id,
       { Content: Content, createdAt: Time }
     );
-    res.status(200).json(updatedComment);
+    res.status(200).send({updateComment: updatedComment, status: "success"});
   } catch (error) {
     console.error('Error al actualizar el comentario:', error);
-    res.status(500).json({ error: 'Error al actualizar el comentario' });
+    res.status(500).send({ message: 'Error al actualizar el comentario', status: "success" });
   }
   
 }
