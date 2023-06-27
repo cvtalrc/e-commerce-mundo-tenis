@@ -1,11 +1,20 @@
-import { Box, List, ListSubheader, ListItemButton, ListItemText, Button } from "@mui/material";
+import { Box, List, ListSubheader, ListItemButton, ListItemText, Button, IconButton } from "@mui/material";
 import ListCategoriesSport from "./ListCategoriesSport";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
-export default function NavListDrawer(SetOpenMenu) {
+export default function NavListDrawer({SetOpenMenu, user, logOut}) {
     const [sports, setSports] = useState(["Tenis", "Padel"])
+
+    const logOutDrawer = () => {
+        logOut()
+        SetOpenMenu(false)
+    }
+
     return (
         <Box sx={{ width: 250, height: '100vh' }}>
             <List
@@ -36,25 +45,49 @@ export default function NavListDrawer(SetOpenMenu) {
             </List>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'absolute', bottom: 0, width: '100%', paddingBottom: 5 }}>
-                <Button
-                    color="inherit"
-                    component={NavLink}
-                    to="/"
-                    onClick={() => SetOpenMenu(false)}
-                >
-                    {/* <HomeIcon sx={{marginRight: 0.5}} /> */}
-                    inicio
+            <Button color="inherit" component={NavLink} to="/">
+            <IconButton aria-label="Example">
+                   <HomeIcon/> 
+                   </IconButton>
+                  
+                </Button>
+            {user != null ? (
+                    <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center' }}>
+                      {/* <Button
+                        color="inherit"
+                        size="small"
+                        sx={{
+                          "&:hover": {
+                            cursor: "auto",
+                          },
+                          ml:4, mr:2
+                        }}
+                        onClick={() => SetOpenMenu(false)}
+                        component={NavLink}
+                        to={`/user/${user._id}`}
+                      > */}
+                        <IconButton aria-label="Example" onClick={() => SetOpenMenu(false)}
+                        component={NavLink}
+                        to={`/user/${user._id}`}>
+                            <AccountCircleIcon/>
 
-                </Button>
-                <Button
-                    color="inherit"
-                    component={NavLink}
-                    to="/login"
-                    onClick={() => SetOpenMenu(false)}
-                >
-                    {/* <AccountCircleIcon sx={{marginRight: 0.5}}/> */}
-                    iniciar sesión
-                </Button>
+                        </IconButton>
+                        {/* ¡Hola, {user.name}! */}
+                      {/* </Button> */}
+
+                      <IconButton onClick={logOutDrawer} aria-label="Example">
+                            <LogoutIcon/>
+                        </IconButton>
+
+                      {/* <Button  onClick={logOutDrawer} color="inherit" sx={{mr:4}} size="small">
+                        Cerrar sesión
+                      </Button> */}
+                    </Box>
+                  ) : (
+                    <Button color="inherit"  onClick={() => SetOpenMenu(false)} component={NavLink} to="/login">
+                      Iniciar sesión
+                    </Button>
+                  )}
             </Box>
 
 

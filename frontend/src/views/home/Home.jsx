@@ -5,12 +5,21 @@ import { helpHttp } from "../../helpers/helpHttp";
 import PaginationCard from "../../components/Product/PaginationCard";
 import ProductsContext from "../../context/ProductsContext";
 import ImageSlider from "../../components/imageSlider/ImageSlider";
-import yonex from "../../img/yonex.jpeg"
-import dropShot from "../../img/drop-shot.jpeg"
-import comfortPolyfibre from "../../img/comfort-polyfibre.jpeg"
-import spinPolyfibre from "../../img/spin-polyfibre.jpeg"
 import vcore from "../../img/vcore.webp"
 import vcore7 from "../../img/vcore7.webp"
+import vcoreYonex from "../../img/vcore-yonex.png"
+import ezone from "../../img/ezone.png"
+import ezone2 from "../../img/ezone2.jpeg"
+import tienda from "../../img/tienda.png"
+import wilson from "../../img/wilson.png"
+import vcorePro from "../../img/vcore-pro.png"
+import vcorePro2 from "../../img/vcore-pro2.jpeg"
+import polyfibre from "../../img/polyfibre.png"
+import palas from "../../img/palas.png"
+import palas2 from "../../img/palas2.png"
+import palas3 from "../../img/palas3.png"
+import palas4 from "../../img/palas4.jpeg"
+
 
 export default function Home() {
     const { products, productsSale, error, loading } = useContext(ProductsContext)
@@ -36,20 +45,25 @@ export default function Home() {
     }, [])
 
     const slides = [
+        { url: tienda, title: "tienda" },
         { url: vcore, title: "vcore" },
         { url: vcore7, title: "vcore7" },
-        { url: yonex, title: "yonex" },
-        { url: dropShot, title: "dropShot" },
-        { url: comfortPolyfibre, title: "comfortPolyfibre" },
-        { url: spinPolyfibre, title: "spinPolyfibre" }
+        { url: ezone, title: "ezone" },
+        { url: wilson, title: "wilson" },
+        { url: vcorePro2, title: "vcorePro2" },
+        { url: palas, title: "palas" },
+        { url: palas2, title: "palas2" },
+        { url: palas3, title: "palas3" },
+        { url: palas4, title: "palas4" }
     ];
 
     const containerStyles = {
         width: "100%",
-        height: "420px",
         marginBottom: "48px",
-        marginTop: "18px"
-    };
+        marginTop: "18px",
+        height: {xs: "250px", sm: "500px"}, // Altura por defecto para dispositivos grandes
+      };
+
 
     function convertToChileanTimeInWinter(dateString) {
         // Parsear la fecha en formato UTC
@@ -86,7 +100,7 @@ export default function Home() {
                 products != null && comments != null &&
                 (<Box sx={{ mb: 1 }}>
                     <Container maxWidth="xl" sx={{ bgcolor: 'white', mt: 2, borderRadius: 1 }}>
-                        <Box sx={containerStyles} >
+                        <Box sx={containerStyles}>
                             <ImageSlider slides={slides} />
                         </Box>
                         <Box sx={{ backgroundColor: "secondary.main", color: 'white', borderRadius: 1, justifyContent: 'center', display: 'flex', mb: 2 }}>

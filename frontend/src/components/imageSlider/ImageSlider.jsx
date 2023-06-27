@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const slideStyles = {
   width: "100%",
   height: "100%",
-  borderRadius: "10px",
+  borderRadius: "5px",
   backgroundSize: "cover",
   backgroundPosition: "center",
 };
@@ -13,8 +13,8 @@ const rightArrowStyles = {
   top: "50%",
   transform: "translate(0, -50%)",
   right: "32px",
-  fontSize: "45px",
-  color: "#000",
+  fontSize: "35px",
+  color: "#fff",
   zIndex: 1,
   cursor: "pointer",
 };
@@ -24,8 +24,8 @@ const leftArrowStyles = {
   top: "50%",
   transform: "translate(0, -50%)",
   left: "32px",
-  fontSize: "45px",
-  color: "#000",
+  fontSize: "35px",
+  color: "#fff",
   zIndex: 1,
   cursor: "pointer",
 };
@@ -33,34 +33,48 @@ const leftArrowStyles = {
 const sliderStyles = {
   position: "relative",
   height: "100%",
+  overflow: "hidden", // Evita que las imágenes se desborden en pantallas pequeñas
 };
 
 const dotsContainerStyles = {
   display: "flex",
   justifyContent: "center",
+  marginTop: "16px", // Espacio adicional entre el slider y los puntos
 };
 
 const dotStyle = {
-  margin: "0 3px",
+  margin: "5px 7px",
   cursor: "pointer",
-  fontSize: "20px",
+  fontSize: "18px",
 };
 
 const ImageSlider = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(goToNext, 15000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const goToPrevious = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((prevIndex) => {
+      if (prevIndex === 0) {
+        return slides.length - 1;
+      } else {
+        return prevIndex - 1;
+      }
+    });
   };
+
   const goToNext = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
+
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
+
   const slideStylesWidthBackground = {
     ...slideStyles,
     backgroundImage: `url(${slides[currentIndex].url})`,
@@ -80,7 +94,10 @@ const ImageSlider = ({ slides }) => {
       <div style={dotsContainerStyles}>
         {slides.map((slide, slideIndex) => (
           <div
-            style={dotStyle}
+            style={{
+              ...dotStyle,
+              color: slideIndex === currentIndex ? "red" : "black",
+            }}
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
           >
