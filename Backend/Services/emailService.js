@@ -6,13 +6,13 @@ const emailService = {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'fernanda.lorcab@gmail.com',
-          pass: 'uwlmcbwntdruunny',
+          user: 'MUNDOTENISCGA@gmail.com',
+          pass: 'lngeerawelhdzswa',
         },
       });
 
       const mailOptions = {
-        from: 'fernanda.lorcab@gmail.com',
+        from: 'Mundo Tenis CGA',
         to,
         subject,
         text,
