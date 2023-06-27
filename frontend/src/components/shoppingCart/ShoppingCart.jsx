@@ -45,7 +45,7 @@ const ShoppingCart = (SetOpenShoppingCart) => {
         <Box sx={{ mt: 'auto', ml: 2.5, mr: 2.5, mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'right' }}>
           {totalPrice != null && cartProducts.length > 0 ? (
             <>
-                <Typography variant="body1" sx={{ mb: 2, mt:2, fontWeight: 700 }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                <Typography variant="body1" sx={{ mb: 3, mt:3, fontWeight: 600 }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
              
               <Button
                 fullWidth

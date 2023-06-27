@@ -61,30 +61,27 @@ function getStepContent(step) {
     case 0:
       return (
         <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5 }}>
-          <Grid container >
-            <Grid item>
+         
               {
                 cartProducts && cartProducts.length > 0 ?
                   cartProducts.map((item, index) => (
                     <CartItem key={index} data={item} id={false} />
                   ))
                   :
-                  <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", height: "200px", ml: 50 }}>
+                  <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", height: "200px" }}>
                     <AddShoppingCartOutlinedIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
-
                     <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2 }}>Agrega productos a tu carrito</Typography>
                   </Box>
               }
-            </Grid>
-            <Grid item>
+            <Box sx={{pr:5}}>
               {cartProducts && cartProducts.length > 0 ?
-                <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, fontSize: 20, pl: 'auto', pt: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
+                <Typography variant="h6" sx={{ fontWeight: 600, mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
                   Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                 </Typography>
                 : ''
               }
-            </Grid>
-          </Grid>
+            </Box>
+         
         </Box>
       );
     case 1:
