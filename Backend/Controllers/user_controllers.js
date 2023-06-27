@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "mundotenisCGA_SECRETKEY";
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
+const auth = require("../Controllers/auth");
+const emailController = require('../Controllers/email_controllers');
 
 async function getUser(req, res) {
   const id = req.params.id;
@@ -122,10 +124,68 @@ async function comparePasswords(plainPassword, hashedPassword) {
   });
 }
 
+async function resetPasswordMail(req, res){
+  try{
+    const email = req.body.email
+    const user = await User.findOne({email : email});
+    if(!user) return res.status(404).send({message: "El correo no tiene cuenta", status: "error"});
+    const name = user.name + " " + user.lastName;
+    const token = jwt.sign({ email }, auth.SECRET_KEY, { expiresIn: '1h' });
+    const resetPasswordLink = `https://localhost:3000/reset-password?token=${token}`;
+    await emailController.sendResetPassword(name, email, resetPasswordLink);
+
+    return res.status(200).send({message:'Se ha enviado un correo de restablecimiento de contraseña.', status: "success"});
+  }catch(error){
+    return res.status(500).send({ message: 'Ocurrió un error al procesar la solicitud de restablecimiento de contraseña.', status: "error"});
+  }
+}
+
+async function resetPassword(req, res){
+  const { token } = req.query;
+  try{
+    const pass = req.body.pass;
+    const decoded = jwt.verify(token, auth.SECRET_KEY);
+    const email = decoded.email;
+    const user = await User.findOne({ email: email });
+    if (!user) return res.status(404).send({ message: 'Usuario no encontrado', status: 'error' });
+
+    const salt = await bcrypt.genSalt(auth.SALT_ROUNDS);
+    const hash = await bcrypt.hash(pass, salt);
+    user.pass = hash;
+    await user.save();
+
+    return res.status(200).send({message:"La contraseña se actualizó con éxito", status: "success"})
+  }catch(error){
+    return res.status(400).send({message: "Error al resetear la contraseña", status: "error"});
+  }
+}
+
+async function validateEmail(req, res) {
+  const { token } = req.query;
+  try {
+    const decoded = jwt.verify(token, auth.SECRET_KEY);
+    const email = decoded.email;
+    const user = await User.findOne({ email: email });
+    if (!user) return res.status(404).send({ message: 'Usuario no encontrado', status: 'error' });
+
+    user.active = true;
+    await user.save();
+
+    return res.status(200).send({ message: 'Cuenta activada exitosamente', status: 'success' });
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') return res.status(400).send({ message: 'El enlace de confirmación ha expirado', status: 'error' });
+    return res.status(400).send({ message: 'Token inválido', status: 'error' });
+  }
+}
+
+
 module.exports = {
   getUser,
   getAll,
   removeAll,
   updateUser,
-  removeUser
+  removeUser,
+  resetPassword,
+  resetPasswordMail,
+  validateEmail
 };
