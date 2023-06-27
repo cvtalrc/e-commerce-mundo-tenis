@@ -14,8 +14,8 @@ const CartProvider = ({ children }) => {
     let totalCartPrice = 0
 
     const initialForm = {
-        User: "",
-        TitleProduct: "",
+        userID: "",
+        idProduct: "",
         Size: "",
         Quantity: ""
     };
@@ -62,12 +62,13 @@ const CartProvider = ({ children }) => {
 
     }, [url]);
 
-    const addToCart = (_id, title, size, quantity) => {
+    const addToCart = (_id, size, quantity) => {
         const urlAdd = `http://localhost:3000/API/cart/add`
-        form.User = email
-        form.TitleProduct = title
+        form.userID = idUser
+        form.idProduct = _id
         form.Size = size
         form.Quantity = quantity
+        console.log(form)
         console.log("token carro", token)
 
         let options = {
@@ -94,10 +95,10 @@ const CartProvider = ({ children }) => {
         setForm(initialForm);
     };
 
-    const delFromCart = (title, size, quantity) => { //eliminando de a uno
+    const delFromCart = (_id, size, quantity) => { //eliminando de a uno
         const urlDel = "http://localhost:3000/API/cart/remove"
-        form.User = email
-        form.TitleProduct = title
+        form.userID = idUser
+        form.idProduct = _id
         form.Size = size
         form.Quantity = quantity
 
@@ -114,7 +115,7 @@ const CartProvider = ({ children }) => {
             .then((res) => {
                 if (!res.err) {
                     console.log(res);
-                    let newData = cartProducts.filter((el) => el.TitleProduct !== title);
+                    let newData = cartProducts.filter((el) => el.idProduct !== _id);
                     setCartProducts(newData);
                     console.log("newData", newData)
                     Toast (

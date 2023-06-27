@@ -10,18 +10,20 @@ async function createOrder(userID, Delivery) {
     // Crear una instancia del modelo Order con los datos de la orden de compra
     const user = await User.findById(userID).select('-pass');;
     const cart = await shoppingCart.findOne({ User: user });
-
+    let available;
+    let amount;
     //validar carrito
     for (const item of cart.items) {
-      const isProduct = await Product.findOne({ idProduct: item.idProduct }); //identifico el producto
+      let isProduct = await Product.findById(item.idProduct); //identifico el producto
+      //console.log(isProduct);
+
       if (isProduct) {
         //producto
-        const stockItem = isProduct.stock.find(
-          (stock) => stock.size === item.Size
-        ); //encuentro el producto de la talla que hay en el carrito
-        const available = stockItem.quantity; //stock disponible de la talla
+        let stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el producto de la talla que hay en el carrito
+        available = stockItem.quantity; //stock disponible de la talla
         //carro
-        const amount = item.Quantity;
+        amount = item.Quantity;
+
         if (available < amount)
           throw new Error("No hay suficiente stock del producto");
       } else {
@@ -70,7 +72,7 @@ async function updateOrderStatusAmdmin(req, res) {
       { Status: status },
       { new: true }
     );
-    return res.status(200).json(updatedOrder);
+    return res.status(200).send({updateOrder: updatedOrder, status: "success"});
     //res.status(200).json(updatedOrder);
   } catch (error) {
     return res.status(400).send({message: "Error al actualizar el estado de la orden"});
@@ -101,9 +103,9 @@ async function getOrder(req, res) {
 async function getAll(req, res){
   Order.find({}, (error, orders) => {
     if (error) {
-      return res.status(400).send({ msj: "Error al encontrar las ordenes" });
+      return res.status(400).send({ message: "Error al encontrar las ordenes" , status: "Error"});
     } else {
-      res.status(200).send(orders); // El producto encontrado
+      res.status(200).send({orders: orders, status: "success"}); // El producto encontrado
     }
   });
 }

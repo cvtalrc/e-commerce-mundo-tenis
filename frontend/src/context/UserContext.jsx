@@ -48,7 +48,7 @@ const UserProvider = ({ children }) => {
                             'success',
                             'Se ha iniciado sesión'
                         )
-                        navigate('/admin');
+                        navigate('/');
                     } else {
                         Toast(
                             'bottom-end',

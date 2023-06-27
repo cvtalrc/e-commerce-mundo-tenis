@@ -1,11 +1,11 @@
-import { Button, Container, Grid, Typography, Box} from "@mui/material";
+import { Button, Container, Grid, Typography, Box, IconButton } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import ProductsContext from "../../context/ProductsContext";
 import CartContext from "../../context/CartContext";
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 
 const CartItem = ({ data, id }) => {
-  let { _id, TitleProduct, price, Quantity, Size } = data;
+  let { idProduct, TitleProduct, price, Quantity, Size } = data;
   const { products } = useContext(ProductsContext);
   const { delFromCart, totalPrice } = useContext(CartContext);
   const [product, setProduct] = useState(null);
@@ -16,69 +16,68 @@ const CartItem = ({ data, id }) => {
     }
   }, [products])
 
-
   return (
     <>
       {products != null && product != null &&
-        <div style={{ borderBottom: "thin solid gray", margin: '20px', pt: 2}}>
-          <Container sx={{ pt: 3, pb: 5, display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
-            {
-              id ? //shoppingCart
-                (
-                  <Grid spacing={1} container>
+        <Container sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+          {
+            id ? // vista shoppingCart
+              (
+                <Box sx={{ border: '1px solid #bebebe', borderRadius: 1, mb: 1 }}>
+                  <Grid spacing={2} container>
                     <Grid item md={4}>
                       <img src={product[0].imgUrl} />
                     </Grid>
                     <Grid item md={6} sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                       <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, fontSize: 17, pl: 'auto', pt: 'auto' }}>{TitleProduct}</Typography>
-                      {product[0].sale ? 
+                      {product[0].sale ?
                         <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 14, pl: 'auto', pt: 'auto' }}>${parseFloat((product[0].price - (product[0].price * (product[0].percentageSale / 100))).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${parseFloat((product[0].price - (product[0].price * (product[0].percentageSale / 100))) * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
-                      :
-                      <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 14, pl: 'auto', pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                        :
+                        <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 14, pl: 'auto', pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
 
                       }
-                      
+
                       {Size && (
                         <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 14, pl: 'auto', pt: 'auto' }}>Talla: {Size}</Typography>
                       )}
                     </Grid>
-                    <Grid item md={2} >
-                      <Button size="small" sx={{p: 4}} onClick={() => delFromCart(TitleProduct, Size, Quantity)} >
-                        <RemoveCircleOutlineRoundedIcon fontSize="medium" sx={{ display:'flex', justifyContent: 'center', alignItems: 'center', alignContent:'center'}}/>
-                      </Button>
+                    <Grid item md={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <IconButton sx={{ mr: 1.5 }} onClick={() => delFromCart(idProduct, Size, Quantity)} >
+                        <RemoveCircleOutlineRoundedIcon fontSize="medium" />
+                      </IconButton>
                     </Grid>
                   </Grid>
-                )
+                </Box>
+              )
 
-                : //order
+              : //vista order
 
-                (<Grid spacing={6} container>
-                  <Grid item md={3} sm={2} xs={4}>
-                    <img src={product[0].imgUrl} />
+              (
+               
+                  <Grid sx={{mb:5, borderBottom: "thin solid gray"}} justifyContent={"space-around"} alignItems={"center"} container>  
+                    <Grid item md={2} sm={2} xs={4}>
+                      <img style={{width: '75%'}} src={product[0].imgUrl} />
+                    </Grid>
+                    <Grid item md={7} sm={4} xs={5}>
+                      <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, pl: 7, pt: 'auto' }}>{TitleProduct}</Typography>
+                      <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 15, pl: 7, pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                      {Size && (
+                        <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 15, pl: 7, pt: 'auto' }}>Talla: {Size}</Typography>
+                      )}
+                    </Grid>
+                    <Grid item md={2.5} sm={6} xs={3}>
+                    <IconButton sx={{ mr: 1.5 ,mt:3.5 }} onClick={() => delFromCart(idProduct, Size, Quantity)} >
+                        <RemoveCircleOutlineRoundedIcon fontSize="large" />
+                      </IconButton>
+                    </Grid>
                   </Grid>
-                  <Grid item md={7} sm={4} xs={5} sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', flexDirection: 'column' }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, pl: 7, pt: 'auto' }}>{TitleProduct}</Typography>
-                    <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: 15, pl: 7, pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
-                    {Size && (
-                      <Typography variant="h5" sx={{ fontWeight: 500, mb: 1, fontSize: 15, pl: 7, pt: 'auto' }}>Talla: {Size}</Typography>
-                    )}
-                  </Grid>
-                  <Grid item md={2} sm={6} xs={3}>
-                    <Button onClick={() => delFromCart(TitleProduct, Size, Quantity)} sx={{ pt: '5rem', pl: 2 }}>
-                      <RemoveCircleOutlineRoundedIcon color="error.main" fontSize="large"/>
-                    </Button>
-                  </Grid>
-                </Grid>
-                )
-            }
-            <Grid sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', top: 10, width: '100%', height: 'auto' }}>
-                  { totalPrice != null && (
-                        <Typography variant="h6" sx={{ fontWeight: 600, pl: 40, fontSize: 15, flexGrow: 1 }}>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
-                      )
-                  }
-            </Grid>
-          </Container>
-        </div>
+                
+                
+              )
+          }
+
+        </Container>
+
       }
     </>
   );

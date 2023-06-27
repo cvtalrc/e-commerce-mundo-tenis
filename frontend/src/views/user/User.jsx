@@ -59,6 +59,8 @@ export default function User() {
         }
     }, [orders, user]);
 
+    console.log(orders)
+
     console.log(userOrders)
 
     const region = ['Valparaíso', "Libertador General Bernardo O'Higgins", 'Metropolitana'];
@@ -206,9 +208,7 @@ export default function User() {
         <>
             {
                 user != null && userOrders !== null && (
-                    <Container maxWidth="xl" sx={{
-                    }}
-                    >
+                    <Container maxWidth="xl">
                         <Typography variant="h4" sx={{
                             mb: 4,
                             fontWeight: 700,

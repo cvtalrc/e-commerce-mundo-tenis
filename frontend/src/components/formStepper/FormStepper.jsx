@@ -59,26 +59,28 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return (
-        <Grid container sx={{ borderBottom: "thin solid gray", margin: '20px', pt: 2 }}>
-          <Grid item sx={{ width: '100%', height: '30%' }}>
-            {
-              cartProducts && cartProducts.length > 0 ?
-                cartProducts.map((item, index) => (
-                  <CartItem key={index} data={item} id={false} />
-                ))
-                :
-                <Typography>Tu carrito está vacío</Typography>
-            }
+        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5 }}>
+          <Grid container >
+            <Grid item>
+              {
+                cartProducts && cartProducts.length > 0 ?
+                  cartProducts.map((item, index) => (
+                    <CartItem key={index} data={item} id={false} />
+                  ))
+                  :
+                  <Typography>Tu carrito está vacío</Typography>
+              }
+            </Grid>
+            <Grid item>
+              {cartProducts && cartProducts.length > 0 ?
+                <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, fontSize: 20, pl: 'auto', pt: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
+                  Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </Typography>
+                : ''
+              }
+            </Grid>
           </Grid>
-          <Grid item sx={{ width: '100%', height: '30%' }}>
-            {cartProducts && cartProducts.length > 0 ?
-              <Typography variant="h5" sx={{ fontWeight: 800, mb: 3, fontSize: 20, pl: 'auto', pt: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
-                Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-              </Typography>
-              : ''
-            }
-          </Grid>
-        </Grid>
+        </Box>
       );
     case 1:
       return (
@@ -112,40 +114,76 @@ const FormStepper = () => {
   let api = helpHttp();
 
   const paymentApi = async () => {
-    const url = "http://localhost:3000/api/payment"
+    // const url = "http://localhost:3000/api/payment"
 
-    const options = {
-      body: {
-        "userID": user._id,
-        "Delivery": formGlobal
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
+    // const options = {
+    //   body: {
+    //     "userID": user._id,
+    //     "Delivery": formGlobal
+    //   },
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": "application/json"
+    //   }
+    // }
+
+    // const response = await api
+    //   .post(url, options)
+    //   .then((res) => {
+    //     console.log("respuesta a consulta formStepper", response)
+    //     return res
+    //   })
+    //   .catch((err) => {
+    //     console.log('Error fatal: ', err);
+    //   })
+
+    // if (response != undefined) {
+    //   const form = document.createElement('form');
+    //   form.action = response.url;
+    //   form.method = 'POST';
+
+    //   const tokenInput = document.createElement('input');
+    //   tokenInput.type = 'hidden';
+    //   tokenInput.name = 'token_ws';
+    //   tokenInput.value = response.token;
+
+    //   form.appendChild(tokenInput);
+    //   document.body.appendChild(form);
+    //   form.submit();
+
+    // }
+
+    try {
+      const url = "http://localhost:3000/api/payment";
+      const options = {
+        body: {
+          userID: user._id,
+          Delivery: formGlobal,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      const response = await api.post(url, options); // Esperar la respuesta del servidor
+  
+      const form = document.createElement("form");
+      form.action = response.url;
+      form.method = "POST";
+  
+      const tokenInput = document.createElement("input");
+      tokenInput.type = "hidden";
+      tokenInput.name = "token_ws";
+      tokenInput.value = response.token;
+  
+      form.appendChild(tokenInput);
+      document.body.appendChild(form);
+      form.submit();
+    } catch (error) {
+      console.log("Error fatal: ", error);
     }
 
-    const response = await api
-      .post(url, options)
-      .then((res) => {
-        return res
-      })
-      .catch((err) => {
-        console.log('Error fatal: ', err);
-      })
-
-    const form = document.createElement('form');
-    form.action = response.url;
-    form.method = 'POST';
-
-    const tokenInput = document.createElement('input');
-    tokenInput.type = 'hidden';
-    tokenInput.name = 'token_ws';
-    tokenInput.value = response.token;
-
-    form.appendChild(tokenInput);
-    document.body.appendChild(form);
-    form.submit();
   }
 
   const handleNext = async (data) => {
@@ -170,42 +208,42 @@ const FormStepper = () => {
   };
 
   return (
-        <div>
-          <Stepper activeStep={activeStep}>
-            {steps.map((step, index) => {
-              const labelProps = {};
-              const stepProps = {};
+    <div>
+      <Stepper activeStep={activeStep}>
+        {steps.map((step, index) => {
+          const labelProps = {};
+          const stepProps = {};
 
-              return (
-                <Step {...stepProps} key={index}>
-                  <StepLabel {...labelProps}>{step}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          <>
-            {getStepContent(activeStep)}
-            <Box sx={{ display: "flex", justifyContent: "right" }} >
-              <Button
-                sx={{ mr: 1 }}
-                disabled={activeStep === 0}
-                onClick={handleBack}
-              >
-                Atrás
-              </Button>
-              <Button
-                // className={classes.button}
-                variant="contained"
-                color="secondary"
-                onClick={handleNext}
-                type="submit"
-                disabled={editForm || (cartProducts && cartProducts.length === 0)}
-              >
-                {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
-              </Button>
-            </Box>
-          </>
-        </div>
+          return (
+            <Step {...stepProps} key={index}>
+              <StepLabel {...labelProps}>{step}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      <>
+        {getStepContent(activeStep)}
+        <Box sx={{ display: "flex", justifyContent: "right" }} >
+          <Button
+            sx={{ mr: 1 }}
+            disabled={activeStep === 0}
+            onClick={handleBack}
+          >
+            Atrás
+          </Button>
+          <Button
+            // className={classes.button}
+            variant="contained"
+            color="secondary"
+            onClick={handleNext}
+            type="submit"
+            disabled={editForm || (cartProducts && cartProducts.length === 0)}
+          >
+            {activeStep === steps.length - 1 ? "Pagar" : "Siguiente"}
+          </Button>
+        </Box>
+      </>
+    </div>
   )
 };
 

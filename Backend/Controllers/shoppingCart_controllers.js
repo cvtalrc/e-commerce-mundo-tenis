@@ -191,24 +191,24 @@ async function emptyAll(req, res) {
 async function reduceStock(orderID){
   //const orderID = req.params.orderID
   const order = await Order.findById(orderID)
-  console.log(order.Cart[1].Products)
   //console.log(order.Cart);
   try{
     //reducir stock
     for (const item of order.Cart[1].Products) {
-      const isProduct = await Product.findById(item.idProduct); //identifico el producto
+      let isProduct = await Product.findById(item.idProduct); //identifico el producto
       if (isProduct) {
-        const stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el stock actual del producto
+        let stockItem = isProduct.stock.find((stock) => stock.size === item.Size); //encuentro el stock actual del producto
     
         if (stockItem) {
-          const newQuantity = stockItem.quantity - item.Quantity; 
-          const index = await isProduct.stock.findIndex(stock => stock.size === item.Size);
+          let newQuantity = stockItem.quantity - item.Quantity; 
+          let index = await isProduct.stock.findIndex(stock => stock.size === item.Size);
           console.log(index);
           await isProduct.updateOne({$set: { [`stock.${index}.quantity`]: newQuantity }});
+          await isProduct.save();
         }else{
           throw new Error("Carrito no encontrado");
         }
-        await isProduct.save();
+        
       }else{
         throw new Error("Error al encontrar el producto en inventario");
       }
