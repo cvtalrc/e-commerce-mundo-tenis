@@ -12,10 +12,10 @@ const FormCheck = ({ cartProducts, totalPrice, form }) => {
                     <Typography sx={{ fontWeight: 700 }}>Productos </Typography>
                     <List>
                         {cartProducts.map((product) => (
-                            <ListItem key={product.TitleProduct}>{product.TitleProduct} x {product.Quantity} = ${product.price}</ListItem>
+                            <ListItem key={product.TitleProduct}>{product.TitleProduct} x {product.Quantity} = ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</ListItem>
                         ))}
                     </List>
-                    <Typography>Total: {totalPrice} </Typography>
+                    <Typography>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} </Typography>
                 </Grid>
 
                 <Grid sm={6} item>
@@ -45,7 +45,7 @@ const FormCheck = ({ cartProducts, totalPrice, form }) => {
                 </Grid>
             </Grid>
 
-        </Box >
+        </Box>
     );
 };
 

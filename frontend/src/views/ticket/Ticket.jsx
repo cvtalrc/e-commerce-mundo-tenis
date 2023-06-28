@@ -11,7 +11,7 @@ export default function Ticket() {
   setTimeout(() => {
     localStorage.removeItem('data');
     window.location.href = '/'
-  }, 15000);
+  }, 7000);
 
   return (
     <Container
