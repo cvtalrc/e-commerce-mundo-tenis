@@ -151,6 +151,7 @@ async function resetPassword(req, res){
     const email = decoded.email;
     console.log(email)
     const user = await User.findOne({ email: email });
+    console.log(email)
     if (!user) return res.status(404).send({ message: 'Usuario no encontrado', status: 'error' });
 
     const salt = await bcrypt.genSalt(auth.SALT_ROUNDS);

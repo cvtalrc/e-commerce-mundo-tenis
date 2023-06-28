@@ -25,6 +25,7 @@ import EmailConfirm from './views/emailConfirm/EmailConfirm';
 import EmailValidation from './components/emailValidation/emailValidation';
 import Admin from './views/admin/Admin';
 import NotFound from './views/notFound/NotFound';
+import TicketError from './views/ticket/TicketError';
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
                                     <Route path="/user/:user" element={<User/>} />
                                     <Route path="/payment" element={<Payment />} />
                                     <Route path="/ticket" element={<Ticket />} />
+                                    <Route path="/ticket-error" element={<TicketError />} />
                                     <Route path="/about-us" element={<AboutUs />} />
                                     <Route path='/reset-password' element={<ResetPassword />} />
                                     <Route path="/reset-pass" element={<ResetPass />} />

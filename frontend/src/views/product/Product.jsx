@@ -185,6 +185,7 @@ export default function Product() {
                         let stockProduct = product[0].stock.filter(
                           (stock) => stock.size === form.Size
                         );
+                        console.log(stockProduct)
                         let quantity = stockProduct[0].quantity;
 
                         if (itemCount < quantity) {
