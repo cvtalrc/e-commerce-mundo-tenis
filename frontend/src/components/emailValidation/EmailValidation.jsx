@@ -15,6 +15,7 @@ export default function EmailValidation() {
         const fetchData = async () => {
             try {
                 const res = await fetch(url);
+                console.log("entra al try")
                 if (res.ok) {
                     const data = await res.json();
                     console.log("respuesta de compra", data);
@@ -33,7 +34,7 @@ export default function EmailValidation() {
         if (param.search) {
             fetchData();
         }
-    }, [param.search, navigate]);
+    }, []);
 
     console.log("respuesta", response);
 

@@ -41,7 +41,6 @@ function isValidAddress(address) {
 
 export default function User() {
     const { user, updateUserData } = useContext(UserContext);
-    // const { orderByUser } = useContext(OrderContext)
     const { orders } = useContext(OrderContext)
     const [validationErrors, setValidationErrors] = useState({});
     const [edit, setEdit] = useState(false);
@@ -51,7 +50,7 @@ export default function User() {
     const [confirmedPass, setConfirmedPass] = useState('')
     const [form, setForm] = useState(null);
     const [userOrders, setUserOrders] = useState(null)
-    
+
 
     useEffect(() => {
         if (orders !== null && user !== null) {
@@ -219,7 +218,7 @@ export default function User() {
                         </Typography>
 
                         {edit ?
-                            <>
+                            <Box >
                                 <Grid spacing={2} rowSpacing={2} sx={{ mt: 1 }} container>
                                     <Grid sm={4} item>
                                         <TextField
@@ -436,7 +435,7 @@ export default function User() {
                                         <CheckIcon color="secondary" />
                                     </Button>
                                 </Box>
-                            </>
+                            </Box>
                             :
                             <>
                                 {form != null ?
@@ -463,10 +462,17 @@ export default function User() {
                                             </Grid>
                                         </Box>
 
-                                        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex' }}>
-                                            <Typography variant='h5' sx={{ mt:1, fontWeight: 700 }}> Pedidos </Typography>
-                                                        <PaginationOrder type={'user'} orders={userOrders}></PaginationOrder>
-                                                    
+
+                                        <Typography variant='h5' sx={{ mt: 1, fontWeight: 700 }}> Pedidos </Typography>
+                                        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex', flexDirection: 'column' }}>
+                                            {userOrders.length > 0 ? <PaginationOrder type={'user'} orders={userOrders}></PaginationOrder>
+                                                :
+                                                <Box sx={{ m: 10, justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
+                                                    <Typography>Aún no tienes pedidos.</Typography>
+                                                </Box>
+                                            }
+
+
                                         </Box>
                                     </>
                                     : ''
@@ -475,6 +481,8 @@ export default function User() {
                             </>
 
                         }
+
+
                     </Container>
                 )
             }

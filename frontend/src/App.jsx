@@ -23,8 +23,8 @@ import User from './views/user/User';
 import AboutUs from './views/aboutUs/AboutUs';
 import ResetPassword from './views/resetPass/ResetPassword';
 import ResetPass from './views/resetPass/ResetPass';
-import EmailValidation from './views/emailConfirm/EmailConfirm';
 import EmailConfirm from './views/emailConfirm/EmailConfirm';
+import EmailValidation from './components/emailValidation/emailValidation';
 
 const navArrayLinks = [
     {

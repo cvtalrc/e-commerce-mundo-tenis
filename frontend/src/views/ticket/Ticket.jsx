@@ -25,7 +25,7 @@ export default function Ticket() {
       }}
     >
       <Box
-        sx={{ m: 5, border: '2px gray solid', borderRadius: 1, width: '50%' }}
+        sx={{ m: 5, border: '1px solid #bebebe', borderRadius: 1, width: '50%' }}
       >
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
           <CheckCircleOutlineIcon

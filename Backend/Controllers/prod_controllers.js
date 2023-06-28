@@ -1,7 +1,7 @@
 const Product = require("../Models/Product");
 
 async function add(req, res) {
-  const {title, brand, price, description, stock, sport, category, imgUrl, sale, percentageSale,} = req.body;
+  const {title, brand, price, description, stock, sport, category, imgUrl, sale, percentageSale} = req.body;
 
   const product = new Product({
     title,
@@ -20,7 +20,7 @@ async function add(req, res) {
     if (error) {
       return res.status(400).send({ message: "Error al crear el producto, intentar nuevamente", status : "Error" });
     } else {
-      res.status(201).send({newProduct: prodStorage, status: "Error"});
+      res.status(201).send({newProduct: prodStorage, status: "success"});
     }
   });
 }

@@ -147,7 +147,14 @@ export default function SignUp() {
       .then((res) => {
         if (!res.err) {
           console.log('usuario registrado', res);
+
           if (res.status === 'success') {
+            Modal (
+              'Registro de usuario exitoso.',
+              'Se ha enviado una confirmación de cuenta al correo proporcionado para su validación.',
+              'success',
+              ''
+            )
             navigate('/login');
           } else {
             Modal (
