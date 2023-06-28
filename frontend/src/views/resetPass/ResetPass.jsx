@@ -11,6 +11,7 @@ import { useState } from "react";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Modal } from "../../components/Alerts/Modal";
 import { useLocation } from "react-router-dom";
+import { BASE_API_URL } from "../../../config";
 
 function Copyright(props) {
   return (
@@ -86,7 +87,7 @@ export default function ResetPass() {
       return;
     }
 
-    let url = `http://localhost:3000/api/reset-password${token}`;
+    let url = `${BASE_API_URL}/reset-password${token}`;
     let options = {
       method: 'POST',
       body: JSON.stringify({ pass: passForm.pass }),

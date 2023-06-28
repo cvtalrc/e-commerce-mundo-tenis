@@ -31,14 +31,14 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
       headerName: "",
       sortable: false,
       renderCell: ({ row }) =>
-        <Button color="secondary" variant="contained" onClick={() => setDataToEdit(row)}>Editar</Button>,
+        <Button color="secondary" variant="outlined" size="small" onClick={() => setDataToEdit(row)}>Editar</Button>,
     },
     {
       field: "delete",
       headerName: "",
       sortable: false,
       renderCell: ({ row }) =>
-        <Button color="secondary" variant="contained" onClick={() => deleteData(row._id)}>Eliminar</Button>,
+        <Button color="secondary" variant="outlined" size="small" onClick={() => deleteData(row._id)}>Eliminar</Button>,
     }
 
   ];

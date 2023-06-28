@@ -1,43 +1,106 @@
 import { Box, Typography, Grid, List, ListItem } from "@mui/material";
 import React, { useState } from "react";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import StoreIcon from '@mui/icons-material/Store';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 
 const FormCheck = ({ cartProducts, totalPrice, form }) => {
     console.log(cartProducts)
 
     return (
-        <Box sx={{ m: 4, mb: 10 }}>
-            <Typography sx={{ fontWeight: 700, mb: 4 }}>REVISAR Y PAGAR</Typography>
+        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5 }}>
             <Grid container>
                 <Grid sm={6} item>
-                    <Typography sx={{ fontWeight: 700 }}>Productos </Typography>
+                    <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>
+                        <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>Productos</Typography>
+                        <LocalMallOutlinedIcon sx={{ ml: 2, fontSize: 40 }} />
+                    </ListItem>
+
                     <List>
                         {cartProducts.map((product) => (
-                            <ListItem key={product.TitleProduct}>{product.TitleProduct} x {product.Quantity} = ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >{product.TitleProduct} x {product.Quantity} = ${product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                            </ListItem>
+
                         ))}
+
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18, fontWeight: 700 }} >Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                        </ListItem>
                     </List>
-                    <Typography>Total: ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} </Typography>
+
                 </Grid>
 
                 <Grid sm={6} item>
-                <Typography sx={{ fontWeight: 700 }}>Entrega </Typography>
-                    <Typography>Tipo de Entrega: {form.delivery === 'store-pickup' ? 'Retiro en Tienda' : 'Delivery'}</Typography>
                     {form.delivery === 'store-pickup' ?
                         <>
-                            <Typography>Datos de retiro: </Typography>
-                            <Typography>Dirección: blahalbha </Typography>
-                            <Typography>Contacto: blahblah </Typography>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>
+                                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>Datos de Retiro</Typography>
+                                <StoreIcon sx={{ ml: 2, fontSize: 40 }} />
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Dirección: Vargas Buston 960</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Región: Metropolitana </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Comuna: San Miguel </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Contacto: +56952360764  </Typography>
+                            </ListItem>
+
                         </>
                         :
                         <>
-                            <Typography>Datos de entrega: </Typography>
-                            <Typography>Nombre: {form.name}</Typography>
-                            <Typography>Apellido: {form.lastName}</Typography>
-                            <Typography>Celular: {form.cellNumber}</Typography>
-                            <Typography>Dirección: {form.address} {form.addressNumber}</Typography>
-                            <Typography>Región: {form.region}</Typography>
-                            <Typography>Comuna: {form.comuna}</Typography>
-                            {form.instructions ? <Typography>Instrucciones de entrega: {form.instructions}</Typography> : ''
-                            }
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>
+                                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>Datos de Entrega</Typography>
+                                <DeliveryDiningOutlinedIcon sx={{ ml: 2, fontSize: 40 }} />
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Nombre: {form.name}</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Apellido: {form.lastName}</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Celular: {form.cellNumber}</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Correo electrónico: {form.email}</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Dirección: {form.address} </Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Región: {form.region}</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Comuna: {form.comuna}</Typography>
+                            </ListItem>
+                            {form.instructions ?
+                                <ListItem>
+                                    <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                    <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Instrucciones de entrega: {form.instructions}</Typography>
+                                </ListItem>
+                                : ''}
+
                         </>
 
                     }

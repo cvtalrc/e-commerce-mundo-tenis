@@ -11,6 +11,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { helpHttp } from '../../helpers/helpHttp';
 import { MenuItem, Select } from '@mui/material';
 import { Modal } from '../Alerts/Modal';
+import { BASE_API_URL } from '../../../config';
 
 function isValidName(name) {
   const regex = /^[A-Za-zÁ-ÿ\s]+$/;
@@ -126,7 +127,7 @@ export default function SignUp() {
     event.preventDefault();
 
     const api = helpHttp();
-    const url = 'http://localhost:3000/api/sign-up';
+    const url = `${BASE_API_URL}/sign-up`;
     const options = {
       body: form,
       headers: { 'content-type': 'application/json' }

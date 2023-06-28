@@ -3,6 +3,7 @@ import { helpHttp } from "../helpers/helpHttp";
 import UserContext from "./UserContext";
 import { Toast } from "../components/Alerts/Toast";
 import { Modal } from "../components/Alerts/Modal";
+import { BASE_API_URL } from "../../config";
 
 const CartContext = createContext();
 
@@ -32,7 +33,7 @@ const CartProvider = ({ children }) => {
     }, [user]);
 
     let api = helpHttp();
-    let url = `http://localhost:3000/api/cart/${idUser}`;
+    let url = `${BASE_API_URL}/cart/${idUser}`;
 
     //console.log('email: ', email)
 
@@ -64,7 +65,7 @@ const CartProvider = ({ children }) => {
     }, [url]);
 
     const addToCart = (_id, size, quantity) => {
-        const urlAdd = `http://localhost:3000/API/cart/add`
+        const urlAdd = `${BASE_API_URL}/cart/add`
         form.userID = idUser
         form.idProduct = _id
         form.Size = size
@@ -109,7 +110,7 @@ const CartProvider = ({ children }) => {
     };
 
     const delFromCart = (_id, size, quantity) => { //eliminando de a uno
-        const urlDel = "http://localhost:3000/API/cart/remove"
+        const urlDel = `${BASE_API_URL}/cart/remove`
         form.userID = idUser
         form.idProduct = _id
         form.Size = size

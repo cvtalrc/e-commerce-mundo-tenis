@@ -1,4 +1,4 @@
-import {AppBar, Button,Drawer,IconButton,Toolbar,Badge,Box,Container} from "@mui/material";
+import { AppBar, Button, Drawer, IconButton, Toolbar, Badge, Box, Container, MenuItem, Menu } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useState, useContext } from "react";
 import NavListDrawer from "./NavListDrawer";
@@ -20,6 +20,15 @@ export default function Navbar() {
   const { handleChangeSearch, handleSubmitSearch } = useContext(ProductsContext);
   const [openMenu, SetOpenMenu] = useState(false);
   const [openShoppingCart, SetOpenShoppingCart] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openButtonMenu = Boolean(anchorEl);
+
+  const handleClickMenuAdmin = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenuAdmin = () => {
+    setAnchorEl(null);
+  };
   const { cartProducts } = useContext(CartContext); //items dentro del carro
   const sports = ["Tenis", "Padel"];
 
@@ -96,22 +105,47 @@ export default function Navbar() {
                 </Button>
                 {user != null ? (
                   <>
-                    <Button
-                      color="inherit"
-                      sx={{
-                        "&:hover": {
-                          cursor: "auto",
-                        }
-                      }}
-                      component={NavLink}
-                      to={`/user/${user._id}`}
-                    >
-                      ¡Hola, {user.name}!
-                    </Button>
+                    {user.type === 'admin' ?
+                      <>
+                        <Button
+                          color="inherit"
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                            }
+                          }}
+                          component={NavLink}
+                          to={`/admin`}
+                        >
+                          ¡Hola, {user.name}!
+                        </Button>
 
-                    <Button color="inherit" onClick={logOut}>
-                      Cerrar sesión
-                    </Button>
+                        <Button color="inherit" onClick={logOut}>
+                          Cerrar sesión
+                        </Button>
+                      </>
+                      :
+                      <>
+                        <Button
+                          color="inherit"
+                          sx={{
+                            "&:hover": {
+                              cursor: "pointer",
+                            }
+                          }}
+                          component={NavLink}
+                          to={`/user/${user._id}`}
+                        >
+                          ¡Hola, {user.name}!
+                        </Button>
+
+                        <Button color="inherit" onClick={logOut}>
+                          Cerrar sesión
+                        </Button>
+                      </>
+
+                    }
+
                   </>
                 ) : (
                   <Button color="inherit" component={NavLink} to="/login">

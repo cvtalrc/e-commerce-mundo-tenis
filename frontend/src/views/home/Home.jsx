@@ -19,6 +19,7 @@ import palas from "../../img/palas.png"
 import palas2 from "../../img/palas2.png"
 import palas3 from "../../img/palas3.png"
 import palas4 from "../../img/palas4.jpeg"
+import { BASE_API_URL } from "../../../config";
 
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
     console.log(comments)
 
     let api = helpHttp()
-    let url = "http://localhost:3000/api/comment/"
+    let url = `${BASE_API_URL}/comment/`
 
     useEffect(() => {
         api

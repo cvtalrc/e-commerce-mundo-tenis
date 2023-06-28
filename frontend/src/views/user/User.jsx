@@ -18,6 +18,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import { helpHttp } from "../../helpers/helpHttp";
 import OrderContext from '../../context/OrderContext'
 import PaginationOrder from "../../components/OrderItem/PaginationOrder";
+import Swal from 'sweetalert2'
+
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import StoreIcon from '@mui/icons-material/Store';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
 
 function isValidName(name) {
     const regex = /^[A-Za-zÁ-ÿ\s]+$/;
@@ -40,7 +47,7 @@ function isValidAddress(address) {
 }
 
 export default function User() {
-    const { user, updateUserData } = useContext(UserContext);
+    const { user, updateUserData, logOut } = useContext(UserContext);
     const { orders } = useContext(OrderContext)
     const [validationErrors, setValidationErrors] = useState({});
     const [edit, setEdit] = useState(false);
@@ -179,6 +186,27 @@ export default function User() {
         }
     }
 
+    const handleEdit = () => {
+        Swal.fire({
+            title: '¿Quieres editar tu información?',
+            text: "Para ver los cambios, deberás cerrar sesión",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Si, cambiémoslo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Cambios!',
+                    'Tus datos estarán disponibles para cambio.',
+                    'success'
+                )
+                setEdit(true)
+            }
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -207,23 +235,23 @@ export default function User() {
         <>
             {
                 user != null && userOrders !== null && (
-                    <Container maxWidth="xl">
+                    <Container sx={{ p: 5 }} maxWidth="xl">
                         <Typography variant="h4" sx={{
                             mb: 4,
                             fontWeight: 700,
-                            marginTop: 6,
+                            marginTop: 2,
                         }}
                         >
-                            Panel de usuario
+                            ¡Bienvenid@ a tu perfil!
                         </Typography>
 
                         {edit ?
-                            <Box >
-                                <Grid spacing={2} rowSpacing={2} sx={{ mt: 1 }} container>
+                            <Box sx={{}}>
+                                <Grid spacing={2} rowSpacing={2} container>
                                     <Grid sm={4} item>
                                         <TextField
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="name"
@@ -241,7 +269,7 @@ export default function User() {
                                         <TextField
                                             required
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="lastName"
@@ -258,7 +286,7 @@ export default function User() {
                                         <TextField
                                             required
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="cellNumber"
@@ -278,7 +306,7 @@ export default function User() {
                                                 <TextField
                                                     required
                                                     fullWidth
-                                                    size="small"
+                                                    size="medium"
                                                     color="secondary"
                                                     type="password"
                                                     name="oldPass"
@@ -295,7 +323,7 @@ export default function User() {
                                                 <TextField
                                                     required
                                                     fullWidth
-                                                    size="small"
+                                                    size="medium"
                                                     color="secondary"
                                                     type="password"
                                                     name="newPass"
@@ -312,7 +340,7 @@ export default function User() {
                                                 <TextField
                                                     required
                                                     fullWidth
-                                                    size="small"
+                                                    size="medium"
                                                     color="secondary"
                                                     type="password"
                                                     name="confirmedPass"
@@ -335,7 +363,7 @@ export default function User() {
                                                 <TextField
                                                     required
                                                     fullWidth
-                                                    size="small"
+                                                    size="medium"
                                                     color="secondary"
                                                     type="password"
                                                     name="oldPass"
@@ -357,7 +385,7 @@ export default function User() {
                                         <TextField
                                             required
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="email"
@@ -373,7 +401,7 @@ export default function User() {
                                         <TextField
                                             required
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="address"
@@ -390,7 +418,7 @@ export default function User() {
                                         <TextField
                                             required
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="region"
@@ -411,7 +439,7 @@ export default function User() {
                                         <TextField
                                             required
                                             fullWidth
-                                            size="small"
+                                            size="medium"
                                             color="secondary"
                                             type="text"
                                             name="comuna"
@@ -440,31 +468,66 @@ export default function User() {
                             <>
                                 {form != null ?
                                     <>
-                                        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex' }}>
-                                            <Grid spacing={2} container direction='row' justifyContent='center'>
-                                                <Grid sm={5} item >
+                                        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex', justifyContent: 'center' }}>
+                                            <Grid container>
+                                                <Grid sm={8} xs={10} item>
                                                     <List>
-                                                        <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos personales</ListItem>
-                                                        <ListItem>Nombre: {form.name}</ListItem>
-                                                        <ListItem>Apellido: {form.lastName}</ListItem>
-                                                        <ListItem>Correo electrónico: {form.email}</ListItem>
-                                                        <ListItem>Celular: {form.cellNumber}</ListItem>
-                                                        <ListItem>Dirección: {form.address}</ListItem>
-                                                        <ListItem>Región: {form.region}</ListItem>
-                                                        <ListItem>Comuna: {form.comuna}</ListItem>
+                                                        <ListItem variant="h5" component={Typography} sx={{ mb: 2, fontWeight: 700 }}>
+                                                            <Typography variant="h5" sx={{ fontWeight: 700 }}>Datos personales</Typography>
+                                                            <AccountCircleIcon sx={{ ml: 2, fontSize: 38 }} />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Nombre: {form.name}</Typography>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Apellido: {form.lastName}</Typography>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Celular: {form.cellNumber}</Typography>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Correo electrónico: {form.email}</Typography>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Dirección: {form.address} </Typography>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Región: {form.region}</Typography>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Comuna: {form.comuna}</Typography>
+                                                        </ListItem>
+                                                        {form.instructions ?
+                                                            <ListItem>
+                                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Instrucciones de entrega: {form.instructions}</Typography>
+                                                            </ListItem>
+                                                            : ''}
+
                                                     </List>
                                                 </Grid>
-                                                <Box sm={7} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                    <Button onClick={() => { setEdit(true) }}>
-                                                        <EditIcon variant="contained" color="secondary" />
+                                                <Grid sm={4} xs={2} item>
+                                                    <Button sx={{ mt: { xs: 2 } }} onClick={() => { setEdit(true) }}>
+                                                        <EditIcon variant="contained" />
                                                     </Button>
-                                                </Box>
+                                                </Grid>
                                             </Grid>
                                         </Box>
 
 
-                                        <Typography variant='h5' sx={{ mt: 1, fontWeight: 700 }}> Pedidos </Typography>
+
                                         <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5, display: 'flex', flexDirection: 'column' }}>
+                                            <ListItem variant="h5" component={Typography} sx={{ mb: 2, fontWeight: 700 }}>
+                                                <Typography variant="h5" sx={{ fontWeight: 700 }}>Pedidos</Typography>
+                                                <ChecklistIcon sx={{ ml: 2, fontSize: 38 }} />
+                                            </ListItem>
                                             {userOrders.length > 0 ? <PaginationOrder type={'user'} orders={userOrders}></PaginationOrder>
                                                 :
                                                 <Box sx={{ m: 10, justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>

@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { helpHttp } from "../../helpers/helpHttp";
 import { Modal } from "../../components/Alerts/Modal";
 import { useLocation } from "react-router-dom";
+import { BASE_API_URL } from "../../../config";
 
 function Copyright(props) {
   return (
@@ -76,7 +77,7 @@ export default function ResetPassword() {
     event.preventDefault();
     console.log(emailForm);
 
-    let url = "http://localhost:3000/api/forgot-password";
+    let url = `${BASE_API_URL}/forgot-password`;
     let options = {
       body: emailForm,
       headers: {

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Toast } from '../components/Alerts/Toast';
 import { Modal } from '../components/Alerts/Modal';
 import jwtDecode from 'jwt-decode';
+import { BASE_API_URL } from "../../config";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
@@ -27,7 +28,7 @@ const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const logIn = (form) => {
-        let url = 'http://localhost:3000/api/sign-in';
+        let url = `${BASE_API_URL}/sign-in`;
 
         let options = {
             body: form,
@@ -46,14 +47,14 @@ const UserProvider = ({ children }) => {
                         Toast(
                             'bottom-end',
                             'success',
-                            'Se ha iniciado sesión'
+                            `Bienvenido, ${decodedUser.name}`
                         )
-                        navigate('/');
+                        navigate('/admin');
                     } else {
                         Toast(
                             'bottom-end',
                             'success',
-                            'Se ha iniciado sesión'
+                            `Bienvenid@, ${decodedUser.name}`
                         )
                         navigate('/');
                     }
@@ -72,7 +73,7 @@ const UserProvider = ({ children }) => {
     }
 
     const logOut = () => {
-        let url = 'http://localhost:3000/api/sign-out';
+        let url = `${BASE_API_URL}/sign-out`;
         let options = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('user')}`,
@@ -99,7 +100,7 @@ const UserProvider = ({ children }) => {
     }
 
     const updateUserData = async (form) => {
-        let url = `http://localhost:3000/api/user/update/${user._id}`;
+        let url = `${BASE_API_URL}/user/update/${user._id}`;
         let options = {
             body: form,
             headers: {
@@ -112,16 +113,35 @@ const UserProvider = ({ children }) => {
             .put(url, options)
             .then((res) => {
                 if (!res.err) {
-                    localStorage.removeItem('user');
 
-                    const localStorageAux = { ...localStorage }
-                    console.log(localStorageAux)
+                    let url = `${BASE_API_URL}/sign-out`;
+                    let options = {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('user')}`,
+                            'content-type': 'application/json'
+                        }
+                    };
+            
+                    api
+                        .post(url, options)
+                        .then(async (res) => {
+                            if (res.err) {
+                                console.error(res.err)
+                            } else {
+                                    setToken(null);
+                                    setUser(null);
+                                    localStorage.removeItem('user');
+                                    navigate('/');
+                            }
+                        })
+                    
 
-                    localStorage.setItem('user', res.newToken);
-                    setToken(res.newToken);
-                    let decodedUser = jwtDecode(res.newToken);
-                    console.log('usuario nuevo', decodedUser._doc)
-                    setUser(decodedUser._doc);
+                    // // localStorage.setItem('user', res.newToken);
+                    // // setToken(res.newToken);
+                    // // let decodedUser = jwtDecode(res.newToken);
+                    // // console.log('usuario nuevo', decodedUser._doc)
+                    // // setUser(decodedUser._doc); eso se supone que es la actualizacion del usuario pal contexto
+                    // no me acuerdo
 
                 }
             })

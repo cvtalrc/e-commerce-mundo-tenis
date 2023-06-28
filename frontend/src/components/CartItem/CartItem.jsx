@@ -51,7 +51,7 @@ const CartItem = ({ data, id }) => {
               )
 
               : //vista order
-/* <img style={{width: '100%'}} src={product[0].imgUrl} /> */
+
               (
 
                 <Grid sx={{ mb: 2, borderBottom: "thin solid gray" }} justifyContent={"space-around"} alignItems={"center"} justifyItems={"center"} container>
@@ -60,7 +60,12 @@ const CartItem = ({ data, id }) => {
                   </Grid>
                   <Grid item md={4} xs={7}>
                     <Typography sx={{ fontWeight: 600, mb: 2, pl: 7, pt: 'auto', fontSize: { md: '20px', md: '20px',xs: '18px' } }}>{TitleProduct}</Typography>
-                    <Typography sx={{ fontWeight: 500, mb: 2, fontSize: { md: '20px', xs: '14px' }, pl: 7, pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                    {product[0].sale ?
+                        <Typography variant="h5" sx={{fontWeight: 500, mb: 2, fontSize: { md: '20px', xs: '14px' }, pl: 7, pt: 'auto' }}>${parseFloat((product[0].price - (product[0].price * (product[0].percentageSale / 100))).toFixed(0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${parseFloat((product[0].price - (product[0].price * (product[0].percentageSale / 100))) * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+                        :
+                        <Typography variant="h5" sx={{ fontWeight: 500, mb: 2, fontSize: { md: '20px', xs: '14px' }, pl: 7, pt: 'auto' }}>${product[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} x {Quantity} = ${(product[0].price * Quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Typography>
+
+                      } 
                     {Size && (
                       <Typography sx={{ fontWeight: 500, mb: 1, fontSize: 15, pl: 7, pt: 'auto' }}>Talla: {Size}</Typography>
                     )}

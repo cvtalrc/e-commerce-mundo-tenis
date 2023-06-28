@@ -5,7 +5,7 @@ import OrderItem from "./OrderItem";
 
 export default function PaginationOrder({ orders, type }) {
     let [page, setPage] = useState(1);
-    let PER_PAGE = 12;
+    let PER_PAGE = 9;
     console.log(type)
 
     let count = Math.ceil(orders.length / PER_PAGE);
@@ -17,7 +17,7 @@ export default function PaginationOrder({ orders, type }) {
     };
 
     return (
-        <Box sx={{m:5, p:5}}>
+        <>
 
             <Grid container spacing={6}>
                 {
@@ -39,6 +39,6 @@ export default function PaginationOrder({ orders, type }) {
                 />
             </Box>
 
-        </Box>
+        </>
     )
 }

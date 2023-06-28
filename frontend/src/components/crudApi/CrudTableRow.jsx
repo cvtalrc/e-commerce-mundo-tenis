@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 
 const CrudTableRow = ({ el, setDataToEdit, deleteData }) => {
@@ -15,8 +16,8 @@ const CrudTableRow = ({ el, setDataToEdit, deleteData }) => {
       <td>{quantity}</td>
       <td>{imgUrl}</td>
       <td>
-        <button onClick={() => setDataToEdit(el)}>Editar</button>
-        <button onClick={() => deleteData(_id)}>Eliminar</button>
+        <Button color="secondary" variant="outlined" size="small" onClick={() => setDataToEdit(el)}>Editar</Button>
+        <Button color="secondary" variant="outlined" size="small" onClick={() => deleteData(_id)}>Eliminar</Button>
       </td>
     </tr>
   );

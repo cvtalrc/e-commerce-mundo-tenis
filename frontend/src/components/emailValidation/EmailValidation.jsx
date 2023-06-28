@@ -2,13 +2,14 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { helpHttp } from '../../helpers/helpHttp'
 import { Typography, Box, CircularProgress } from '@mui/material'
+import { BASE_API_URL } from '../../../config'
 
 export default function EmailValidation() {
     const param = useLocation()
     const navigate = useNavigate();
     const [response, setResponse] = useState({});
 
-    const url = `http://localhost:3000/api/email-confirm${param.search}`;
+    const url = `${BASE_API_URL}/email-confirm${param.search}`;
     console.log(url);
 
     useEffect(() => {

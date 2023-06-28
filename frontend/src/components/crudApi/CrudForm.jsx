@@ -568,8 +568,8 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
                     </Grid>
                     <Box sx={{ display: 'flex', justifyContent: 'right', mt: 2 }}>
-                        <Button color="secondary" variant="contained" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Enviar</Button>
-                        <Button color="secondary" variant="contained" sx={{ width: '200px' }} type="reset" onClick={handleReset}>Limpiar</Button>
+                        <Button color="secondary" variant="outlined" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Enviar</Button>
+                        <Button color="secondary" variant="outlined" sx={{ width: '200px' }} type="reset" onClick={handleReset}>Limpiar</Button>
                     </Box>
 
                 </form>

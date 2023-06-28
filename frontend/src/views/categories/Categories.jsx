@@ -1,9 +1,10 @@
-import { Typography, Container, Box, Grid } from "@mui/material";
-import { useAsyncError, useParams } from 'react-router-dom';
+import { Typography, Container, Grid, Stack, Breadcrumbs } from "@mui/material";
+import { NavLink, useParams } from 'react-router-dom';
 import PaginationCard from "../../components/Product/PaginationCard";
 import ProductsContext from "../../context/ProductsContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, } from "react";
 import Filter from "../../components/Product/Filter";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 export default function Categories() {
     const { sport, category } = useParams();
@@ -19,12 +20,32 @@ export default function Categories() {
             {
                 products != null && brands != null && productsCategory !== null &&
                 <>
-                    <Container maxWidth="xl" sx={{ mt: 2, mb: 2, p: 0 }}>
-                        <Typography variant="h4" sx={{ fontWeight: 700, p: 0 }} >{category}</Typography>
-                    </Container>
-                    <Container maxWidth="xl" sx={{ pt: 1, mt: 2, mb: 2 }}>
-                        <Grid container>
-                            
+                    <Container maxWidth="xl" sx={{ pt: 1, mt: 2, mb: 2, p: 4 }}>
+                        <Stack spacing={2}>
+                            <Breadcrumbs
+                                separator={<NavigateNextIcon fontSize="small" />}
+                                aria-label="breadcrumb"
+                            >
+                                <Typography key="1" color="inherit" to="/" component={NavLink} sx={{ fontSize: 18 }}>
+                                    Inicio
+                                </Typography>,
+                                <Typography
+                                    component={NavLink}
+                                    sx={{ fontSize: 18 }}
+                                    underline="hover"
+                                    key="2"
+                                    color="inherit"
+                                    to={`/${sport}`}
+                                >
+                                    {sport}
+                                </Typography>,
+                                <Typography key="3" sx={{ fontSize: 18 }} color="black">
+                                    {category}
+                                </Typography>,
+                            </Breadcrumbs>
+                        </Stack>
+
+                        <Grid sx={{ mt: 5 }} container>
                             <Filter products={productsCategory} brands={brands} category={category} sport={sport} dataFilter={dataFilter} setDataFilter={setDataFilter} />
                             {dataFilter.length === 0 ?
                                 (<Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>

@@ -6,21 +6,17 @@ import OrderContext from "../../context/OrderContext";
 import PaginationOrder from "../../components/OrderItem/PaginationOrder";
 
 export default function AdminOrders() {
-    const {orders} = useContext(OrderContext)
-    
+    const { orders } = useContext(OrderContext)
+
     return (
         <>
-        {orders != null &&
-        <Container maxWidth="xl">
-            <Box sx={{mt: 5, mb:5}}>
-            <Typography variant="h4" sx={{fontWeight: 700, mb:4}}>Panel de Administración de Órdenes</Typography>
-            
-                <PaginationOrder orders={orders} type={'admin'}/>
-            
-            </Box>
-            
-        </Container>
-        }
+            {orders != null &&
+                <>
+                    <Typography variant="h4" sx={{ fontWeight: 700, mb: 4 }}>Panel de Administración de Órdenes</Typography>
+
+                    <PaginationOrder orders={orders} type={'admin'} />
+                </>
+            }
         </>
     )
 

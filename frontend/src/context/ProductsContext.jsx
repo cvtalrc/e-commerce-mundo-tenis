@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import { useNavigate } from 'react-router-dom';
 import { Modal } from "../components/Alerts/Modal";
+import { BASE_API_URL } from "../../config";
 
 const ProductsContext = createContext();
 
@@ -17,7 +18,7 @@ const ProductsProvider = ({ children }) => {
     const navigate = useNavigate();
 
     let api = helpHttp();
-    let url = "http://localhost:3000/api/product";
+    let url = `${BASE_API_URL}/product`;
 
     useEffect(() => {
         //setLoading(true);

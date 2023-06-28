@@ -8,7 +8,6 @@ import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
 import React from 'react';
 import Login from './views/login/Login';
-import AdminProducts from './views/admin/AdminProducts';
 import NewAccount from './views/register/Register';
 import Ticket from './views/ticket/Ticket';
 import { ProductsProvider } from './context/ProductsContext';
@@ -18,44 +17,14 @@ import { CartProvider } from './context/CartContext';
 import { CrudProvider } from './context/CrudContext';
 import Payment from './components/payment/Payment';
 import { OrderProvider } from './context/OrderContext';
-import AdminOrders from './views/admin/AdminOrders';
 import User from './views/user/User';
 import AboutUs from './views/aboutUs/AboutUs';
 import ResetPassword from './views/resetPass/ResetPassword';
 import ResetPass from './views/resetPass/ResetPass';
 import EmailConfirm from './views/emailConfirm/EmailConfirm';
 import EmailValidation from './components/emailValidation/emailValidation';
-
-const navArrayLinks = [
-    {
-        title: "Home",
-        path: "/"
-    },
-    {
-        title: "Login",
-        path: "/login"
-    },
-    {
-        title: "Register",
-        path: "/register"
-    },
-    {
-        title: "Sport",
-        path: "/:sport"
-    },
-    {
-        title: "Categories",
-        path: "/:sport/:category"
-    },
-    {
-        title: "Product",
-        path: "/:sport/:category/:id"
-    },
-    {
-        title: "Oder",
-        path: "/order"
-    },
-]
+import Admin from './views/admin/Admin';
+import NotFound from './views/notFound/NotFound';
 
 function App() {
 
@@ -66,7 +35,7 @@ function App() {
                     <ProductsProvider>
                         <CrudProvider>
                             <OrderProvider>
-                                <Navbar navArrayLinks={navArrayLinks} />
+                                <Navbar  />
                                 <Routes>
                                     <Route path="/" element={<Home />} /> {/*pagina de inicio (vista principal) */}
                                     <Route path="/login" element={<Login />} />
@@ -75,8 +44,7 @@ function App() {
                                     <Route path="/:sport/:category" element={<Categories />} /> {/*pagina por deporte y categorías (zap, cuerdas, etc) */}
                                     <Route path="/:sport/:category/:id" element={<Product />} /> {/*pagina por producto en específico */}
                                     <Route path="/order" element={<Order />} /> 
-                                    <Route path="/admin/products" element={<AdminProducts />} /> 
-                                    <Route path="/admin/orders" element={<AdminOrders />} />
+                                    <Route path="/admin" element={<Admin/>} /> 
                                     <Route path="/search" element={<Search />} />
                                     <Route path="/user/:user" element={<User/>} />
                                     <Route path="/payment" element={<Payment />} />
@@ -86,6 +54,7 @@ function App() {
                                     <Route path="/reset-pass" element={<ResetPass />} />
                                     <Route path="/email-confirm" element={<EmailConfirm />} />
                                     <Route path="/email-validate" element={<EmailValidation />} />
+                                    <Route path="*" element={<NotFound />} />
                                 </Routes>
                                 <Footer />
                             </OrderProvider>

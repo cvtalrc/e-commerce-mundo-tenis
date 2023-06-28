@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Typography, Box, CircularProgress } from '@mui/material'
+import { helpHttp } from '../../helpers/helpHttp'
+import { Typography, Grid, Container, Box, CircularProgress } from '@mui/material'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { BASE_API_URL } from '../../../config';
 
 export default function Payment() {
     const param = useLocation()
     const navigate = useNavigate();
     const [response, setResponse] = useState({});
 
-    const url = `http://localhost:3000/api/verify-payment${param.search}`;
+    const url = `${BASE_API_URL}/verify-payment${param.search}`;
     console.log(url);
 
     useEffect(() => {
@@ -23,6 +26,7 @@ export default function Payment() {
                     window.location.href = '/ticket';
                 } else {
                     console.error("Error en la respuesta de la petición");
+                    window.location.href = "/ticket"; 
                 }
             } catch (error) {
                 console.error("Error fatal: ", error);

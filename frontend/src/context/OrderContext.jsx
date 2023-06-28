@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import UserContext from "./UserContext";
 import { helpHttp } from "../helpers/helpHttp";
+import { BASE_API_URL } from "../../config";
 
 const OrderContext = createContext();
 
@@ -14,7 +15,7 @@ const OrderProvider = ({ children }) => {
     //consulta a la api x todas las ordenes de compra
 
     let api = helpHttp();
-    let url = "http://localhost:3000/api/order";
+    let url = `${BASE_API_URL}/order`;
 
     useEffect(() => {
 

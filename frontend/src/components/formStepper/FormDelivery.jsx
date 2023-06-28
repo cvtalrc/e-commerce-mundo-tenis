@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import { Modal } from "../Alerts/Modal";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import StoreIcon from '@mui/icons-material/Store';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
 
 function isValidName(name) {
     const regex = /^[A-Za-zÁ-ÿ\s]+$/;
@@ -95,7 +99,7 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
             [e.target.name]: e.target.value,
         });
 
-        if (name !== 'instructions'){
+        if (name !== 'instructions') {
             validateField(name, value);
         }
     };
@@ -142,8 +146,8 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
     };
 
     return (
-        // #1989F3
-        <Box sx={{ mt: 4, mb:4, border: '1px solid #bebebe', borderRadius: 1, p:5 }}> 
+
+        <Box sx={{ mt: 4, mb: 4, border: '1px solid #bebebe', borderRadius: 1, p: 5 }}>
 
             <FormControl component="fieldset">
                 <FormLabel sx={{ fontWeight: 700, color: 'black' }} component="legend">Método de entrega</FormLabel>
@@ -153,9 +157,9 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
                     value={deliveryMethod}
                     onChange={handleDeliveryMethodChange}
                 >
-                    <Box sx={{ display: 'flex', flexDirection: 'row', mt:2 }}>
-                        <FormControlLabel value="store-pickup" control={<Radio color="secondary" />} label="Retiro en tienda" />
-                        <FormControlLabel value="delivery" control={<Radio color="secondary" />} label="Delivery" />
+                    <Box sx={{ display: 'flex', flexDirection: 'row', mt: 2 }}>
+                        <FormControlLabel value="store-pickup" control={<Radio />} label="Retiro en tienda" />
+                        <FormControlLabel value="delivery" control={<Radio />} label="Delivery" />
                     </Box>
                 </RadioGroup>
             </FormControl>
@@ -163,30 +167,75 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
             <Grid spacing={2} justifyContent={"space-between"} container>
                 <Grid sm={6} item>
                     <List>
-                    <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos personales</ListItem>
-                        <ListItem>Nombre: {user.name}</ListItem>
-                        <ListItem>Apellido: {user.lastName}</ListItem>
-                        <ListItem>Correo electrónico: {user.email}</ListItem>
-                        <ListItem>Celular: {user.cellNumber}</ListItem>
-                        <ListItem>Dirección: {user.address}</ListItem>
-                        <ListItem>Región: {user.region}</ListItem>
-                        <ListItem>Comuna: {user.comuna}</ListItem>
+                        <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>
+                            <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>Datos personales</Typography>
+                            <AccountCircleIcon sx={{ ml: 2, fontSize: 38 }} />
+                        </ListItem>
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Nombre: {user.name}</Typography>
+                        </ListItem>
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Apellido: {user.lastName}</Typography>
+                        </ListItem>
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Celular: {user.cellNumber}</Typography>
+                        </ListItem>
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Correo electrónico: {user.email}</Typography>
+                        </ListItem>
+
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Dirección: {user.address}</Typography>
+                        </ListItem>
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Región: {user.region}</Typography>
+                        </ListItem>
+                        <ListItem>
+                            <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                            <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Comuna: {user.comuna}</Typography>
+                        </ListItem>
                     </List>
 
                 </Grid>
                 <Grid sm={6} item>
                     {deliveryMethod === 'store-pickup' ?
                         (<List>
-                            <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>Datos de retiro</ListItem>
-                            <ListItem>Dirección: blahblah</ListItem>
-                            <ListItem>Contacto: +569939333</ListItem>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>
+                                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>Datos de Retiro</Typography>
+                                <StoreIcon sx={{ ml: 2, fontSize: 40 }} />
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Dirección: Vargas Buston 960</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Región: Metropolitana</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Comuna: San Miguel</Typography>
+                            </ListItem>
+                            <ListItem>
+                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Contacto: +56952360764</Typography>
+                            </ListItem>
                         </List>)
 
                         :
                         (<>
-                            <ListItem variant="h5" component={Typography} sx={{ mt: 2, fontWeight: 700 }}>Datos de entrega</ListItem>
+                            <ListItem variant="h5" component={Typography} sx={{ mt: 1, fontWeight: 700 }}>
+                                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>Datos de Entrega</Typography>
+                                <DeliveryDiningOutlinedIcon sx={{ ml: 2, fontSize: 40 }} />
+                            </ListItem>
                             {edit ? (<form >
-                                <Grid spacing={1} rowSpacing={2} sx={{mt:1}} container>
+                                <Grid spacing={1} rowSpacing={2} sx={{ mt: 1 }} container>
                                     <Grid sm={4} item>
                                         <TextField
                                             size="small"
@@ -324,27 +373,54 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
                                 </Grid>
                                 <Box sx={{ display: 'flex', justifyContent: 'right', pt: 1 }}>
                                     <Button onClick={handleSubmit}>
-                                        <CheckIcon color="secondary" />
+                                        <CheckIcon />
                                     </Button>
                                 </Box>
 
                             </form>) :
                                 (<Grid container>
-                                    <Grid sm={10} item>
+                                    <Grid sm={10} xs={10} item>
                                         <List>
-                                        <ListItem>Nombre: {form.name}</ListItem>
-                                        <ListItem>Apellido: {form.lastName}</ListItem>
-                                        <ListItem>Correo electrónico: {form.email}</ListItem>
-                                        <ListItem>Celular: {form.cellNumber}</ListItem>
-                                        <ListItem>Dirección: {form.address} {form.addressNumber}</ListItem>
-                                        <ListItem>Región: {form.region}</ListItem>
-                                        <ListItem>Comuna: {form.comuna}</ListItem>
-                                        {form.instructions ? <ListItem>Instrucciones de entrega: {form.instructions}</ListItem> : ''}
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Nombre: {form.name}</Typography>
+                                            </ListItem>
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Apellido: {form.lastName}</Typography>
+                                            </ListItem>
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Celular: {form.cellNumber}</Typography>
+                                            </ListItem>
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Correo electrónico: {form.email}</Typography>
+                                            </ListItem>
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Dirección: {form.address} </Typography>
+                                            </ListItem>
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Región: {form.region}</Typography>
+                                            </ListItem>
+                                            <ListItem>
+                                                <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Comuna: {form.comuna}</Typography>
+                                            </ListItem>
+                                            {form.instructions ?
+                                                <ListItem>
+                                                    <ArrowForwardIosIcon sx={{ fontSize: 10 }} />
+                                                    <Typography variant="h6" sx={{ ml: 2, fontSize: 18 }} >Instrucciones de entrega: {form.instructions}</Typography>
+                                                </ListItem>
+                                                : ''}
+
                                         </List>
                                     </Grid>
-                                    <Grid sm={2} item>
+                                    <Grid sm={2} xs={2} item>
                                         <Button onClick={() => { setEdit(true) }}>
-                                            <EditIcon variant="contained" color="secondary" />
+                                            <EditIcon variant="contained" />
                                         </Button>
                                     </Grid>
                                 </Grid>
@@ -360,3 +436,4 @@ const FormDelivery = ({ user, form, setForm, deliveryMethod, setDeliveryMethod, 
 };
 
 export default FormDelivery;
+

@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
 import { Container, Typography } from "@mui/material";
@@ -8,12 +8,12 @@ import ProductsContext from "../../context/ProductsContext";
 // import Message from "./Message";
 
 const CrudApi = () => {
-  const {products} = useContext(ProductsContext)
-  const { createData, updateData, dataToEdit, setDataToEdit, deleteData} = useContext(CrudContext);
+  const { products } = useContext(ProductsContext)
+  const { createData, updateData, dataToEdit, setDataToEdit, deleteData } = useContext(CrudContext);
 
-   return (
-    <Container  sx={{mt: 6, mb: 6}}>
-      <Typography variant="h4" sx={{mb: 4, fontWeight: 700}}>Panel de Administración de Productos</Typography>
+  return (
+    <>
+      <Typography variant="h4" sx={{ mb: 4, fontWeight: 700 }}>Panel de Administración de Productos</Typography>
       <article className="gr_id-1-2">
         <CrudForm
           createData={createData}
@@ -37,7 +37,7 @@ const CrudApi = () => {
           />
         )}
       </article>
-    </Container>
+    </>
   );
 };
 

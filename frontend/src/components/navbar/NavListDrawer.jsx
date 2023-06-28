@@ -53,22 +53,9 @@ export default function NavListDrawer({SetOpenMenu, user, logOut}) {
             
             {user != null ? (
                    <>
-                      {/* <Button
-                        color="inherit"
-                        size="small"
-                        sx={{
-                          "&:hover": {
-                            cursor: "auto",
-                          },
-                          ml:4, mr:2
-                        }}
-                        onClick={() => SetOpenMenu(false)}
-                        component={NavLink}
-                        to={`/user/${user._id}`}
-                      > */}
                         <IconButton aria-label="Example" sx={{mr:2}} onClick={() => SetOpenMenu(false)}
                         component={NavLink}
-                        to={`/user/${user._id}`}>
+                        to={ user.type === 'admin' ? '/admin' : `/user/${user._id}` }>
                             <AccountCircleIcon/>
 
                         </IconButton>

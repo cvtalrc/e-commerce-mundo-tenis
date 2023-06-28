@@ -17,6 +17,7 @@ import { helpHttp } from "../../helpers/helpHttp";
 import FormDelivery from "./FormDelivery";
 import FormCheck from "./FormCheck";
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import { BASE_API_URL } from "../../../config";
 
 function getSteps() {
   return [
@@ -158,7 +159,7 @@ const FormStepper = () => {
     // }
 
     try {
-      const url = "http://localhost:3000/api/payment";
+      const url = `${BASE_API_URL}/payment`;
       const options = {
         body: {
           userID: user._id,

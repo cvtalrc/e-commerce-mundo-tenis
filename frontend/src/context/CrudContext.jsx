@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import ProductsContext from "./ProductsContext";
 import { Modal } from "../components/Alerts/Modal";
+import { BASE_API_URL } from "../../config";
 
 const CrudContext = createContext();
 
@@ -12,7 +13,7 @@ const CrudProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
 
     let api = helpHttp();
-    let url = "http://localhost:3000/api/product";
+    let url = `${BASE_API_URL}/product`;
 
     const createData = (data) => {
         console.log(data);
