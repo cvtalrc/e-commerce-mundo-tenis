@@ -107,7 +107,6 @@ const FormCheck = ({ cartProducts, totalPrice, form }) => {
 
                 </Grid>
             </Grid>
-
         </Box>
     );
 };
