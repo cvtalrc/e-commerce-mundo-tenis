@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, List, ListItem } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 const FormCheck = ({ cartProducts, totalPrice, form }) => {
     console.log(cartProducts)
@@ -44,7 +44,6 @@ const FormCheck = ({ cartProducts, totalPrice, form }) => {
 
                 </Grid>
             </Grid>
-
         </Box>
     );
 };
