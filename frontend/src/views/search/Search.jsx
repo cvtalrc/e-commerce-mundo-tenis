@@ -5,25 +5,19 @@ import { Typography, Container, Box, Grid } from "@mui/material";
 import PaginationCard from "../../components/Product/PaginationCard";
 import Filter from '../../components/Product/Filter';
 
-let searchItem = ''
 export default function Search() {
   const { productsSearch, search, setSearch } = useContext(ProductsContext);
   const [dataFilter, setDataFilter] = useState([]);
   const brands = productsSearch != null ? [...new Set(productsSearch.map(objeto => objeto.brand))] : null;
   console.log(productsSearch);
 
-  useEffect(() => {
-    setSearch(null);
-    const searchItemRef = useRef(search);
-    searchItem = searchItemRef.current;
-  }, [setSearch]);
 
   return (
     <>
       {productsSearch != null && brands != null && (
         <Container maxWidth="xl" sx={{ mt: 2, mb: 2, p: 0 }}>
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 5 }}>
-            Resultados de la búsqueda "{searchItem}"
+            Resultados de la búsqueda "{search}"
           </Typography>
           {productsSearch.length > 0 ? (
             <Grid container>

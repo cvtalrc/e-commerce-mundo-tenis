@@ -131,7 +131,8 @@ async function resetPasswordMail(req, res){
     if(!user) return res.status(404).send({message: "El correo no tiene cuenta", status: "error"});
     const name = user.name + " " + user.lastName;
     const token = jwt.sign({ email }, auth.SECRET_KEY, { expiresIn: '1h' });
-    const resetPasswordLink = `http://localhost:5173/reset-pass?token=${token}`;
+    //const resetPasswordLink = `http://localhost:5173/reset-pass?token=${token}`;
+    const resetPasswordLink = `http://52.3.204.14/api/reset-pass?token=${token}`;
     await emailController.sendResetPassword(name, email, resetPasswordLink);
 
     return res.status(200).send({message:'Se ha enviado un correo de restablecimiento de contraseña.', status: "success"});

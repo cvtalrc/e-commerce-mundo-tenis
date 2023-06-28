@@ -12,8 +12,8 @@ const { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } = r
 // Configurar las credenciales de integración
 const apiKey = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C";
 const commerceCode = "597055555532";
-const returnUrl = "http://localhost:5173/payment";
-
+//const returnUrl = "http://localhost:5173/payment";
+const returnUrl = "http://52.3.204.14/api/payment";
 async function generateTransaction(req, res) {
   const userToken = req.headers.authorization?.split(' ')[1]; //token usuario
   //const userToken = req.cookies.accessToken;

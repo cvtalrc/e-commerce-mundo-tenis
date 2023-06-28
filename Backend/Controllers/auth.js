@@ -54,7 +54,9 @@ async function sign_up(req, res) {
     const name = body.name + " " + body.lastName
     //Verificacion del email
     const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-    const confirmEmailLink = `http://localhost:5173/email-validate?token=${token}`;
+    
+   // const confirmEmailLink = `http://localhost:5173/email-validate?token=${token}`;
+   const confirmEmailLink = `http://52.3.204.14/api/email-validate?token=${token}`;
     await emailController.sendEmailConfirmation(name, email, confirmEmailLink);
     return res.status(200).send({
       create: insertUser,
