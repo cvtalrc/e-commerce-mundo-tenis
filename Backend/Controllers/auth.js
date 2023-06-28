@@ -54,7 +54,7 @@ async function sign_up(req, res) {
     const name = body.name + " " + body.lastName
     //Verificacion del email
     const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: '1h' });
-    const confirmEmailLink = `https://localhost:3000/email-confirm?token=${token}`;
+    const confirmEmailLink = `https://localhost:5173/email-validate?token=${token}`;
     await emailController.sendEmailConfirmation(name, email, confirmEmailLink);
     return res.status(200).send({
       create: insertUser,
@@ -113,8 +113,8 @@ function sign_out(req, res) {
 }
 
 function authenticateToken(req, res, next) {
-  const token = req.cookies.accessToken;
-  //const token = req.headers.authorization?.split(' ')[1];
+  //const token = req.cookies.accessToken;
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     return res.status(401).send({ message: "No se proporcionó un token de acceso", status: "error",});

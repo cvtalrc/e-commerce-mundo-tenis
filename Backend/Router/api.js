@@ -25,8 +25,7 @@ api.post("/guestCart/add", func_guestCart.addtoCart);
 api.post("/order/", func_auth.authenticateToken, func_order.createOrder);
 api.post("/comment/", func_auth.authenticateToken, func_comment.createComment);
 api.post("/forgot-password",func_user.resetPasswordMail);
-api.post("/reset-password", func_user.resetPassword);
-api.post("/email-confirm", func_user.validateEmail);
+
 
 //API GET
 api.get("/user/", func_auth.authenticateAdmin, func_user.getAll);
@@ -38,7 +37,8 @@ api.get("/guestCart/:sessionID", func_guestCart.getCart);
 api.get("/order/:id", func_order.getOrder); //después agregar token admin
 api.get("/order/",  func_auth.authenticateToken, func_order.getAll); //después agregar token admin
 api.get("/comment/", func_comment.getAllComments);
-
+api.get("/email-confirm", func_user.validateEmail);
+api.get("/reset-password", func_user.resetPassword);
 //API DELETE
 api.delete("/user/remove/:id", func_auth.authenticateToken, func_user.removeUser)
 api.delete("/user/removeAll", func_auth.authenticateAdmin, func_user.removeAll); 
