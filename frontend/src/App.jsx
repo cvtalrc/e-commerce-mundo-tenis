@@ -10,8 +10,6 @@ import React, { useContext, useEffect } from 'react';
 import Login from './views/login/Login';
 import AdminProducts from './views/admin/AdminProducts';
 import NewAccount from './views/register/Register';
-import { useState } from 'react'
-import { Modal } from './components/Alerts/Modal';
 import Ticket from './views/ticket/Ticket';
 import { ProductsProvider } from './context/ProductsContext';
 import Search from './views/search/Search';
@@ -23,6 +21,8 @@ import { OrderProvider } from './context/OrderContext';
 import AdminOrders from './views/admin/AdminOrders';
 import User from './views/user/User';
 import AboutUs from './views/aboutUs/AboutUs';
+import EmailValidation from './views/emailConfirm/EmailConfirm';
+import EmailConfirm from './views/emailConfirm/EmailConfirm';
 
 const navArrayLinks = [
     {
@@ -80,6 +80,8 @@ function App() {
                                     <Route path="/payment" element={<Payment />} />
                                     <Route path="/ticket" element={<Ticket />} />
                                     <Route path="/about-us" element={<AboutUs />} />
+                                    <Route path="/email-confirm" element={<EmailConfirm />} />
+                                    <Route path="/email-validate" element={<EmailValidation />} />
                                 </Routes>
                                 <Footer />
                             </OrderProvider>

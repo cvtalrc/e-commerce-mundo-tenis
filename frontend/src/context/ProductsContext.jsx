@@ -76,6 +76,7 @@ const ProductsProvider = ({ children }) => {
         productsSale,
         productsSearch,
         search,
+        setSearch,
         categoriesTenis,
         categoriesPadel,
         handleChangeSearch,
