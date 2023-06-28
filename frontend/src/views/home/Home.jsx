@@ -47,7 +47,7 @@ export default function Home() {
     const slides = [
         { url: tienda, title: "tienda" },
         { url: vcore, title: "vcore" },
-        { url: vcore7, title: "vcore7" },
+        // { url: vcore7, title: "vcore7" },
         { url: ezone, title: "ezone" },
         { url: wilson, title: "wilson" },
         { url: vcorePro2, title: "vcorePro2" },

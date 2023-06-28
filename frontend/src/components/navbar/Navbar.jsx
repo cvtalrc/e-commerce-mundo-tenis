@@ -48,9 +48,8 @@ export default function Navbar() {
             <Box
               maxWidth="lg"
               sx={{
-                display: { xs: "none", sm: "flex" },
+                display: { xs: "flex", sm: "flex" },
                 alignItems: "center",
-                m: 0,
                 pt: "10px",
               }}
             >
@@ -178,7 +177,7 @@ export default function Navbar() {
             <ButtonMenu key={sport} sport={sport}></ButtonMenu>
           ))}
 
-          <Button color="inherit" component={NavLink} to="/sobre-nosotros">
+          <Button color="inherit" component={NavLink} to="/about-us">
             Sobre Nosotros
           </Button>
         </Box>

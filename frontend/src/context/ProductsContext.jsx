@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { helpHttp } from "../helpers/helpHttp";
 import { useNavigate } from 'react-router-dom';
+import { Modal } from "../components/Alerts/Modal";
 
 const ProductsContext = createContext();
 
@@ -48,7 +49,7 @@ const ProductsProvider = ({ children }) => {
         console.log(search)
 
         if (search === null || search === "") {
-            alert("Datos incompletos");
+            Modal('Búsqueda de productos.', 'Llene el campo para realizar la búsqueda correspondiente.', 'warning')
             return;
         }else {
             filtrar(search)

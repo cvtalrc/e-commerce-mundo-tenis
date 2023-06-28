@@ -31,7 +31,7 @@ export default function Footer() {
                   Contáctanos
                 </Typography>
                 <Typography variant="body2" sx={{color:'white'}}>
-                  Correo: EMAIL@EMAIL.CL
+                  Correo: mundoteniscga@gmail.com
                 </Typography>
                 <Typography variant="body2" sx={{color:'white'}}>
                   Teléfono: +56952360764
