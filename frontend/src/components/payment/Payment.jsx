@@ -1,8 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { helpHttp } from '../../helpers/helpHttp'
-import { Typography, Grid, Container, Box, CircularProgress } from '@mui/material'
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { Typography, Box, CircularProgress } from '@mui/material'
 
 export default function Payment() {
     const param = useLocation()

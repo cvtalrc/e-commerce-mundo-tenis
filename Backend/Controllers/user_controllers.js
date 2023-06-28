@@ -131,7 +131,7 @@ async function resetPasswordMail(req, res){
     if(!user) return res.status(404).send({message: "El correo no tiene cuenta", status: "error"});
     const name = user.name + " " + user.lastName;
     const token = jwt.sign({ email }, auth.SECRET_KEY, { expiresIn: '1h' });
-    const resetPasswordLink = `https://localhost:3000/reset-password?token=${token}`;
+    const resetPasswordLink = `http://localhost:5173/reset-pass?token=${token}`;
     await emailController.sendResetPassword(name, email, resetPasswordLink);
 
     return res.status(200).send({message:'Se ha enviado un correo de restablecimiento de contraseña.', status: "success"});
@@ -142,10 +142,13 @@ async function resetPasswordMail(req, res){
 
 async function resetPassword(req, res){
   const { token } = req.query;
+  console.log(token)
   try{
     const pass = req.body.pass;
+    console.log(pass)
     const decoded = jwt.verify(token, auth.SECRET_KEY);
     const email = decoded.email;
+    console.log(email)
     const user = await User.findOne({ email: email });
     if (!user) return res.status(404).send({ message: 'Usuario no encontrado', status: 'error' });
 

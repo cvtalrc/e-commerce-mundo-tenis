@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from "./components/navbar/Navbar";
 import Home from "./views/home/Home";
 import Categories from "./views/categories/Categories";
@@ -6,12 +6,10 @@ import Sports from "./views/sports/Sports";
 import Product from "./views/product/Product";
 import Order from "./views/order/Order";
 import Footer from "./components/footer/Footer";
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import Login from './views/login/Login';
 import AdminProducts from './views/admin/AdminProducts';
 import NewAccount from './views/register/Register';
-import { useState } from 'react'
-import { Modal } from './components/Alerts/Modal';
 import Ticket from './views/ticket/Ticket';
 import { ProductsProvider } from './context/ProductsContext';
 import Search from './views/search/Search';
@@ -23,6 +21,8 @@ import { OrderProvider } from './context/OrderContext';
 import AdminOrders from './views/admin/AdminOrders';
 import User from './views/user/User';
 import AboutUs from './views/aboutUs/AboutUs';
+import ResetPassword from './views/resetPass/ResetPassword';
+import ResetPass from './views/resetPass/ResetPass';
 
 const navArrayLinks = [
     {
@@ -80,6 +80,8 @@ function App() {
                                     <Route path="/payment" element={<Payment />} />
                                     <Route path="/ticket" element={<Ticket />} />
                                     <Route path="/about-us" element={<AboutUs />} />
+                                    <Route path='/reset-password' element={<ResetPassword />} />
+                                    <Route path="/reset-pass" element={<ResetPass />} />
                                 </Routes>
                                 <Footer />
                             </OrderProvider>

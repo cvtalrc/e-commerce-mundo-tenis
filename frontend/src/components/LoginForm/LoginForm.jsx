@@ -160,7 +160,7 @@ export default function SignIn() {
                 <Button href="#" 
                 variant="body1" 
                 component={NavLink}
-                to="/">
+                to="/reset-password">
                   ¿Olvidaste la contraseña?
                 </Button>
               </Grid>
