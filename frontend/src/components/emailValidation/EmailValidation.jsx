@@ -23,7 +23,8 @@ export default function EmailValidation() {
                     setResponse(data);
                     const encodedData = encodeURIComponent(JSON.stringify(data));
                     localStorage.setItem('data', encodedData)
-                    window.location.href = '/email-confirm';
+                    navigate('/email-confirm')
+                    //window.location.href = '/email-confirm';
                 } else {
                     console.error("Error en la respuesta de la petición");
                 }

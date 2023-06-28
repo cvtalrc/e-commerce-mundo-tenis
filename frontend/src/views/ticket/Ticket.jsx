@@ -1,17 +1,19 @@
 import React from 'react';
 import { Container, Box, Typography, Grid } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Ticket() {
   const response = localStorage.getItem('data');
   const decodedResponse = decodeURIComponent(response);
   const resp = JSON.parse(decodedResponse);
+  const navigate = useNavigate()
   
   if(response !== '' || response !== null) {
     setTimeout(() => {
       localStorage.removeItem('data');
-      window.location.href = '/'
+      navigate("/")
+      //window.location.href = '/'
     }, 7000);
   }
   

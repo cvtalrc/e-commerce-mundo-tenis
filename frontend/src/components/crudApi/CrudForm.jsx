@@ -330,7 +330,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 : ""}
                         </Grid>
 
-                        <Grid sm={12} item>
+                        <Grid sm={12} xs={12} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -344,7 +344,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 helperText={validationErrors.title}
                             />
                         </Grid>
-                        <Grid sm={3} item>
+                        <Grid sm={3} xs={12} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -358,7 +358,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 helperText={validationErrors.brand || ''}
                             />
                         </Grid>
-                        <Grid sm={3} item>
+                        <Grid sm={3} xs={12} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -373,7 +373,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                             />
                         </Grid>
 
-                        <Grid sm={3} item>
+                        <Grid sm={3} xs={12} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -393,7 +393,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 ))}
                             </TextField>
                         </Grid>
-                        <Grid sm={3} item>
+                        <Grid sm={3} xs={12} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -416,7 +416,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                         {form.stock.length > 1 ?
                             (form.stock.map((item, index) => (
                                 < React.Fragment key={index}>
-                                    <Grid sm={5.5} item>
+                                    <Grid sm={5.5} xs={5} item>
                                         <TextField
                                             color="secondary"
                                             type="text"
@@ -427,7 +427,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                             value={item.size}
                                         />
                                     </Grid>
-                                    <Grid sm={5.5} item>
+                                    <Grid sm={5.5} xs={5} item>
                                         <TextField
                                             required
                                             color="secondary"
@@ -439,7 +439,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                             value={item.quantity}
                                         />
                                     </Grid>
-                                    <Grid sm={1} item>
+                                    <Grid sm={1} xs={2} item>
                                         <Button color="error" variant="outlined" sx={{ mr: 2, borderRadius: 1 }} fullWidth onClick={() => handleRemoveStockItem(index)}>
                                             <RemoveIcon sx={{ height: '42px' }} />
                                         </Button>
@@ -473,7 +473,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                             ))))}
 
 
-                        <Grid sm={5.5} item>
+                        <Grid sm={5.5} xs={5} item>
                             <TextField
                                 color="secondary"
                                 type="text"
@@ -484,7 +484,7 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                                 value={newStockItem.size}
                             />
                         </Grid>
-                        <Grid sm={5.5} item>
+                        <Grid sm={5.5} xs={5} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -497,13 +497,13 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
                             />
                         </Grid>
 
-                        <Grid sm={1} item>
+                        <Grid sm={1} xs={2} item>
                             <Button color="secondary" variant="outlined" sx={{ mr: 2, borderRadius: 1 }} fullWidth onClick={handleAddStockItem}>
                                 <AddIcon sx={{ height: '42px' }} />
                             </Button>
                         </Grid>
 
-                        <Grid sm={12} item>
+                        <Grid sm={12} xs={12} item>
                             <TextField
                                 required
                                 color="secondary"
@@ -568,8 +568,8 @@ const CrudForm = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
 
                     </Grid>
                     <Box sx={{ display: 'flex', justifyContent: 'right', mt: 2 }}>
-                        <Button color="secondary" variant="outlined" sx={{ width: '200px', mr: 2 }} onClick={handleSubmit}>Enviar</Button>
-                        <Button color="secondary" variant="outlined" sx={{ width: '200px' }} type="reset" onClick={handleReset}>Limpiar</Button>
+                        <Button color="secondary" variant="outlined" sx={{ width: {sm: '200px', xs: '250px' }, mr: 2 }} onClick={handleSubmit}>Enviar</Button>
+                        <Button color="secondary" variant="outlined" sx={{width: {sm: '200px', xs: '250px' }}} type="reset" onClick={handleReset}>Limpiar</Button>
                     </Box>
 
                 </form>

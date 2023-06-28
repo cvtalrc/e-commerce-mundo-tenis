@@ -63,8 +63,6 @@ const CrudTable = ({ data, setDataToEdit, deleteData }) => {
               },
             }}
           >
-            {/* <Button onClick={() => setDataToEdit(el)}>Editar</Button>
-            <Button onClick={() => deleteData(_id)}>Eliminar</Button> */}
           </DataGrid> 
           :
           <Typography> Sin productos </Typography>}

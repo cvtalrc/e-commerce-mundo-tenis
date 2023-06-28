@@ -122,37 +122,7 @@ const CrudProvider = ({ children }) => {
         }else {
             return
         }
-
-        // let isDelete = window.confirm(
-        //     `¿Estás seguro de eliminar el registro con el _id '${_id}'?`
-        // );
-
-        // if (isDelete) {
-        //     let endpoint = `${url}/${_id}`;
-        //     console.log(endpoint);
-        //     let options = {
-        //         headers: { "content-type": "application/json" },
-        //     };
-
-        //     api.del(endpoint, options).then((res) => {
-        //         console.log(res.err);
-        //         if (!res.err) {
-        //             let newData = products.filter((el) => el._id !== _id);
-        //             setProducts(newData);
-        //             Modal(
-        //                 'Eliminación de producto.',
-        //                 'El producto ha sido eliminado correctamente.',
-        //                 'success',
-        //                 ''
-        //             )
-        //         } else {
-        //             setError(res);
-        //         }
-        //     });
-
-        // } else {
-        //     return;
-        // }
+     
     };
 
     const data = {

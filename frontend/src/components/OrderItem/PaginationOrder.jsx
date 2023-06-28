@@ -22,7 +22,7 @@ export default function PaginationOrder({ orders, type }) {
             <Grid container spacing={6}>
                 {
                     (_DATA.currentData().map(order =>
-                        <Grid key={order._id} item md={4} sm={4} xs={6}> <OrderItem type={type} key={order._id} order={order} /> </Grid>))
+                        <Grid key={order._id} item md={4} sm={4} xs={12}> <OrderItem type={type} key={order._id} order={order} /> </Grid>))
                 }
 
             </Grid>

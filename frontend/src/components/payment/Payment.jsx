@@ -23,10 +23,12 @@ export default function Payment() {
                     setResponse(data);
                     const encodedData = encodeURIComponent(JSON.stringify(data));
                     localStorage.setItem('data', encodedData)
-                    window.location.href = '/ticket';
+                    //window.location.href = '/ticket';
+                    navigate("/ticket")
                 } else {
                     console.error("Error en la respuesta de la petición");
-                    window.location.href = "/ticket-error"; 
+                    navigate("/ticket-error")
+                    //window.location.href = "/ticket-error"; 
                 }
             } catch (error) {
                 console.error("Error fatal: ", error);
