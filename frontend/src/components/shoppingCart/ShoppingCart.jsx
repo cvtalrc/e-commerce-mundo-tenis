@@ -77,7 +77,7 @@ const ShoppingCart = (SetOpenShoppingCart) => {
       <Grid >
           <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: 'column', alignItems: "center", alignContent: "center", height: { sm: "800px", xs: "550px" } }}>
             <LoginIcon color="secondary" sx={{ mt: 2, fontSize: 100, strokeWidth: 0.5 }} />
-            <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2, pl:5, pr:5, textAlign:'center' }}>Inicia sesión o Regístrate para añadir actículos al carrito</Typography>
+            <Typography variant="h6" color="secondary" sx={{ fontWeight: 500, mt: 2, pl:5, pr:5, textAlign:'center' }}>Inicia sesión o regístrate para añadir productos al carrito</Typography>
           </Box>
       </Grid>
     </List>

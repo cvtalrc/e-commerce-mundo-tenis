@@ -8,7 +8,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(1)})`,
         transition: theme.transitions.create('width'),
-        width: 120,
+        width: 60,
         [theme.breakpoints.up('sm')]: {
             width: '40vw',
           },
