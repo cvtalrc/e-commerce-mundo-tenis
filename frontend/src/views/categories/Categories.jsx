@@ -24,6 +24,7 @@ export default function Categories() {
                     </Container>
                     <Container maxWidth="xl" sx={{ pt: 1, mt: 2, mb: 2 }}>
                         <Grid container>
+                            
                             <Filter products={productsCategory} brands={brands} category={category} sport={sport} dataFilter={dataFilter} setDataFilter={setDataFilter} />
                             {dataFilter.length === 0 ?
                                 (<Grid md={10} sm={10} xs={12} sx={{ pt: 1, pl: 1 }} item>

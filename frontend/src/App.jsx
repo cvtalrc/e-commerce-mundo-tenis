@@ -23,6 +23,8 @@ import User from './views/user/User';
 import AboutUs from './views/aboutUs/AboutUs';
 import ResetPassword from './views/resetPass/ResetPassword';
 import ResetPass from './views/resetPass/ResetPass';
+import EmailValidation from './views/emailConfirm/EmailConfirm';
+import EmailConfirm from './views/emailConfirm/EmailConfirm';
 
 const navArrayLinks = [
     {
@@ -82,6 +84,8 @@ function App() {
                                     <Route path="/about-us" element={<AboutUs />} />
                                     <Route path='/reset-password' element={<ResetPassword />} />
                                     <Route path="/reset-pass" element={<ResetPass />} />
+                                    <Route path="/email-confirm" element={<EmailConfirm />} />
+                                    <Route path="/email-validate" element={<EmailValidation />} />
                                 </Routes>
                                 <Footer />
                             </OrderProvider>
