@@ -6,7 +6,7 @@ import { Modal } from "../components/Alerts/Modal";
 const CrudContext = createContext();
 
 const CrudProvider = ({ children }) => {
-    const {products, setProducts} = useContext(ProductsContext)
+    const { products, setProducts } = useContext(ProductsContext)
     const [dataToEdit, setDataToEdit] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const CrudProvider = ({ children }) => {
         api.post(url, options).then((res) => {
             console.log(res);
             if (!res.err) {
-                setProducts([...products, res]);
+                setProducts([...products, res.newProduct]);
                 Modal(
                     'Agregación de producto',
                     'El producto ha sido creado correctamente.',
@@ -91,12 +91,10 @@ const CrudProvider = ({ children }) => {
         });
     };
 
-    const deleteData = (_id) => {
-        let isDelete = window.confirm(
-            `¿Estás seguro de eliminar el registro con el _id '${_id}'?`
-        );
+    const deleteData = async (_id) => {
 
-        if (isDelete) {
+        const result = await Modal('Eliminar producto', `¿Deseas eliminar el producto con id '${_id}'?`, 'question');
+        if (result.isConfirmed) {
             let endpoint = `${url}/${_id}`;
             console.log(endpoint);
             let options = {
@@ -118,10 +116,42 @@ const CrudProvider = ({ children }) => {
                     setError(res);
                 }
             });
-
-        } else {
-            return;
+            await Modal('Eliminación de producto.', 'Producto eliminado.', 'success');
+            navigate('/');
+        }else {
+            return
         }
+
+        // let isDelete = window.confirm(
+        //     `¿Estás seguro de eliminar el registro con el _id '${_id}'?`
+        // );
+
+        // if (isDelete) {
+        //     let endpoint = `${url}/${_id}`;
+        //     console.log(endpoint);
+        //     let options = {
+        //         headers: { "content-type": "application/json" },
+        //     };
+
+        //     api.del(endpoint, options).then((res) => {
+        //         console.log(res.err);
+        //         if (!res.err) {
+        //             let newData = products.filter((el) => el._id !== _id);
+        //             setProducts(newData);
+        //             Modal(
+        //                 'Eliminación de producto.',
+        //                 'El producto ha sido eliminado correctamente.',
+        //                 'success',
+        //                 ''
+        //             )
+        //         } else {
+        //             setError(res);
+        //         }
+        //     });
+
+        // } else {
+        //     return;
+        // }
     };
 
     const data = {

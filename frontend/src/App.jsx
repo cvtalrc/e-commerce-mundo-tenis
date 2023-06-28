@@ -21,8 +21,8 @@ import { OrderProvider } from './context/OrderContext';
 import AdminOrders from './views/admin/AdminOrders';
 import User from './views/user/User';
 import AboutUs from './views/aboutUs/AboutUs';
-import EmailValidation from './views/emailConfirm/EmailConfirm';
 import EmailConfirm from './views/emailConfirm/EmailConfirm';
+import EmailValidation from './components/emailValidation/emailValidation';
 
 const navArrayLinks = [
     {
