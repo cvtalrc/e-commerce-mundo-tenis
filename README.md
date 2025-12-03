@@ -46,4 +46,9 @@ A diferencia de proyectos académicos estándar, este software pasó por una fas
 * **Resultado:** 15/15 casos de prueba exitosos antes del despliegue.
 
 ---
-*Proyecto desarrollado para la asignatura de Ingeniería de Software. Enfocado en la digitalización de PYMES y estándares de calidad.*
+*Proyecto desarrollado por:
+   * Catalina Lorca
+   * Fernanda Lorca
+   * Felipe Lazo
+   * Pablo Díaz
+para la asignatura de Ingeniería de Software. Enfocado en la digitalización de PYMES y estándares de calidad.*
