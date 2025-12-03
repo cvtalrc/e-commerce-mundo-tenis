@@ -51,4 +51,5 @@ A diferencia de proyectos académicos estándar, este software pasó por una fas
    * Fernanda Lorca
    * Felipe Lazo
    * Pablo Díaz
+     
 para la asignatura de Ingeniería de Software. Enfocado en la digitalización de PYMES y estándares de calidad.*
