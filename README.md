@@ -8,65 +8,12 @@
 ![QA](https://img.shields.io/badge/Testing-QA_Methodology-purple)
 
 ### 🧩 Arquitectura del Sistema & Flujo de Pagos
-Este diagrama resume cómo interactúan los clientes, el servidor y la pasarela de pagos WebPay:
+Este diagrama muestra cómo interactúan los clientes, el servidor y la pasarela de pagos WebPay:
 
-```mermaid
-graph TD
-    %% ESTILOS
-    classDef client fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
-    classDef server fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-    classDef db fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,stroke-dasharray: 5 5;
-    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
-
-    %% --- ACTORES ---
-    subgraph Client_Layer ["Capa de Cliente (Frontend)"]
-        User([Usuario / Cliente])
-        Admin([Administrador])
-    end
-
-    %% --- SERVIDOR ---
-    subgraph Server_Layer ["Servidor Backend (MVC)"]
-        direction TB
-        Controller[Controlador API<br>Express/Node.js]
-        Auth[Módulo de Autenticación<br>Roles & Sesiones]
-        Logic[Lógica de Negocio<br>Carro & Pedidos]
-    end
-
-    %% --- DATOS ---
-    subgraph Data_Layer ["Capa de Datos (NoSQL)"]
-        MongoDB[(MongoDB Cluster)]
-    end
-
-    %% --- SERVICIOS EXTERNOS ---
-    subgraph External_Services ["Servicios Externos"]
-        WebPay[Pasarela WebPay Plus<br>Transbank]
-        EmailService[Servicio de Email<br>Notificaciones]
-    end
-
-    %% --- FLUJO ---
-    User -->|Navega/Compra| Controller
-    Admin -->|Gestiona Stock| Controller
-    
-    Controller --> Auth
-    Controller --> Logic
-    
-    Logic -->|CRUD Productos/Usuarios| MongoDB
-    
-    %% Flujo de Pago (Clave)
-    Logic -- "1. Inicia Transacción" --> WebPay
-    WebPay -- "2. Redirecciona Usuario" --> User
-    User -- "3. Confirma Pago" --> WebPay
-    WebPay -- "4. Notifica Éxito (Webhook)" --> Logic
-    
-    %% Post-Venta
-    Logic -- "5. Envía Comprobante" --> EmailService
-    EmailService -.-> User
-
-    %% CLASES
-    class User,Admin client;
-    class Controller,Auth,Logic server;
-    class MongoDB db;
-    class WebPay,EmailService external;´´´
+> **Diagrama de Arquitectura:**
+>
+> ![Arquitectura MVC](frontend/scr/assets/Diagrama_de_flujo.png)
+>
 
 ## 📖 Descripción General
 Este proyecto nació de una necesidad real de negocio: transformar la venta informal (WhatsApp/Instagram) de una PYME deportiva en una **plataforma digital centralizada y escalable**.
